@@ -1,0 +1,9 @@
+.env
+artworks/audio/*
+artworks/content/*
+!artworks/content/example
+artworks/images/*
+fonts/*
+node_modules
+
+!/**/.gitkeep

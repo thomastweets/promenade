@@ -1,0 +1,14 @@
+{
+  "name": "audioguide",
+  "version": "1.0.0",
+  "description": "A mobile-first audio guide for exhibitions",
+  "scripts": {
+    "generate-index": "node scripts/generate_index.js"
+  },
+  "dependencies": {
+    "canvas": "^3.1.0",
+    "dotenv": "^16.4.7",
+    "js-yaml": "^4.1.0",
+    "openai": "^4.83.0"
+  }
+}

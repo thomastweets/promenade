@@ -1,0 +1,1315 @@
+:root {
+    /* Light theme colors */
+    --primary-color: #2563eb;
+    --secondary-color: #1d4ed8;
+    --background-color: #f8fafc;
+    --surface-color: #ffffff;
+    --text-color: #1e293b;
+    --text-secondary: #64748b;
+    --border-color: #e2e8f0;
+    --error-color: #ef4444;
+    --success-color: #22c55e;
+    --accent-color: #2563eb;
+    --bg-primary: #ffffff;
+    --bg-secondary: #f1f5f9;
+
+    /* Typography */
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+    /* Spacing and sizing */
+    --spacing: 1rem;
+    --keypad-button-size: 4rem;
+    --keypad-gap: 0.5rem;
+    --border-radius: 12px;
+    --border-radius-sm: 8px;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark theme colors */
+:root[data-theme="dark"] {
+    --primary-color: #3b82f6;
+    --secondary-color: #60a5fa;
+    --background-color: #0f172a;
+    --surface-color: #1e293b;
+    --text-color: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --border-color: #334155;
+    --accent-color: #60a5fa;
+    --bg-primary: #1e293b;
+    --bg-secondary: #334155;
+}
+
+/* System dark mode - only applies when theme is set to 'auto' */
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]):not([data-theme="dark"]) {
+        --primary-color: #3b82f6;
+        --secondary-color: #60a5fa;
+        --background-color: #0f172a;
+        --surface-color: #1e293b;
+        --text-color: #f1f5f9;
+        --text-secondary: #94a3b8;
+        --border-color: #334155;
+        --accent-color: #60a5fa;
+        --bg-primary: #1e293b;
+        --bg-secondary: #334155;
+    }
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-body);
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+}
+
+h2 {
+    font-size: 2rem;
+    margin-bottom: 1.25rem;
+}
+
+h3 {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+}
+
+.app {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: var(--spacing);
+}
+
+/* Header Styles */
+header {
+    background-color: var(--surface-color);
+    color: var(--text-color);
+    margin-bottom: var(--spacing);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+}
+
+.header-content {
+    padding: var(--spacing);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-controls {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.theme-toggle {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.theme-toggle .icon {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.2s ease;
+}
+
+.theme-toggle .icon.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.theme-toggle .icon i {
+    color: var(--text-color);
+}
+
+/* Navigation Styles */
+.main-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing);
+    border-top: 1px solid var(--border-color);
+}
+
+.nav-links {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.nav-links a {
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius-sm);
+    transition: all 0.2s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Artwork Menu Toggle Button - Main CTA */
+.artwork-menu-toggle {
+    padding: 0.5rem 1rem;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius-sm);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.artwork-menu-toggle i {
+    font-size: 1.1rem;
+}
+
+.artwork-menu-toggle:hover {
+    background: var(--secondary-color);
+    transform: translateY(-1px);
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .main-nav {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: stretch;
+    }
+
+    .nav-links {
+        flex-direction: column;
+    }
+
+    .artwork-menu-toggle {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Remove old floating button styles */
+.artwork-menu-toggle {
+    position: static;
+    width: auto;
+    height: auto;
+    box-shadow: none;
+    z-index: auto;
+}
+
+/* Input Section */
+.input-section {
+    background-color: var(--surface-color);
+    padding: var(--spacing);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-md);
+    margin-bottom: var(--spacing);
+}
+
+/* Tab Interface */
+.input-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.input-tab {
+    flex: 1;
+    padding: 1rem;
+    background: var(--bg-secondary);
+    border: none;
+    border-radius: var(--border-radius-sm);
+    color: var(--text-secondary);
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.input-tab.active {
+    background: var(--primary-color);
+    color: white;
+}
+
+.input-tab i {
+    font-size: 1.2rem;
+}
+
+/* Input Panels */
+.input-panels {
+    position: relative;
+}
+
+.input-panel {
+    display: none;
+}
+
+.input-panel.active {
+    display: block;
+}
+
+/* Keypad Improvements */
+.keypad {
+    background: var(--surface-color);
+    padding: var(--spacing);
+    border-radius: var(--border-radius);
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.keypad-display {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--text-color);
+    margin-bottom: 1rem;
+    min-height: 2.5rem;
+}
+
+.keypad-row {
+    display: flex;
+    justify-content: center;
+    gap: var(--keypad-gap);
+    margin-bottom: var(--keypad-gap);
+}
+
+/* Artwork Page Quick Input */
+.artwork-quick-input {
+    background: var(--surface-color);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.artwork-quick-input button {
+    flex: 1;
+    padding: 1rem;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: var(--bg-secondary);
+    color: var(--text-color);
+    border: none;
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.artwork-quick-input button:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.artwork-quick-input button i {
+    font-size: 1.2rem;
+}
+
+/* QR Scanner Improvements */
+.scanner-section {
+    text-align: center;
+    padding: 2rem;
+}
+
+.scan-button {
+    font-size: 1.1rem;
+    padding: 1rem 2rem;
+}
+
+/* Hide the old input box */
+.manual-input {
+    display: none;
+}
+
+/* Error Message */
+.error-message {
+    color: var(--error-color);
+    font-size: 0.9rem;
+    min-height: 1.5rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    margin-top: 0.5rem;
+    text-align: center;
+}
+
+.error-message:not(:empty) {
+    opacity: 1;
+}
+
+/* Button Styles */
+button {
+    padding: 0.8rem 1.2rem;
+    font-size: 1rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+}
+
+button:hover:not(:disabled) {
+    background-color: var(--secondary-color);
+    transform: translateY(-1px);
+}
+
+button:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Main content area */
+main {
+    padding-bottom: 180px; /* Space for sticky player */
+}
+
+/* Artwork Content */
+.artwork-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Swiper Styles */
+.artwork-swiper {
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    aspect-ratio: 4/3;
+    background: var(--bg-secondary);
+}
+
+.swiper-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: var(--bg-secondary);
+}
+
+.swiper-pagination-bullet {
+    width: 8px;
+    height: 8px;
+    background: var(--text-primary);
+    opacity: 0.5;
+}
+
+.swiper-pagination-bullet-active {
+    opacity: 1;
+}
+
+/* Artwork Info Improvements */
+.artwork-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.artwork-number {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--accent-color);
+    background: var(--bg-secondary);
+    padding: 8px 16px;
+    border-radius: 8px;
+}
+
+.artwork-metadata {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 20px;
+    color: var(--text-secondary);
+}
+
+.artwork-metadata span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Sticky Audio Player */
+.audio-player-sticky {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--surface-color);
+    border-top: 1px solid var(--border-color);
+    padding: 16px;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+    display: none; /* Hidden by default */
+}
+
+.audio-player-sticky.show {
+    display: block;
+}
+
+.audio-player-content {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.audio-player-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--text-color);
+}
+
+.audio-artwork-number {
+    font-weight: bold;
+    color: var(--accent-color);
+    background: var(--bg-secondary);
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.audio-artwork-title {
+    font-weight: 500;
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.audio-player-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+}
+
+.audio-play-pause {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.audio-play-pause:hover {
+    transform: scale(1.05);
+}
+
+.nav-button {
+    background: var(--bg-secondary);
+    color: var(--text-color);
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.nav-button:hover:not(:disabled) {
+    background: var(--border-color);
+    transform: scale(1.05);
+}
+
+.nav-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.audio-progress {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 4px;
+    background: var(--bg-secondary);
+    border-radius: 2px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.progress-filled {
+    height: 100%;
+    background: var(--accent-color);
+    width: 0;
+}
+
+.time-display {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+/* Cancel buttons */
+.keypad-cancel,
+.cancel-scan-button {
+    color: var(--error-color);
+}
+
+.cancel-scan-button {
+    margin-top: 8px;
+    padding: 8px 16px;
+    border: 1px solid var(--error-color);
+    border-radius: 8px;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.cancel-scan-button:hover {
+    background: var(--error-color);
+    color: white;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+    main {
+        padding-bottom: 200px; /* More space for mobile layout */
+    }
+
+    .artwork-content {
+        padding: 16px;
+    }
+
+    .toggle-keypad {
+        bottom: calc(200px + 1rem); /* Adjusted for mobile audio player height */
+    }
+
+    .artwork-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .artwork-metadata {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .audio-player-content {
+        gap: 8px;
+    }
+
+    .audio-player-controls {
+        gap: 12px;
+    }
+
+    .audio-play-pause {
+        width: 40px;
+        height: 40px;
+    }
+
+    .nav-button {
+        width: 32px;
+        height: 32px;
+    }
+
+    .time-display {
+        font-size: 0.75rem;
+    }
+
+    .audio-player-info {
+        font-size: 0.9rem;
+    }
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+    .audio-player-sticky {
+        background: var(--bg-primary);
+        border-top-color: var(--border-color);
+    }
+}
+
+/* Media Queries */
+@media (max-width: 600px) {
+    .main-nav {
+        flex-direction: column;
+    }
+
+    .header-content {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+}
+
+@media (min-width: 768px) {
+    .app {
+        padding: calc(var(--spacing) * 2);
+    }
+    
+    .artwork-content,
+    .content-page {
+        padding: calc(var(--spacing) * 2);
+    }
+
+    .keypad {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+}
+
+/* Icon styles */
+.icon i {
+    line-height: 1;
+    vertical-align: middle;
+}
+
+/* Metadata icons */
+.artwork-metadata span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-right: 1.5rem;
+}
+
+.artwork-metadata i {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+}
+
+/* Navigation button icons */
+.nav-button i {
+    font-size: 0.9rem;
+}
+
+/* Scanner button */
+.scan-button i {
+    font-size: 1.2rem;
+}
+
+/* Keypad delete button */
+.keypad-delete i {
+    font-size: 1.2rem;
+}
+
+/* Toggle Keypad Button */
+.toggle-keypad {
+    position: fixed;
+    bottom: calc(180px + 1rem); /* Audio player height + spacing */
+    right: 1rem;
+    width: 3rem;
+    height: 3rem;
+    padding: 0;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    box-shadow: var(--shadow-lg);
+    z-index: 101;
+}
+
+/* Keypad Styles */
+.keypad-section {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    margin-top: 8px;
+}
+
+.keypad-section.show {
+    display: block;
+}
+
+.keypad-button {
+    width: var(--keypad-button-size);
+    height: var(--keypad-button-size);
+    padding: 0;
+    font-size: 1.5rem;
+    background-color: var(--surface-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.keypad-button:hover:not(:disabled) {
+    background-color: var(--border-color);
+    transform: none;
+}
+
+.keypad-clear {
+    background-color: var(--error-color);
+    color: white;
+    border: none;
+    font-size: 1rem;
+}
+
+.keypad-delete {
+    background-color: var(--text-secondary);
+    color: white;
+    border: none;
+}
+
+/* Language Selector */
+.language-selector {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.lang-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    background: none;
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+}
+
+.lang-btn:hover {
+    background-color: var(--border-color);
+    transform: none;
+}
+
+.lang-btn.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+/* Swiper Navigation Arrows */
+.swiper-button-next,
+.swiper-button-prev {
+    color: var(--primary-color) !important;
+    background: var(--surface-color);
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50%;
+    box-shadow: var(--shadow-md);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+    font-size: 1.2rem !important;
+}
+
+.artwork-swiper:hover .swiper-button-next,
+.artwork-swiper:hover .swiper-button-prev {
+    opacity: 1;
+}
+
+/* Artwork Grid Improvements */
+.artworks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+}
+
+/* Artwork Card Styles */
+.artwork-card {
+    background: var(--surface-color);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+.artwork-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.artwork-card-image {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4/3;
+}
+
+.artwork-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.artwork-card-content {
+    padding: 1.5rem;
+}
+
+.artwork-card-content h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+    color: var(--text-color);
+    line-height: 1.4;
+}
+
+.artwork-card-content .artwork-metadata {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.artwork-card-content p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.artwork-card .artwork-number {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: var(--primary-color);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius-sm);
+    font-weight: bold;
+    font-size: 1.2rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.artwork-card .image-count {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--border-radius-sm);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.artwork-card .image-count i {
+    font-size: 1rem;
+}
+
+/* Image count indicator for artwork page */
+.artwork-swiper .image-count {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--border-radius-sm);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    z-index: 10;
+}
+
+.artwork-swiper .image-count i {
+    font-size: 1rem;
+}
+
+/* Help and About Page Styles */
+.content-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.content-section {
+    background: var(--surface-color);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow-md);
+}
+
+.content-section h2 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.content-section p {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+    color: var(--text-color);
+}
+
+.feature-list {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+}
+
+.feature-list li {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--bg-secondary);
+    margin-bottom: 0.5rem;
+    border-radius: var(--border-radius-sm);
+}
+
+.feature-list li i {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    width: 24px;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .artworks-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    .content-section {
+        padding: 1.5rem;
+    }
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background: var(--surface-color);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-lg);
+    max-width: 90%;
+    width: 400px;
+    animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Hide QR scanner button on root page */
+.input-section #scanQR {
+    display: none;
+}
+
+.input-section .input-panel[id="qrPanel"] {
+    text-align: center;
+    padding: 2rem;
+}
+
+/* Adjust artwork quick input buttons */
+.artwork-quick-input {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.artwork-quick-input button {
+    flex: 1;
+    padding: 1rem;
+    font-size: 1.1rem;
+    background: var(--bg-secondary);
+    color: var(--text-color);
+    border: none;
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.artwork-quick-input button:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.artwork-quick-input button i {
+    font-size: 1.2rem;
+}
+
+/* Remove input section completely on artwork pages */
+.artwork-content ~ .input-section,
+.artwork-content .artwork-quick-input,
+.artwork-content .artwork-menu-actions {
+    display: none !important;
+}
+
+/* Input section only visible on home page */
+.input-section {
+    display: none;
+}
+
+body:not(.has-artwork) .input-section {
+    display: block;
+}
+
+/* Show artwork menu toggle on all pages except home */
+.artwork-menu-toggle {
+    display: none !important;
+}
+
+body.has-artwork .artwork-menu-toggle {
+    display: flex !important;
+}
+
+/* Remove old menu action styles */
+.artwork-menu-actions,
+.menu-action-btn {
+    display: flex;
+}
+
+/* Artwork Menu Styles */
+.artwork-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.artwork-menu.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.artwork-menu-content {
+    background: var(--surface-color);
+    border-radius: var(--border-radius);
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-lg);
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+}
+
+.artwork-menu.show .artwork-menu-content {
+    transform: translateY(0);
+}
+
+.artwork-menu-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    gap: 1rem;
+}
+
+.artwork-menu-header h2 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+.artwork-menu-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.menu-action-btn {
+    padding: 0.5rem 1rem;
+    background: var(--bg-secondary);
+    color: var(--text-color);
+    border: none;
+    border-radius: var(--border-radius-sm);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.menu-action-btn:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: translateY(-1px);
+}
+
+.menu-action-btn i {
+    font-size: 1rem;
+}
+
+.close-menu {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    padding: 0.5rem;
+    cursor: pointer;
+    font-size: 1.25rem;
+}
+
+/* Mobile optimizations for menu header */
+@media (max-width: 768px) {
+    .artwork-menu-header {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .artwork-menu-header h2 {
+        justify-content: center;
+    }
+
+    .artwork-menu-actions {
+        justify-content: center;
+    }
+
+    .close-menu {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+    }
+}
+
+.artwork-menu-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 1rem;
+    padding: 1.5rem;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.artwork-mini-card {
+    aspect-ratio: 1;
+    background: var(--bg-secondary);
+    border-radius: var(--border-radius-sm);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 1rem;
+}
+
+.artwork-mini-card:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.artwork-mini-card .artwork-number {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    background: none;
+    padding: 0;
+} 
