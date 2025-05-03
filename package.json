@@ -3,20 +3,21 @@
   "version": "1.0.0",
   "description": "A mobile-first audio guide for exhibitions",
   "scripts": {
-    "generate-index": "node scripts/generate_index.js",
     "clean": "rimraf public",
-    "copy-assets": "copyfiles -u 0 \"assets/**/*\" public/",
-    "copy-fonts": "copyfiles -u 0 \"fonts/**/*\" public/",
-    "copy-webfonts": "copyfiles -u 0 \"webfonts/**/*\" public/",
-    "copy-artworks": "copyfiles -u 0 \"artworks/**/*\" public/",
-    "copy-html": "copyfiles -u 0 \"*.html\" public/",
-    "copy-manifest": "copyfiles -u 0 \"manifest.json\" public/",
-    "copy-vendor-js": "mkdir -p public/js/vendor && cp -r js/vendor/* public/js/vendor/",
+    "generate-index": "node scripts/generate_index.js",
+    "generate-artwork-images": "node scripts/generate_artwork_images.js",
+    "generate-audio-files": "node scripts/generate_audio_files.js",
+    "copy-static": "copyfiles -u 0 \"assets/**/*\" \"fonts/**/*\" \"webfonts/**/*\" \"artworks/**/*\" \"*.html\" \"manifest.json\" public/",
+    "copy-vendor-js": "copyfiles -u 0 \"js/vendor/**/*\" public/js/vendor/",
     "minify-js": "node scripts/build.js",
     "minify-css": "node scripts/build-css.js",
     "process-assets": "node scripts/process-html.js",
-    "build": "npm run clean && mkdir -p public/js public/css && npm run copy-assets && npm run copy-fonts && npm run copy-webfonts && npm run copy-artworks && npm run copy-html && npm run copy-manifest && npm run copy-vendor-js && npm run minify-js && npm run minify-css && npm run process-assets",
-    "serve": "serve public"
+    "build": "npm run clean && npm run generate-index && npm run copy-static && npm run copy-vendor-js && npm run minify-js && npm run minify-css && npm run process-assets",
+    "build:all": "npm run clean && npm run generate-artwork-images && npm run generate-audio-files && npm run build",
+    "serve": "serve public",
+    "dev": "npm run build && npm run serve",
+    "watch": "nodemon --watch html --watch js --watch css --watch artworks --watch assets --ext js,css,md,jpg,jpeg,png,mp3 --exec \"npm run build\"",
+    "browsersync": "browser-sync start --server public --files 'public/**/*' --no-open"
   },
   "dependencies": {
     "canvas": "^3.1.0",
@@ -25,9 +26,11 @@
     "openai": "^4.83.0"
   },
   "devDependencies": {
+    "browser-sync": "^3.0.4",
     "copyfiles": "^2.4.1",
     "cssnano": "^6.0.1",
     "glob": "^8.1.0",
+    "nodemon": "^3.1.10",
     "postcss": "^8.4.31",
     "postcss-cli": "^10.1.0",
     "rimraf": "^5.0.1",
