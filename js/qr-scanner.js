@@ -1,4 +1,5 @@
-import QrScanner from './vendor/qr-scanner.min.js';
+import QrScanner from 'qr-scanner';
+QrScanner.WORKER_PATH = 'vendor/qr-scanner-worker.min.js';
 
 export async function initializeQRScanner() {
     // Create a video element for the scanner

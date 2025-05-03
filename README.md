@@ -13,16 +13,16 @@ A lightweight, mobile-first web application for museum audio guides. This applic
 
 ## Third-Party Libraries
 
-The following third-party libraries are used in this project. All are included locally to ensure the app can be served in isolated networks without relying on public CDNs:
+The following third-party libraries are managed via npm and copied to `public/vendor/` during the build process:
 
-| Library         | Version   | Local Path(s)                  | Usage                        |
-|----------------|-----------|--------------------------------|------------------------------|
-| Font Awesome   | 6.5.1     | `fonts/fontawesome.min.css`, `webfonts/fa-solid-900.woff2` | Icon fonts for UI            |
-| Swiper         | 11.2.2    | `js/vendor/swiper-bundle.min.js`, `js/vendor/swiper-bundle.min.css` | Image slider/gallery         |
-| js-yaml        | 4.1.0     | `js/vendor/js-yaml.min.js`     | YAML parsing for artwork data|
-| QR Scanner     | (custom/minified) | `js/vendor/qr-scanner.min.js`, `js/vendor/qr-scanner-worker.min.js` | QR code scanning            |
+| Library         | Version   | npm Package                          | Public Path(s)                        | Usage                        |
+|----------------|-----------|--------------------------------------|---------------------------------------|------------------------------|
+| Font Awesome   | 6.7.2     | @fortawesome/fontawesome-free         | `vendor/all.min.css`, `vendor/webfonts/*` | Icon fonts for UI            |
+| Swiper         | 11.2.6    | swiper                                | `vendor/swiper-bundle.min.js`, `vendor/swiper-bundle.min.css` | Image slider/gallery         |
+| js-yaml        | 4.1.0     | js-yaml                               | `vendor/js-yaml.min.js`                | YAML parsing for artwork data|
+| QR Scanner     | 1.4.2     | qr-scanner                            | `vendor/qr-scanner.min.js`, `vendor/qr-scanner-worker.min.js` | QR code scanning            |
 
-> **Note:** All references in HTML, CSS, and JS should point to these local files. No remote CDN loads are required for any dependencies.
+> **Note:** All references in HTML, CSS, and JS point to these local files in `public/vendor/`. No remote CDN loads are required for any dependencies.
 
 ## Artwork Data & Content Management
 

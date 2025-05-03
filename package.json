@@ -8,11 +8,11 @@
     "generate-artwork-images": "node scripts/generate_artwork_images.js",
     "generate-audio-files": "node scripts/generate_audio_files.js",
     "copy-static": "copyfiles -u 0 \"assets/**/*\" \"fonts/**/*\" \"webfonts/**/*\" \"artworks/**/*\" \"*.html\" \"manifest.json\" public/",
-    "copy-vendor-js": "copyfiles -u 0 \"js/vendor/**/*\" public/js/vendor/",
+    "copy-vendor": "copyfiles -u 2 \"node_modules/swiper/swiper-bundle.min.js\" \"node_modules/swiper/swiper-bundle.min.css\" \"node_modules/js-yaml/dist/js-yaml.min.js\" \"node_modules/@fortawesome/fontawesome-free/css/all.min.css\" \"node_modules/@fortawesome/fontawesome-free/webfonts/*\" \"node_modules/qr-scanner/qr-scanner.min.js\" \"node_modules/qr-scanner/qr-scanner-worker.min.js\" public/vendor/",
     "minify-js": "node scripts/build.js",
     "minify-css": "node scripts/build-css.js",
     "process-assets": "node scripts/process-html.js",
-    "build": "npm run clean && npm run generate-index && npm run copy-static && npm run copy-vendor-js && npm run minify-js && npm run minify-css && npm run process-assets",
+    "build": "npm run clean && npm run generate-index && npm run copy-static && npm run copy-vendor && npm run minify-js && npm run minify-css && npm run process-assets",
     "build:all": "npm run clean && npm run generate-artwork-images && npm run generate-audio-files && npm run build",
     "serve": "serve public",
     "dev": "npm run build && npm run serve",
@@ -20,10 +20,13 @@
     "browsersync": "browser-sync start --server public --files 'public/**/*' --no-open"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.7.2",
     "canvas": "^3.1.0",
     "dotenv": "^16.4.7",
     "js-yaml": "^4.1.0",
-    "openai": "^4.83.0"
+    "openai": "^4.83.0",
+    "qr-scanner": "^1.4.2",
+    "swiper": "^11.2.6"
   },
   "devDependencies": {
     "browser-sync": "^3.0.4",
