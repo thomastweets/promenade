@@ -599,34 +599,40 @@ class AudioGuideApp {
         const currentTime = document.querySelector('.current-time');
         const duration = document.querySelector('.duration');
 
-        playPauseBtn.addEventListener('click', () => {
-            if (this.audioElement.paused) {
-                this.audioElement.play();
-                playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
-            } else {
-                this.audioElement.pause();
-                playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
-            }
-        });
+        if (playPauseBtn) {
+            playPauseBtn.addEventListener('click', () => {
+                if (this.audioElement.paused) {
+                    this.audioElement.play();
+                    playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                } else {
+                    this.audioElement.pause();
+                    playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+                }
+            });
+        }
 
-        this.audioElement.addEventListener('timeupdate', () => {
-            const percent = (this.audioElement.currentTime / this.audioElement.duration) * 100;
-            progressFilled.style.width = `${percent}%`;
-            currentTime.textContent = this.formatTime(this.audioElement.currentTime);
-        });
+        if (this.audioElement && progressFilled && currentTime && duration) {
+            this.audioElement.addEventListener('timeupdate', () => {
+                const percent = (this.audioElement.currentTime / this.audioElement.duration) * 100;
+                progressFilled.style.width = `${percent}%`;
+                currentTime.textContent = this.formatTime(this.audioElement.currentTime);
+            });
 
-        this.audioElement.addEventListener('loadedmetadata', () => {
-            duration.textContent = this.formatTime(this.audioElement.duration);
-        });
+            this.audioElement.addEventListener('loadedmetadata', () => {
+                duration.textContent = this.formatTime(this.audioElement.duration);
+            });
 
-        this.audioElement.addEventListener('ended', () => {
-            playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
-        });
+            this.audioElement.addEventListener('ended', () => {
+                if (playPauseBtn) playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+            });
+        }
 
-        progressBar.addEventListener('click', (e) => {
-            const progressTime = (e.offsetX / progressBar.offsetWidth) * this.audioElement.duration;
-            this.audioElement.currentTime = progressTime;
-        });
+        if (progressBar) {
+            progressBar.addEventListener('click', (e) => {
+                const progressTime = (e.offsetX / progressBar.offsetWidth) * this.audioElement.duration;
+                this.audioElement.currentTime = progressTime;
+            });
+        }
     }
 
     formatTime(seconds) {

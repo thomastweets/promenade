@@ -61,7 +61,7 @@ class ArtworksGrid {
         card.className = 'artwork-card';
         card.innerHTML = `
             <div class="artwork-card-image">
-                <img src="/artworks/images/${artwork.image}" alt="${artwork.title[this.currentLang] || ''}" 
+                <img src="/artworks/images/${images[0]}" alt="${artwork.title[this.currentLang] || ''}" 
                      onerror="this.src='/artworks/images/placeholder.jpg'">
                 <span class="artwork-number">${artwork.id}</span>
                 ${images.length > 1 ? `<span class="image-count"><i class="fas fa-images"></i> ${images.length}</span>` : ''}
