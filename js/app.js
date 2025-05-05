@@ -1,3 +1,4 @@
+import './i18n.js';
 import { initializeQRScanner } from './qr-scanner.js';
 import Swiper from 'swiper';
 import jsyaml from 'js-yaml';
@@ -71,23 +72,11 @@ class AudioGuideApp {
         const prevBtn = document.getElementById('prevArtwork');
         const nextBtn = document.getElementById('nextArtwork');
         if (prevBtn) {
-            prevBtn.innerHTML = `
-                <i class="fas fa-chevron-left"></i>
-                <span class="artwork-number">
-                    <i class="fas fa-headphones"></i>
-                    <span class="prev-number"></span>
-                </span>
-            `;
+            prevBtn.innerHTML = `<i class="fas fa-chevron-left"></i>`;
             prevBtn.addEventListener('click', () => this.navigateArtwork(-1));
         }
         if (nextBtn) {
-            nextBtn.innerHTML = `
-                <span class="artwork-number">
-                    <i class="fas fa-headphones"></i>
-                    <span class="next-number"></span>
-                </span>
-                <i class="fas fa-chevron-right"></i>
-            `;
+            nextBtn.innerHTML = `<i class="fas fa-chevron-right"></i>`;
             nextBtn.addEventListener('click', () => this.navigateArtwork(1));
         }
 
@@ -702,6 +691,7 @@ class AudioGuideApp {
 
     displayArtwork(artwork) {
         // Create artwork content structure if it doesn't exist
+        let needsInject = false;
         if (!document.querySelector('.artwork-swiper')) {
             this.artworkContent.innerHTML = `
                 <div class="swiper artwork-swiper">
@@ -730,13 +720,22 @@ class AudioGuideApp {
                     <p id="artwork-description"></p>
                 </div>
             `;
+            needsInject = true;
         }
 
         this.updateContent(artwork);
-        this.updateArtworkImages(artwork);
+
+        // Ensure updateArtworkImages is called after DOM update
+        if (needsInject) {
+            requestAnimationFrame(() => {
+                this.updateArtworkImages(artwork);
+            });
+        } else {
+            this.updateArtworkImages(artwork);
+        }
 
         // Update audio source and reset player
-        const audioFile = artwork.audio[window.i18n.currentLang];
+        const audioFile = artwork.audio[getCurrentLang()];
         this.audioElement.src = `/artworks/audio/${audioFile}`;
         
         // Show content and player
@@ -756,7 +755,7 @@ class AudioGuideApp {
     }
 
     updateContent(artwork) {
-        const lang = window.i18n.currentLang;
+        const lang = getCurrentLang();
         
         // Update main content with headphone icon
         document.getElementById('artwork-number').innerHTML = `
@@ -778,10 +777,10 @@ class AudioGuideApp {
         // Update navigation numbers
         const prevNumber = (parseInt(artwork.id) - 1).toString().padStart(2, '0');
         const nextNumber = (parseInt(artwork.id) + 1).toString().padStart(2, '0');
-        const prevElement = document.querySelector('.prev-number');
-        const nextElement = document.querySelector('.next-number');
-        if (prevElement) prevElement.textContent = prevNumber;
-        if (nextElement) nextElement.textContent = nextNumber;
+        const prevElement = document.querySelector('.prev-artwork-number');
+        const nextElement = document.querySelector('.next-artwork-number');
+        if (prevElement) prevElement.innerHTML = `<i class='fas fa-headphones'></i> ${prevNumber}`;
+        if (nextElement) nextElement.innerHTML = `<i class='fas fa-headphones'></i> ${nextNumber}`;
     }
 
     updateNavigationState() {
@@ -810,39 +809,40 @@ class AudioGuideApp {
     updateArtworkImages(artwork) {
         const images = Array.isArray(artwork.image) ? artwork.image : [artwork.image];
         const swiperWrapper = document.querySelector('.swiper-wrapper');
-        
+        const swiperContainer = document.querySelector('.artwork-swiper');
+
         // Clear existing slides
         swiperWrapper.innerHTML = '';
-        
+
         // Remove existing image count indicator if any
-        const existingCount = document.querySelector('.artwork-swiper .image-count');
-        if (existingCount) {
-            existingCount.remove();
-        }
-        
+        const existingCount = swiperContainer.querySelector('.image-count');
+        if (existingCount) existingCount.remove();
+
         // Add image count indicator if multiple images
         if (images.length > 1) {
             const imageCount = document.createElement('div');
             imageCount.className = 'image-count';
             imageCount.innerHTML = `<i class="fas fa-images"></i> ${images.length}`;
-            document.querySelector('.artwork-swiper').appendChild(imageCount);
+            swiperContainer.appendChild(imageCount);
         }
-        
+
         // Add new slides
         images.forEach(image => {
             const slide = document.createElement('div');
             slide.className = 'swiper-slide';
-            slide.innerHTML = `<img src="/artworks/images/${image}" alt="${artwork.title[window.i18n.currentLang]}">`;
+            slide.innerHTML = `<img src="/artworks/images/${image}" alt="${artwork.title[getCurrentLang()]}" />`;
             swiperWrapper.appendChild(slide);
         });
 
-        // Initialize or update Swiper
+        // Destroy previous Swiper instance if exists
         if (this.swiper) {
-            this.swiper.destroy();
+            this.swiper.destroy(true, true);
             this.swiper = null;
         }
-        
+
+        // Now that all slides and navigation elements are present, initialize Swiper
         this.swiper = new Swiper('.artwork-swiper', {
+            slidesPerView: 1,
             pagination: {
                 el: '.swiper-pagination',
                 clickable: true
@@ -854,6 +854,13 @@ class AudioGuideApp {
             loop: images.length > 1,
             grabCursor: true
         });
+        // Only update navigation/pagination if they exist
+        if (this.swiper.navigation && typeof this.swiper.navigation.update === 'function') {
+            this.swiper.navigation.update();
+        }
+        if (this.swiper.pagination && typeof this.swiper.pagination.update === 'function') {
+            this.swiper.pagination.update();
+        }
     }
 
     loadArtworkFromURL() {
@@ -905,4 +912,9 @@ class AudioGuideApp {
 // Initialize the app when the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     new AudioGuideApp();
-}); 
+});
+
+// Helper to safely get the current language
+function getCurrentLang() {
+    return (window.i18n && window.i18n.currentLang) ? window.i18n.currentLang : 'de';
+} 

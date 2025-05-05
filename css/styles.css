@@ -518,99 +518,88 @@ main {
 .audio-player-info {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 16px;
     color: var(--text-color);
+    margin-bottom: 0.25rem;
 }
 
 .audio-artwork-number {
-    font-weight: bold;
+    font-weight: 700;
     color: var(--accent-color);
     background: var(--bg-secondary);
-    padding: 4px 8px;
-    border-radius: 4px;
+    padding: 6px 16px;
+    border-radius: 8px;
+    font-size: 1.35rem;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    min-width: 56px;
 }
 
 .audio-artwork-title {
-    font-weight: 500;
+    font-weight: 700;
+    font-size: 1.35rem;
     flex: 1;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    letter-spacing: 0.2px;
 }
 
 .audio-player-controls {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 16px;
+    justify-content: space-between;
+    width: 100%;
 }
 
-.audio-play-pause {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: var(--accent-color);
-    color: white;
-    border: none;
+.side-controls {
     display: flex;
     align-items: center;
+    gap: 0.5rem;
+    min-width: 80px;
+}
+
+.prev-artwork-number, .next-artwork-number {
+    display: inline-flex;
+    align-items: center;
     justify-content: center;
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: transform 0.2s;
-}
-
-.audio-play-pause:hover {
-    transform: scale(1.05);
-}
-
-.nav-button {
     background: var(--bg-secondary);
-    color: var(--text-color);
-    width: 36px;
-    height: 36px;
-    padding: 0;
-    border-radius: 50%;
-    transition: all 0.2s ease;
+    color: var(--accent-color);
+    border-radius: 8px;
+    font-weight: bold;
+    padding: 0 12px;
+    font-size: 1.1rem;
+    min-width: 48px;
+    height: 40px;
 }
 
-.nav-button:hover:not(:disabled) {
-    background: var(--border-color);
-    transform: scale(1.05);
-}
-
-.nav-button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+@media (max-width: 768px) {
+    .side-controls {
+        min-width: 60px;
+    }
+    .prev-artwork-number, .next-artwork-number {
+        font-size: 1rem;
+        padding: 0 8px;
+        min-width: 36px;
+        height: 32px;
+    }
+    .audio-artwork-number {
+        font-size: 1.1rem;
+        padding: 4px 10px;
+        min-width: 40px;
+    }
+    .audio-artwork-title {
+        font-size: 1.1rem;
+    }
 }
 
 .audio-progress {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.progress-bar {
     width: 100%;
-    height: 4px;
-    background: var(--bg-secondary);
-    border-radius: 2px;
-    overflow: hidden;
-    cursor: pointer;
-}
-
-.progress-filled {
-    height: 100%;
-    background: var(--accent-color);
-    width: 0;
-}
-
-.time-display {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.875rem;
-    color: var(--text-secondary);
+    margin-top: 1.2rem;
+    position: relative;
+    z-index: auto;
+    display: block;
 }
 
 /* Cancel buttons */
@@ -673,9 +662,21 @@ main {
         gap: 12px;
     }
 
-    .audio-play-pause {
+    .audio-player-controls .nav-button {
         width: 40px;
         height: 40px;
+        font-size: 1rem;
+    }
+
+    .audio-play-pause {
+        width: 44px;
+        height: 44px;
+        font-size: 1.1rem;
+    }
+
+    .audio-player-controls .audio-artwork-number {
+        font-size: 1rem;
+        padding: 0 8px;
     }
 
     .nav-button {
@@ -850,7 +851,7 @@ main {
     border-color: var(--primary-color);
 }
 
-/* Swiper Navigation Arrows */
+/* Swiper Navigation Arrows - use default Swiper arrows, styled for color and size */
 .swiper-button-next,
 .swiper-button-prev {
     color: var(--primary-color) !important;
@@ -859,18 +860,21 @@ main {
     height: 40px !important;
     border-radius: 50%;
     box-shadow: var(--shadow-md);
-    opacity: 0;
+    opacity: 1;
     transition: opacity 0.3s ease;
+    pointer-events: auto;
+    font-size: 1.5rem;
+}
+
+.artwork-swiper .swiper-button-next:hover,
+.artwork-swiper .swiper-button-prev:hover {
+    opacity: 0.85;
 }
 
 .swiper-button-next:after,
 .swiper-button-prev:after {
-    font-size: 1.2rem !important;
-}
-
-.artwork-swiper:hover .swiper-button-next,
-.artwork-swiper:hover .swiper-button-prev {
-    opacity: 1;
+    font-size: 1.5rem !important;
+    color: var(--primary-color) !important;
 }
 
 /* Artwork Grid Improvements */
@@ -1312,4 +1316,46 @@ body.has-artwork .artwork-menu-toggle {
     font-weight: bold;
     background: none;
     padding: 0;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 6px;
+    background: var(--bg-secondary);
+    border-radius: 3px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-filled {
+    height: 100%;
+    background: var(--accent-color);
+    width: 0;
+    transition: width 0.2s;
+}
+
+.time-display {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin-top: 0.25rem;
+    padding: 0 2px;
+    letter-spacing: 0.5px;
+}
+
+.audio-artwork-number i,
+.prev-artwork-number i,
+.next-artwork-number i,
+.audio-player-info .audio-artwork-number i {
+    margin-right: 0.5em;
+    font-size: 1.1em;
+}
+
+.audio-artwork-number,
+.prev-artwork-number,
+.next-artwork-number {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
 } 
