@@ -7,19 +7,14 @@
     "generate-index": "node scripts/generate_index.js",
     "generate-artwork-images": "node scripts/generate_artwork_images.js",
     "generate-audio-files": "node scripts/generate_audio_files.js",
-    "copy-static": "copyfiles -u 0 \"assets/**/*\" \"fonts/**/*\" \"webfonts/**/*\" \"artworks/**/*\" \"*.html\" \"manifest.json\" public/",
-    "copy-vendor": "copyfiles -u 2 \"node_modules/swiper/swiper-bundle.min.js\" \"node_modules/swiper/swiper-bundle.min.css\" \"node_modules/js-yaml/dist/js-yaml.min.js\" \"node_modules/@fortawesome/fontawesome-free/css/all.min.css\" \"node_modules/@fortawesome/fontawesome-free/webfonts/*\" \"node_modules/qr-scanner/qr-scanner.min.js\" \"node_modules/qr-scanner/qr-scanner-worker.min.js\" public/vendor/",
-    "minify-js": "node scripts/build.js",
-    "minify-css": "node scripts/build-css.js",
-    "process-assets": "node scripts/process-html.js",
-    "build": "npm run clean && npm run generate-index && npm run copy-static && npm run copy-vendor && npm run minify-js && npm run minify-css && npm run process-assets",
+    "build": "vite build",
     "build:all": "npm run clean && npm run generate-artwork-images && npm run generate-audio-files && npm run build",
-    "serve": "serve public",
-    "dev": "npm run build && npm run serve",
-    "watch": "nodemon --watch html --watch js --watch css --watch artworks --watch assets --ext js,css,md,jpg,jpeg,png,mp3 --exec \"npm run build\"",
-    "browsersync": "browser-sync start --server public --files 'public/**/*' --no-open"
+    "dev": "vite",
+    "preview": "vite preview"
   },
   "dependencies": {
+    "@fontsource/inter": "^5.2.5",
+    "@fontsource/playfair-display": "^5.2.5",
     "@fortawesome/fontawesome-free": "^6.7.2",
     "canvas": "^3.1.0",
     "dotenv": "^16.4.7",
@@ -29,15 +24,8 @@
     "swiper": "^11.2.6"
   },
   "devDependencies": {
-    "browser-sync": "^3.0.4",
-    "copyfiles": "^2.4.1",
-    "cssnano": "^6.0.1",
-    "glob": "^8.1.0",
-    "nodemon": "^3.1.10",
-    "postcss": "^8.4.31",
-    "postcss-cli": "^10.1.0",
     "rimraf": "^5.0.1",
-    "serve": "^14.2.1",
-    "terser": "^5.19.2"
+    "vite": "^6.3.5",
+    "vite-plugin-static-copy": "^2.3.1"
   }
 }

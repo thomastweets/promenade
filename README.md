@@ -10,19 +10,22 @@ A lightweight, mobile-first web application for museum audio guides. This applic
 - Native audio playback
 - No server required - runs entirely in the browser
 - Easy to customize and deploy
+- Modern asset and dependency management (npm, Vite, ES modules)
 
-## Third-Party Libraries
+## Third-Party Libraries & Fonts
 
-The following third-party libraries are managed via npm and copied to `public/vendor/` during the build process:
+All third-party libraries and fonts are managed via npm and imported as ES modules or CSS imports. No CDN or manual copying is required.
 
-| Library         | Version   | npm Package                          | Public Path(s)                        | Usage                        |
-|----------------|-----------|--------------------------------------|---------------------------------------|------------------------------|
-| Font Awesome   | 6.7.2     | @fortawesome/fontawesome-free         | `vendor/all.min.css`, `vendor/webfonts/*` | Icon fonts for UI            |
-| Swiper         | 11.2.6    | swiper                                | `vendor/swiper-bundle.min.js`, `vendor/swiper-bundle.min.css` | Image slider/gallery         |
-| js-yaml        | 4.1.0     | js-yaml                               | `vendor/js-yaml.min.js`                | YAML parsing for artwork data|
-| QR Scanner     | 1.4.2     | qr-scanner                            | `vendor/qr-scanner.min.js`, `vendor/qr-scanner-worker.min.js` | QR code scanning            |
+| Library/Font      | Version   | npm Package                        | Usage                        |
+|------------------|-----------|------------------------------------|------------------------------|
+| Font Awesome     | 6.7.2     | @fortawesome/fontawesome-free       | Icon fonts for UI            |
+| Swiper           | 11.2.6    | swiper                              | Image slider/gallery         |
+| js-yaml          | 4.1.0     | js-yaml                             | YAML parsing for artwork data|
+| QR Scanner       | 1.4.2     | qr-scanner                          | QR code scanning             |
+| Playfair Display | latest    | @fontsource/playfair-display        | Headings, titles             |
+| Inter            | latest    | @fontsource/inter                   | Body text                    |
 
-> **Note:** All references in HTML, CSS, and JS point to these local files in `public/vendor/`. No remote CDN loads are required for any dependencies.
+> **Note:** All dependencies are bundled by Vite. No references to `public/vendor/` or CDN are used. Fonts are imported via `css/fonts.css` using @fontsource.
 
 ## Artwork Data & Content Management
 
@@ -64,31 +67,21 @@ audio:
 To produce a fully self-contained, deployable app:
 
 - Run `npm run build`.
-- The `public/` folder will contain all minified JS/CSS, assets, fonts, vendor libraries, and artwork content, ready for deployment.
+- The `public/` folder will contain all minified JS/CSS, assets, fonts, and artwork content, ready for deployment.
 
 ## Setup
 
 1. Clone this repository
 2. Add your artwork assets:
-   - Place artwork images in `assets/` directory
-   - Place audio files in `assets/` directory
-   - Update the `artworkData` object in `js/app.js` with your content
+   - Place artwork images in `artworks/images/`
+   - Place audio files in `artworks/audio/`
+   - Add Markdown files to `artworks/content/` as described above
 
-### Artwork Data Structure
-
-Add your artwork information to the `artworkData` object in `js/app.js`:
-
-```javascript
-const artworkData = {
-    1: {
-        title: "Artwork Title",
-        description: "Artwork description",
-        image: "assets/artwork-1.jpg",
-        audio: "assets/audio-1.mp3"
-    },
-    // Add more artwork entries...
-};
-```
+> **Tip:** If you ever need to reset your dependencies, run:
+> ```bash
+> npm run clean
+> npm install
+> ```
 
 ## Deployment
 
@@ -110,11 +103,13 @@ To generate QR codes for your artworks:
 
 To run locally during development:
 
-1. Use a local web server (e.g., Python's built-in server):
+1. Run the Vite dev server:
    ```bash
-   python -m http.server 8000
+   npm run dev
    ```
-2. Open `http://localhost:8000` in your browser
+2. Open the local server URL (e.g., `http://localhost:5173`) in your browser
+
+> **Note:** Do not open HTML files directly in your browser; always use the Vite dev server for local development.
 
 ## Browser Support
 
@@ -138,16 +133,24 @@ The modular structure makes it easy to add new features:
 
 1. Modify the HTML in `index.html`
 2. Add corresponding styles in `css/styles.css`
-3. Extend the `AudioGuide` class in `js/app.js`
+3. Extend the `AudioGuideApp` class in `js/app.js`
 
 ## Build & Development Scripts
 
-- `npm run build` — Clean, generate index, copy and minify all assets, and prepare a deployable `public/` folder.
+- `npm run build` — Bundles and prepares a deployable `public/` folder using Vite.
 - `npm run build:all` — Clean, generate artwork images and audio files, then run the full build. Use this when you add or update artwork content.
 - `npm run generate-artwork-images` — Generate artwork images from metadata (for development/content updates).
 - `npm run generate-audio-files` — Generate audio files for artworks (requires OpenAI API key).
-- `npm run dev` — Build and serve the app locally for development.
-- `npm run watch` — Watch for changes in source/content files and automatically rebuild the app (use with `npm run serve` for live development).
-- `npm run browsersync` — Serve the app from the public folder with live reload on file changes (use with `npm run watch` for full live-reload development).
+- `npm run dev` — Serve the app locally for development with hot reload (Vite).
+- `npm run clean` — Remove the `public/` build output and reset for a fresh build.
 
-> For most development, use `npm run dev`. When adding new artworks or updating content, use `npm run build:all` to ensure all generated assets are up to date. For live-rebuilds, run `npm run watch` and `npm run browsersync` in parallel.
+> For most development, use `npm run dev`. When adding new artworks or updating content, use `npm run build:all` to ensure all generated assets are up to date.
+
+## Favicons & App Icons
+
+Favicons and app icons are included from the `assets/` folder and referenced in all HTML files:
+
+- `assets/icon-192.png` (192x192)
+- `assets/icon-512.png` (512x512)
+
+These are used for browser tabs, bookmarks, and PWA installation.

@@ -1,49 +1,10 @@
-/* Playfair Display - Regular */
-@font-face {
-    font-family: 'Playfair Display';
-    src: url('../fonts/playfair-display/PlayfairDisplay-Regular.woff2') format('woff2'),
-         url('../fonts/playfair-display/PlayfairDisplay-Regular.woff') format('woff');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-}
+@import '@fontsource/playfair-display/400.css';
+@import '@fontsource/playfair-display/700.css';
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/700.css';
 
-/* Playfair Display - Bold */
-@font-face {
-    font-family: 'Playfair Display';
-    src: url('../fonts/playfair-display/PlayfairDisplay-Bold.woff2') format('woff2'),
-         url('../fonts/playfair-display/PlayfairDisplay-Bold.woff') format('woff');
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap;
-}
+/* Only the required weights are imported for both fonts. Subset-specific imports are not available. */
 
-/* Inter - Regular */
-@font-face {
-    font-family: 'Inter';
-    src: url('../fonts/inter/Inter-Regular.woff2') format('woff2'),
-         url('../fonts/inter/Inter-Regular.woff') format('woff');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-}
+/* Playfair Display does not support subset-specific imports. Inter is optimized for Latin only. */
 
-/* Inter - Medium */
-@font-face {
-    font-family: 'Inter';
-    src: url('../fonts/inter/Inter-Medium.woff2') format('woff2'),
-         url('../fonts/inter/Inter-Medium.woff') format('woff');
-    font-weight: 500;
-    font-style: normal;
-    font-display: swap;
-}
-
-/* Inter - Bold */
-@font-face {
-    font-family: 'Inter';
-    src: url('../fonts/inter/Inter-Bold.woff2') format('woff2'),
-         url('../fonts/inter/Inter-Bold.woff') format('woff');
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap;
-} 
+/* Only Latin subset is included for optimal bundle size. */ 

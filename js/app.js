@@ -1,4 +1,10 @@
 import { initializeQRScanner } from './qr-scanner.js';
+import Swiper from 'swiper';
+import jsyaml from 'js-yaml';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
 class AudioGuideApp {
     constructor() {
