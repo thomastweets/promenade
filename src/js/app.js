@@ -6,6 +6,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import '../css/styles.css';
 
 class AudioGuideApp {
     constructor() {
@@ -756,7 +757,6 @@ class AudioGuideApp {
 
     updateContent(artwork) {
         const lang = getCurrentLang();
-        
         // Update main content with headphone icon
         document.getElementById('artwork-number').innerHTML = `
             <i class="fas fa-headphones"></i>
@@ -765,15 +765,21 @@ class AudioGuideApp {
         document.getElementById('artwork-title').textContent = artwork.title[lang];
         document.querySelector('.artist-name').textContent = artwork.artist;
         document.querySelector('.year-value').textContent = artwork.year;
-        document.getElementById('artwork-description').textContent = artwork.description[lang];
-        
+        // Render description with paragraphs and line breaks
+        const descRaw = artwork.description[lang] || '';
+        const descHtml = descRaw
+            .split(/\n\s*\n/)
+            .map(paragraph => paragraph.trim().replace(/\n/g, '<br>'))
+            .filter(Boolean)
+            .map(paragraph => `<p>${paragraph}</p>`)
+            .join('');
+        document.getElementById('artwork-description').innerHTML = descHtml;
         // Update audio player info with headphone icon
         document.querySelector('.audio-artwork-number').innerHTML = `
             <i class="fas fa-headphones"></i>
             ${artwork.id}
         `;
         document.querySelector('.audio-artwork-title').textContent = artwork.title[lang];
-
         // Update navigation numbers
         const prevNumber = (parseInt(artwork.id) - 1).toString().padStart(2, '0');
         const nextNumber = (parseInt(artwork.id) + 1).toString().padStart(2, '0');

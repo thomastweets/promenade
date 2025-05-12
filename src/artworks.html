@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-i18n="app.title">Audio Guide - All Artworks</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/fonts.css">
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="assets/icon-512.png">
@@ -28,6 +26,11 @@
                 </div>
             </div>
             <nav class="main-nav">
+                <button class="burger-menu" aria-label="Open navigation" aria-expanded="false">
+                    <span class="burger-bar"></span>
+                    <span class="burger-bar"></span>
+                    <span class="burger-bar"></span>
+                </button>
                 <div class="nav-links">
                     <a href="index.html" data-i18n="nav.home">Home</a>
                     <a href="artworks.html" class="active" data-i18n="nav.artworks">All Artworks</a>
@@ -56,6 +59,7 @@
     </div>
 
     <script type="module" src="js/app.js"></script>
+    <script type="module" src="js/shared.js"></script>
     <script type="module" src="js/artworks.js"></script>
 </body>
 </html> 

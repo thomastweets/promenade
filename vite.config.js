@@ -1,18 +1,17 @@
 import { defineConfig } from 'vite';
-import { viteStaticCopy } from 'vite-plugin-static-copy';
 import path from 'path';
 
 export default defineConfig({
-  root: '.',
+  root: 'src',
   build: {
-    outDir: 'public',
+    outDir: '../dist',
     emptyOutDir: true,
     rollupOptions: {
       input: {
-        main: path.resolve(__dirname, 'index.html'),
-        about: path.resolve(__dirname, 'about.html'),
-        artworks: path.resolve(__dirname, 'artworks.html'),
-        help: path.resolve(__dirname, 'help.html'),
+        main: path.resolve(__dirname, 'src/index.html'),
+        about: path.resolve(__dirname, 'src/about.html'),
+        artworks: path.resolve(__dirname, 'src/artworks.html'),
+        help: path.resolve(__dirname, 'src/help.html'),
       },
       output: {
         assetFileNames: 'assets/[name].[hash][extname]',
@@ -21,14 +20,14 @@ export default defineConfig({
       },
     },
   },
-  plugins: [
-    viteStaticCopy({
-      targets: [
-        { src: 'assets', dest: '' },
-        { src: 'artworks', dest: '' },
-        { src: 'css', dest: '' },
-      ],
-    }),
-  ],
-  publicDir: false, // We'll copy everything explicitly
+  publicDir: '../public', // Only for static files
+  server: {
+    watch: {
+      // Use polling to ensure changes in copied CSS are detected
+      usePolling: true,
+      interval: 100,
+    },
+    // Optional: open browser on start
+    // open: true,
+  },
 }); 

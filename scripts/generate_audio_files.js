@@ -20,15 +20,16 @@ const openai = new OpenAI({
 // Voice configuration using OpenAI voices
 const voices = {
     en: 'onyx',    // Clear, professional English voice
-    de: 'shimmer'  // Female voice that can handle German well
+    de: 'onyx'  // Female voice that can handle German well
 };
 
 async function generateAudioFile(text, outputPath, voice) {
     try {
         const mp3 = await openai.audio.speech.create({
-            model: 'tts-1',
+            model: 'gpt-4o-mini-tts',
             voice: voice,
             input: text,
+            instruction: "Lies den folgenden Text so, als wärst du die Stimme eines professionellen Audioguides in einer Kunstausstellung. Sprich ruhig, klar und mit einem leicht kontemplativen, respektvollen Ton. Lass Raum für Gedanken, vermeide übermäßige Dramatik, aber betone wichtige Wendepunkte oder Begriffe leicht. Ziel ist es, die Zuhörer:innen in die Atmosphäre des Kunstwerks eintauchen zu lassen, ohne zu überfordern oder zu langweilen.",
         });
 
         // Convert the response to buffer and save it

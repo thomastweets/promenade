@@ -1,3 +1,14 @@
+@import '@fontsource/playfair-display/400.css';
+@import '@fontsource/playfair-display/700.css';
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/700.css';
+
+/* Only the required weights are imported for both fonts. Subset-specific imports are not available. */
+
+/* Playfair Display does not support subset-specific imports. Inter is optimized for Latin only. */
+
+/* Only Latin subset is included for optimal bundle size. */ 
+
 :root {
     /* Light theme colors */
     --primary-color: #2563eb;
@@ -216,18 +227,84 @@ header {
     }
 
     .main-nav {
-        flex-direction: column;
-        gap: 1rem;
-        align-items: stretch;
+        position: relative;
+        z-index: 201;
     }
 
     .nav-links {
+        display: none;
         flex-direction: column;
+        gap: 0;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--surface-color);
+        box-shadow: var(--shadow-md);
+        z-index: 200;
+    }
+    .nav-links.show {
+        display: flex;
+    }
+    .burger-menu {
+        width: 36px;
+        height: 36px;
+        background: transparent !important;
+        border: none !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        z-index: 202;
+        position: relative;
+        padding: 0;
+        transition: background 0.2s;
+    }
+    .burger-menu:hover, .burger-menu:focus {
+        background: rgba(0,0,0,0.04);
+    }
+    .burger-bar {
+        width: 42px;
+        height: 4px;
+        min-height: 3px;
+        background: var(--text-color);
+        margin: 1px 0;
+        border-radius: 2px;
+        transition: all 0.3s;
+        box-shadow: 0 1px 1px rgba(0,0,0,0.04);
     }
 
     .artwork-menu-toggle {
         width: 100%;
         justify-content: center;
+    }
+
+    .artwork-swiper {
+        position: relative;
+        z-index: 201;
+    }
+
+    .audio-player-sticky {
+        z-index: 10;
+    }
+
+    header {
+        overflow: visible !important;
+    }
+}
+
+@media (min-width: 769px) {
+    .burger-menu {
+        display: none !important;
+    }
+    .nav-links {
+        display: flex !important;
+        position: static;
+        flex-direction: row;
+        gap: 0.5rem;
+        background: none;
+        box-shadow: none;
     }
 }
 
@@ -501,6 +578,7 @@ main {
     z-index: 100;
     backdrop-filter: blur(10px);
     display: none; /* Hidden by default */
+    pointer-events: none;
 }
 
 .audio-player-sticky.show {
@@ -513,6 +591,7 @@ main {
     display: flex;
     flex-direction: column;
     gap: 12px;
+    pointer-events: auto;
 }
 
 .audio-player-info {
@@ -1358,4 +1437,4 @@ body.has-artwork .artwork-menu-toggle {
     display: inline-flex;
     align-items: center;
     gap: 0.5em;
-} 
+}

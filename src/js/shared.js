@@ -8,9 +8,14 @@ class SharedUI {
     }
 
     initializeElements() {
-        this.themeToggle = document.getElementById('themeToggle');
-        this.lightIcon = this.themeToggle.querySelector('.light-icon');
-        this.darkIcon = this.themeToggle.querySelector('.dark-icon');
+        this.themeToggle = document.querySelector('.theme-toggle');
+        if (this.themeToggle) {
+            this.lightIcon = this.themeToggle.querySelector('.light-icon');
+            this.darkIcon = this.themeToggle.querySelector('.dark-icon');
+        } else {
+            this.lightIcon = null;
+            this.darkIcon = null;
+        }
     }
 
     bindEvents() {
@@ -35,13 +40,26 @@ class SharedUI {
         document.documentElement.setAttribute('data-theme', this.theme);
         
         // Update icons based on current theme
-        const isDark = this.theme === 'dark';
-        this.lightIcon.classList.toggle('active', !isDark);
-        this.darkIcon.classList.toggle('active', isDark);
+        if (this.lightIcon && this.darkIcon) {
+            const isDark = this.theme === 'dark';
+            this.lightIcon.classList.toggle('active', !isDark);
+            this.darkIcon.classList.toggle('active', isDark);
+        }
     }
 }
 
 // Initialize shared UI when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     window.sharedUI = new SharedUI();
+
+    // Burger menu toggle logic
+    const burger = document.querySelector('.burger-menu');
+    const navLinks = document.querySelector('.nav-links');
+    if (burger && navLinks) {
+        burger.addEventListener('click', () => {
+            const expanded = burger.getAttribute('aria-expanded') === 'true';
+            burger.setAttribute('aria-expanded', !expanded);
+            navLinks.classList.toggle('show');
+        });
+    }
 }); 
