@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const yaml = require('js-yaml');
 
-const contentDir = path.join(__dirname, '..', 'artworks', 'content');
+const contentDir = path.join(__dirname, '..', 'public', 'artworks', 'content');
 const outputFile = path.join(contentDir, 'index.json');
 
 // Read all markdown files

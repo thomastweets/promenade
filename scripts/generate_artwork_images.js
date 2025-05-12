@@ -4,7 +4,7 @@ const path = require('path');
 const yaml = require('js-yaml');
 
 // Create images directory if it doesn't exist
-const imagesDir = path.join(__dirname, '../artworks/images');
+const imagesDir = path.join(__dirname, '../public/artworks/images');
 if (!fs.existsSync(imagesDir)) {
     fs.mkdirSync(imagesDir, { recursive: true });
 }
@@ -84,7 +84,7 @@ function createArtworkImage(artwork, imageName, style = 'main') {
 }
 
 // Process each artwork markdown file
-const contentDir = path.join(__dirname, '../artworks/content');
+const contentDir = path.join(__dirname, '../public/artworks/content');
 fs.readdirSync(contentDir)
     .filter(file => file.endsWith('.md'))
     .forEach(file => {

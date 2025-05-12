@@ -4,13 +4,13 @@ const fs = require('fs');
 const path = require('path');
 
 // Create audio directory if it doesn't exist
-const audioDir = path.join(__dirname, '../artworks/audio');
+const audioDir = path.join(__dirname, '../public/artworks/audio');
 if (!fs.existsSync(audioDir)) {
     fs.mkdirSync(audioDir, { recursive: true });
 }
 
 // Load artwork data
-const artworkData = require('../artworks/content/index.json');
+const artworkData = require('../public/artworks/content/index.json');
 
 // Initialize OpenAI client
 const openai = new OpenAI({
