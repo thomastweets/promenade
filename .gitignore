@@ -1,10 +1,9 @@
 .env
-artworks/audio/*
-artworks/content/*
-!artworks/content/example
-artworks/images/*
-fonts/*
+dist/*
+public/artworks/audio/*
+public/artworks/content/*
+!public/artworks/content/example
+public/artworks/images/*
 node_modules
-public/*
 
 !/**/.gitkeep
