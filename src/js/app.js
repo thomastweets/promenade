@@ -984,19 +984,54 @@ function updateExhibitionUI() {
         if (!logoImg) {
             logoImg = document.createElement('img');
             logoImg.className = 'exhibition-logo';
-            const headerContent = document.querySelector('.header-content');
-            if (headerContent) headerContent.insertBefore(logoImg, headerContent.firstChild);
         }
         logoImg.src = config.logo;
         logoImg.alt = config.title && config.title[lang] ? config.title[lang] : 'Logo';
-        logoImg.style.maxHeight = '48px';
-        logoImg.style.marginRight = '1rem';
+        logoImg.style.maxHeight = '80px';
+        logoImg.style.marginRight = '0';
+        const logoContainer = document.querySelector('.header-logo');
+        if (logoContainer && !logoContainer.contains(logoImg)) {
+            logoContainer.innerHTML = '';
+            logoContainer.appendChild(logoImg);
+        }
     }
     // Title in header
     if (config.title && config.title[lang]) {
         const h1 = document.querySelector('h1[data-i18n="app.title"]');
         if (h1) h1.textContent = config.title[lang];
         document.title = config.title[lang];
+        // Subtitle
+        let subtitleElem = document.querySelector('.exhibition-subtitle');
+        if (!subtitleElem) {
+            subtitleElem = document.createElement('div');
+            subtitleElem.className = 'exhibition-subtitle';
+            const h1 = document.querySelector('h1[data-i18n="app.title"]');
+            if (h1 && h1.parentElement) h1.parentElement.insertBefore(subtitleElem, h1.nextSibling);
+        }
+        if (config.subtitle && config.subtitle[lang]) {
+            subtitleElem.textContent = config.subtitle[lang];
+            subtitleElem.style.display = '';
+        } else {
+            subtitleElem.style.display = 'none';
+        }
+        // Inject subtitle style if not present
+        if (!document.getElementById('exhibition-subtitle-style')) {
+            const style = document.createElement('style');
+            style.id = 'exhibition-subtitle-style';
+            style.textContent = `
+                .exhibition-subtitle {
+                    display: block;
+                    font-size: 1.1rem;
+                    color: var(--text-secondary, #bfc9db);
+                    margin-top: 0.3em;
+                    margin-bottom: 0.5em;
+                    font-weight: 400;
+                    letter-spacing: 0.01em;
+                    text-align: center;
+                }
+            `;
+            document.head.appendChild(style);
+        }
     }
     // Only render start page intro on index.html
     if (window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname === '') {

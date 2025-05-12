@@ -2,6 +2,9 @@
 title:
   de: "Beispielausstellung: Moderne Kunst"
   en: "Sample Exhibition: Modern Art"
+subtitle:
+  de: "Eine Reise durch zeitgenössische Kreativität"
+  en: "A Journey Through Contemporary Creativity"
 start_page:
   heading:
     de: "Willkommen zur Ausstellung"
@@ -21,7 +24,7 @@ vita:
       Max Mustermann, geboren 1970 in Berlin, ist ein international anerkannter Künstler. Seine Werke wurden weltweit ausgestellt.
     en: |
       Max Mustermann, born 1970 in Berlin, is an internationally recognized artist. His works have been exhibited worldwide.
-  artist_photo: "/assets/artist-photo.jpg"
+  artist_photo: "/assets/custom/artist-photo.jpg"
 organisation:
   name:
     de: "Museum Beispiel"
@@ -45,5 +48,5 @@ footer:
   text:
     de: "© 2024 Museum Beispiel. Alle Rechte vorbehalten."
     en: "© 2024 Example Museum. All rights reserved."
-logo: "/assets/logo.png"
+logo: "/assets/custom/logo.png"
 --- 

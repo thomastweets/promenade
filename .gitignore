@@ -4,6 +4,7 @@ public/exhibition.md
 public/artworks/audio/*
 public/artworks/content/*
 public/artworks/images/*
+public/assets/custom/*
 node_modules
 
 !/**/.gitkeep
