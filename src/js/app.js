@@ -717,6 +717,14 @@ class AudioGuideApp {
                             <i class="fas fa-calendar-alt"></i>
                             <span class="year-value"></span>
                         </span>
+                        <span id="artwork-dimensions" style="display:none">
+                            <i class="fas fa-ruler-combined"></i>
+                            <span class="dimensions-value"></span>
+                        </span>
+                        <span id="artwork-material" style="display:none">
+                            <i class="fas fa-cube"></i>
+                            <span class="material-value"></span>
+                        </span>
                     </div>
                     <p id="artwork-description"></p>
                 </div>
@@ -787,6 +795,23 @@ class AudioGuideApp {
         const nextElement = document.querySelector('.next-artwork-number');
         if (prevElement) prevElement.innerHTML = `<i class='fas fa-headphones'></i> ${prevNumber}`;
         if (nextElement) nextElement.innerHTML = `<i class='fas fa-headphones'></i> ${nextNumber}`;
+        // Dimensions
+        const dimElem = document.getElementById('artwork-dimensions');
+        if (artwork.dimensions) {
+            dimElem.style.display = '';
+            dimElem.querySelector('.dimensions-value').textContent = artwork.dimensions;
+        } else {
+            dimElem.style.display = 'none';
+        }
+        // Material (i18n)
+        const matElem = document.getElementById('artwork-material');
+        const langMat = artwork.material && artwork.material[lang];
+        if (langMat) {
+            matElem.style.display = '';
+            matElem.querySelector('.material-value').textContent = langMat;
+        } else {
+            matElem.style.display = 'none';
+        }
     }
 
     updateNavigationState() {
