@@ -761,6 +761,22 @@ class AudioGuideApp {
             console.warn('Auto-play failed:', error);
             document.querySelector('.audio-play-pause').innerHTML = '<i class="fas fa-play"></i>';
         });
+
+        // Hide exhibition blocks if artwork detail is shown
+        const exhibitionBlocks = document.querySelectorAll('.exhibition-block');
+        const artworkContent = document.getElementById('artwork-content');
+        if (artworkContent && !artworkContent.classList.contains('hidden')) {
+            exhibitionBlocks.forEach(block => block.style.display = 'none');
+        } else {
+            exhibitionBlocks.forEach(block => block.style.display = '');
+        }
+        // Ensure audio player is always clickable
+        const audioPlayer = document.getElementById('audio-player');
+        if (audioPlayer) {
+            audioPlayer.style.pointerEvents = 'auto';
+            const playerContent = audioPlayer.querySelector('.audio-player-content');
+            if (playerContent) playerContent.style.pointerEvents = 'auto';
+        }
     }
 
     updateContent(artwork) {
@@ -940,11 +956,6 @@ class AudioGuideApp {
     }
 }
 
-// Initialize the app when the DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    new AudioGuideApp();
-});
-
 // Helper to safely get the current language
 function getCurrentLang() {
     return (window.i18n && window.i18n.currentLang) ? window.i18n.currentLang : 'de';
@@ -973,6 +984,17 @@ window.addEventListener('DOMContentLoaded', async () => {
     await loadExhibitionConfig();
     updateExhibitionUI();
     new AudioGuideApp();
+});
+
+// Update exhibition config-driven UI on language change
+window.addEventListener('languageChanged', () => {
+    updateExhibitionUI();
+    // Update input tab buttons for number and QR scanner
+    const numpadBtn = document.querySelector('.input-tab[data-input="numpad"] span');
+    const qrBtn = document.querySelector('.input-tab[data-input="qr"] span');
+    if (numpadBtn) numpadBtn.textContent = window.i18n.getTranslation('input.numpad');
+    if (qrBtn) qrBtn.textContent = window.i18n.getTranslation('input.qr');
+    updateExhibitionBlockVisibility();
 });
 
 function updateExhibitionUI() {
@@ -1042,12 +1064,14 @@ function updateExhibitionUI() {
             if (!introHeading) {
                 introHeading = document.createElement('h2');
                 introHeading.id = 'exhibition-intro-heading';
+                introHeading.className = 'exhibition-block';
                 const main = document.querySelector('main');
                 if (main) main.insertBefore(introHeading, main.firstChild);
             }
             if (!introText) {
                 introText = document.createElement('div');
                 introText.id = 'exhibition-intro-text';
+                introText.className = 'exhibition-block';
                 const main = document.querySelector('main');
                 if (main) main.insertBefore(introText, introHeading.nextSibling);
             }
@@ -1070,6 +1094,67 @@ function updateExhibitionUI() {
         let introText = document.getElementById('exhibition-intro-text');
         if (introHeading) introHeading.remove();
         if (introText) introText.remove();
+    }
+
+    // Vita (artist bio) section for homepage (index.html)
+    if (window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname === '') {
+        if (config.vita && config.vita.enabled && config.vita.text && config.vita.text[lang]) {
+            let main = document.querySelector('main');
+            let vitaSection = document.getElementById('vita-section');
+            if (!vitaSection) {
+                vitaSection = document.createElement('div');
+                vitaSection.className = 'content-section exhibition-block';
+                vitaSection.id = 'vita-section';
+                // Insert after the start page intro
+                const introText = document.getElementById('exhibition-intro-text');
+                if (introText && introText.parentElement) {
+                    introText.parentElement.insertBefore(vitaSection, introText.nextSibling);
+                } else if (main) {
+                    main.insertBefore(vitaSection, main.firstChild);
+                }
+            }
+            let heading = config.vita.heading && config.vita.heading[lang] ? config.vita.heading[lang] : '';
+            let photoHtml = '';
+            if (config.vita.artist_photo) {
+                photoHtml = `<img src="${config.vita.artist_photo}" alt="Artist photo" class="vita-artist-photo">`;
+            }
+            vitaSection.innerHTML = `
+                <h2><i class="fas fa-user"></i> ${heading}</h2>
+                <div class="vita-bio-flex">
+                    ${photoHtml}
+                    <div class="vita-text">${config.vita.text[lang].replace(/\n/g, '<br>')}</div>
+                </div>
+            `;
+            // Inject style for artist photo if not present
+            if (!document.getElementById('vita-photo-style')) {
+                const style = document.createElement('style');
+                style.id = 'vita-photo-style';
+                style.textContent = `
+                    .vita-bio-flex { display: flex; align-items: flex-start; gap: 2rem; flex-wrap: wrap; }
+                    .vita-artist-photo {
+                        width: 120px;
+                        height: 120px;
+                        object-fit: cover;
+                        border-radius: 50%;
+                        box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+                        margin-bottom: 1rem;
+                    }
+                    @media (max-width: 600px) {
+                        .vita-bio-flex { flex-direction: column; align-items: center; gap: 1rem; }
+                        .vita-artist-photo { width: 90px; height: 90px; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+        } else {
+            // Remove vita section if not enabled or missing
+            let vitaSection = document.getElementById('vita-section');
+            if (vitaSection) vitaSection.remove();
+        }
+    } else {
+        // Remove vita section from non-home pages
+        let vitaSection = document.getElementById('vita-section');
+        if (vitaSection) vitaSection.remove();
     }
 
     // Footer injection (with styling)
@@ -1200,57 +1285,15 @@ function updateExhibitionUI() {
             root.style.setProperty('--secondary-color', config.theme.color_secondary);
         }
     }
+    updateExhibitionBlockVisibility();
+}
 
-    // Vita (artist bio) section for about page
-    if (window.location.pathname.endsWith('about.html')) {
-        if (config.vita && config.vita.enabled && config.vita.text && config.vita.text[lang]) {
-            let main = document.querySelector('main.content-page');
-            if (main) {
-                let vitaSection = document.getElementById('vita-section');
-                if (!vitaSection) {
-                    vitaSection = document.createElement('div');
-                    vitaSection.className = 'content-section';
-                    vitaSection.id = 'vita-section';
-                    main.insertBefore(vitaSection, main.firstChild);
-                }
-                let heading = config.vita.heading && config.vita.heading[lang] ? config.vita.heading[lang] : '';
-                let photoHtml = '';
-                if (config.vita.artist_photo) {
-                    photoHtml = `<img src="${config.vita.artist_photo}" alt="Artist photo" class="vita-artist-photo">`;
-                }
-                vitaSection.innerHTML = `
-                    <h2><i class="fas fa-user"></i> ${heading}</h2>
-                    <div class="vita-bio-flex">
-                        ${photoHtml}
-                        <div class="vita-text">${config.vita.text[lang].replace(/\n/g, '<br>')}</div>
-                    </div>
-                `;
-                // Inject style for artist photo if not present
-                if (!document.getElementById('vita-photo-style')) {
-                    const style = document.createElement('style');
-                    style.id = 'vita-photo-style';
-                    style.textContent = `
-                        .vita-bio-flex { display: flex; align-items: flex-start; gap: 2rem; flex-wrap: wrap; }
-                        .vita-artist-photo {
-                            width: 120px;
-                            height: 120px;
-                            object-fit: cover;
-                            border-radius: 50%;
-                            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-                            margin-bottom: 1rem;
-                        }
-                        @media (max-width: 600px) {
-                            .vita-bio-flex { flex-direction: column; align-items: center; gap: 1rem; }
-                            .vita-artist-photo { width: 90px; height: 90px; }
-                        }
-                    `;
-                    document.head.appendChild(style);
-                }
-            }
-        } else {
-            // Remove vita section if not enabled or missing
-            let vitaSection = document.getElementById('vita-section');
-            if (vitaSection) vitaSection.remove();
-        }
+function updateExhibitionBlockVisibility() {
+    const exhibitionBlocks = document.querySelectorAll('.exhibition-block');
+    const artworkContent = document.getElementById('artwork-content');
+    if (artworkContent && !artworkContent.classList.contains('hidden')) {
+        exhibitionBlocks.forEach(block => block.style.display = 'none');
+    } else {
+        exhibitionBlocks.forEach(block => block.style.display = '');
     }
 } 

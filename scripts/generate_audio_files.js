@@ -19,8 +19,8 @@ const openai = new OpenAI({
 
 // Voice configuration using OpenAI voices
 const voices = {
-    en: 'onyx',    // Clear, professional English voice
-    de: 'onyx'  // Female voice that can handle German well
+    en: 'coral',
+    de: 'coral'
 };
 
 async function generateAudioFile(text, outputPath, voice) {
@@ -29,7 +29,7 @@ async function generateAudioFile(text, outputPath, voice) {
             model: 'gpt-4o-mini-tts',
             voice: voice,
             input: text,
-            instruction: "Lies den folgenden Text so, als wärst du die Stimme eines professionellen Audioguides in einer Kunstausstellung. Sprich ruhig, klar und mit einem leicht kontemplativen, respektvollen Ton. Lass Raum für Gedanken, vermeide übermäßige Dramatik, aber betone wichtige Wendepunkte oder Begriffe leicht. Ziel ist es, die Zuhörer:innen in die Atmosphäre des Kunstwerks eintauchen zu lassen, ohne zu überfordern oder zu langweilen.",
+            instruction: "Voice Affect: Warm, introspective, and subtly expressive; convey presence and quiet intensity.\n\nTone: Calm and thoughtful, with a gentle sense of reverence — as if guiding the listener through a space filled with meaning.\n\nPacing: Measured and steady, with slight variations to mirror the rhythm of reflection and movement within the artworks.\n\nEmotion: Emotionally resonant but never sentimental — allow a hint of wonder, curiosity, or vulnerability where appropriate.\n\nEmphasis: Highlight philosophical contrasts and key metaphors (\"fragility and flow,\" \"silenced or liberated,\" \"movement frozen in form\") to deepen listener engagement.\n\nPronunciation: Clear and precise, with naturally flowing articulation. Avoid stiffness; let the language breathe.\n\nPauses: Use deliberate pauses after interpretive insights or at shifts in tone to give listeners space for contemplation.",
         });
 
         // Convert the response to buffer and save it
@@ -47,7 +47,7 @@ async function generateAudioForArtwork(artwork) {
     
     for (const lang of languages) {
         const outputPath = path.join(audioDir, `${artwork.id}-${lang}.mp3`);
-        const text = `${artwork.title[lang]}. ${artwork.description[lang]}`;
+        const text = `${artwork.description[lang]}`;
         await generateAudioFile(text, outputPath, voices[lang]);
         
         // Add a small delay between requests to avoid rate limiting
