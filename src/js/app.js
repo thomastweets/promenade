@@ -948,4 +948,274 @@ document.addEventListener('DOMContentLoaded', () => {
 // Helper to safely get the current language
 function getCurrentLang() {
     return (window.i18n && window.i18n.currentLang) ? window.i18n.currentLang : 'de';
+}
+
+// Load and parse exhibition config from public/exhibition.md
+async function loadExhibitionConfig() {
+    try {
+        const response = await fetch('/exhibition.md');
+        if (!response.ok) throw new Error('Exhibition config not found');
+        const text = await response.text();
+        const match = text.match(/^---\n([\s\S]*?)\n---/);
+        if (!match) throw new Error('Invalid exhibition config format');
+        const config = jsyaml.load(match[1]);
+        window.exhibitionConfig = config;
+        return config;
+    } catch (e) {
+        console.error('Failed to load exhibition config:', e);
+        window.exhibitionConfig = {};
+        return {};
+    }
+}
+
+// Wait for config before initializing the app
+window.addEventListener('DOMContentLoaded', async () => {
+    await loadExhibitionConfig();
+    updateExhibitionUI();
+    new AudioGuideApp();
+});
+
+function updateExhibitionUI() {
+    const config = window.exhibitionConfig || {};
+    const lang = getCurrentLang();
+    // Logo
+    if (config.logo) {
+        let logoImg = document.querySelector('.exhibition-logo');
+        if (!logoImg) {
+            logoImg = document.createElement('img');
+            logoImg.className = 'exhibition-logo';
+            const headerContent = document.querySelector('.header-content');
+            if (headerContent) headerContent.insertBefore(logoImg, headerContent.firstChild);
+        }
+        logoImg.src = config.logo;
+        logoImg.alt = config.title && config.title[lang] ? config.title[lang] : 'Logo';
+        logoImg.style.maxHeight = '48px';
+        logoImg.style.marginRight = '1rem';
+    }
+    // Title in header
+    if (config.title && config.title[lang]) {
+        const h1 = document.querySelector('h1[data-i18n="app.title"]');
+        if (h1) h1.textContent = config.title[lang];
+        document.title = config.title[lang];
+    }
+    // Only render start page intro on index.html
+    if (window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname === '') {
+        // Start page heading and text
+        if (config.start_page) {
+            let introHeading = document.getElementById('exhibition-intro-heading');
+            let introText = document.getElementById('exhibition-intro-text');
+            if (!introHeading) {
+                introHeading = document.createElement('h2');
+                introHeading.id = 'exhibition-intro-heading';
+                const main = document.querySelector('main');
+                if (main) main.insertBefore(introHeading, main.firstChild);
+            }
+            if (!introText) {
+                introText = document.createElement('div');
+                introText.id = 'exhibition-intro-text';
+                const main = document.querySelector('main');
+                if (main) main.insertBefore(introText, introHeading.nextSibling);
+            }
+            if (config.start_page.heading && config.start_page.heading[lang]) {
+                introHeading.textContent = config.start_page.heading[lang];
+                introHeading.style.display = '';
+            } else {
+                introHeading.style.display = 'none';
+            }
+            if (config.start_page.text && config.start_page.text[lang]) {
+                introText.innerHTML = config.start_page.text[lang].replace(/\n/g, '<br>');
+                introText.style.display = '';
+            } else {
+                introText.style.display = 'none';
+            }
+        }
+    } else {
+        // Remove start page intro if present on other pages
+        let introHeading = document.getElementById('exhibition-intro-heading');
+        let introText = document.getElementById('exhibition-intro-text');
+        if (introHeading) introHeading.remove();
+        if (introText) introText.remove();
+    }
+
+    // Footer injection (with styling)
+    let footer = document.querySelector('footer.exhibition-footer');
+    if (!footer) {
+        footer = document.createElement('footer');
+        footer.className = 'exhibition-footer';
+        const appDiv = document.querySelector('.app');
+        if (appDiv) appDiv.appendChild(footer);
+    }
+    let html = '';
+    // Organisation name and homepage
+    if (config.organisation && config.organisation.name && config.organisation.name[lang]) {
+        if (config.organisation.homepage) {
+            html += `<div class="org"><a href="${config.organisation.homepage}" target="_blank" rel="noopener">${config.organisation.name[lang]}</a></div>`;
+        } else {
+            html += `<div class="org">${config.organisation.name[lang]}</div>`;
+        }
+    }
+    // Dates
+    if (config.dates && (config.dates.start || config.dates.end)) {
+        html += '<div class="dates">';
+        if (config.dates.start) html += `<span class="date-start">${config.dates.start}</span>`;
+        if (config.dates.start && config.dates.end) html += ' – ';
+        if (config.dates.end) html += `<span class="date-end">${config.dates.end}</span>`;
+        html += '</div>';
+    }
+    // Contact info
+    if (config.organisation && config.organisation.contact && (config.organisation.contact.email || config.organisation.contact.phone)) {
+        html += '<div class="contact">';
+        if (config.organisation.contact.email) html += `<a href="mailto:${config.organisation.contact.email}"><i class="fas fa-envelope"></i> ${config.organisation.contact.email}</a> `;
+        if (config.organisation.contact.phone) html += `<span><i class="fas fa-phone"></i> ${config.organisation.contact.phone}</span>`;
+        html += '</div>';
+    }
+    // Social links
+    if (config.organisation && config.organisation.social) {
+        const social = config.organisation.social;
+        const icons = { twitter: 'fab fa-twitter', instagram: 'fab fa-instagram', facebook: 'fab fa-facebook' };
+        const links = Object.entries(icons)
+            .filter(([key]) => social[key])
+            .map(([key, icon]) => `<a href="${social[key]}" target="_blank" rel="noopener"><i class="${icon}"></i></a>`)
+            .join(' ');
+        if (links) html += `<div class="social">${links}</div>`;
+    }
+    // Footer text
+    if (config.footer && config.footer.text && config.footer.text[lang]) {
+        html += `<div class="footer-text">${config.footer.text[lang]}</div>`;
+    }
+    footer.innerHTML = html;
+    // Inject footer styles if not present
+    if (!document.getElementById('exhibition-footer-style')) {
+        const style = document.createElement('style');
+        style.id = 'exhibition-footer-style';
+        style.textContent = `
+        .exhibition-footer {
+            background: var(--bg-secondary, #222c3a);
+            color: var(--text-secondary, #bfc9db);
+            border-top: 1px solid var(--border-color, #334);
+            padding: 2rem 1rem 1.5rem 1rem;
+            margin-top: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem 2.5rem;
+            justify-content: center;
+            align-items: flex-start;
+            font-size: 1rem;
+        }
+        .exhibition-footer .org, .exhibition-footer .dates, .exhibition-footer .contact, .exhibition-footer .social, .exhibition-footer .footer-text {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .exhibition-footer .org a {
+            color: var(--primary-color, #0055a5);
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .exhibition-footer .org a:hover {
+            text-decoration: underline;
+        }
+        .exhibition-footer .social a {
+            color: var(--primary-color, #0055a5);
+            font-size: 1.3em;
+            margin-right: 0.5em;
+        }
+        .exhibition-footer .social a:last-child {
+            margin-right: 0;
+        }
+        .exhibition-footer .contact a, .exhibition-footer .contact span {
+            color: inherit;
+            text-decoration: none;
+            margin-right: 1em;
+        }
+        .exhibition-footer .contact a:hover {
+            text-decoration: underline;
+        }
+        .exhibition-footer .footer-text {
+            flex-basis: 100%;
+            justify-content: center;
+            text-align: center;
+            margin-top: 0.5rem;
+            color: var(--text-secondary, #bfc9db);
+            font-size: 0.95em;
+        }
+        @media (max-width: 600px) {
+            .exhibition-footer {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.5rem;
+                padding: 1.2rem 0.5rem 1rem 0.5rem;
+            }
+            .exhibition-footer .footer-text {
+                margin-top: 1rem;
+            }
+        }
+        `;
+        document.head.appendChild(style);
+    }
+
+    // Theme colors
+    if (config.theme) {
+        const root = document.documentElement;
+        if (config.theme.color_primary) {
+            root.style.setProperty('--primary-color', config.theme.color_primary);
+        }
+        if (config.theme.color_secondary) {
+            root.style.setProperty('--secondary-color', config.theme.color_secondary);
+        }
+    }
+
+    // Vita (artist bio) section for about page
+    if (window.location.pathname.endsWith('about.html')) {
+        if (config.vita && config.vita.enabled && config.vita.text && config.vita.text[lang]) {
+            let main = document.querySelector('main.content-page');
+            if (main) {
+                let vitaSection = document.getElementById('vita-section');
+                if (!vitaSection) {
+                    vitaSection = document.createElement('div');
+                    vitaSection.className = 'content-section';
+                    vitaSection.id = 'vita-section';
+                    main.insertBefore(vitaSection, main.firstChild);
+                }
+                let heading = config.vita.heading && config.vita.heading[lang] ? config.vita.heading[lang] : '';
+                let photoHtml = '';
+                if (config.vita.artist_photo) {
+                    photoHtml = `<img src="${config.vita.artist_photo}" alt="Artist photo" class="vita-artist-photo">`;
+                }
+                vitaSection.innerHTML = `
+                    <h2><i class="fas fa-user"></i> ${heading}</h2>
+                    <div class="vita-bio-flex">
+                        ${photoHtml}
+                        <div class="vita-text">${config.vita.text[lang].replace(/\n/g, '<br>')}</div>
+                    </div>
+                `;
+                // Inject style for artist photo if not present
+                if (!document.getElementById('vita-photo-style')) {
+                    const style = document.createElement('style');
+                    style.id = 'vita-photo-style';
+                    style.textContent = `
+                        .vita-bio-flex { display: flex; align-items: flex-start; gap: 2rem; flex-wrap: wrap; }
+                        .vita-artist-photo {
+                            width: 120px;
+                            height: 120px;
+                            object-fit: cover;
+                            border-radius: 50%;
+                            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+                            margin-bottom: 1rem;
+                        }
+                        @media (max-width: 600px) {
+                            .vita-bio-flex { flex-direction: column; align-items: center; gap: 1rem; }
+                            .vita-artist-photo { width: 90px; height: 90px; }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
+            }
+        } else {
+            // Remove vita section if not enabled or missing
+            let vitaSection = document.getElementById('vita-section');
+            if (vitaSection) vitaSection.remove();
+        }
+    }
 } 

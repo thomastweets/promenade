@@ -1,8 +1,8 @@
 .env
 dist/*
+public/exhibition.md
 public/artworks/audio/*
 public/artworks/content/*
-!public/artworks/content/example
 public/artworks/images/*
 node_modules
 

@@ -10,7 +10,8 @@
     "build": "vite build",
     "build:all": "npm run clean && npm run generate-artwork-images && npm run generate-audio-files && npm run build",
     "dev": "vite",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "copy-fixtures": "node scripts/copy-fixtures.js"
   },
   "dependencies": {
     "@fontsource/inter": "^5.2.5",
