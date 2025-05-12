@@ -36,6 +36,7 @@ organisation:
   social:
     twitter: "https://twitter.com/examplemuseum"
     instagram: "https://instagram.com/examplemuseum"
+    instagram_handle: "@instagram_handle"
     facebook: "https://facebook.com/examplemuseum"
 dates:
   start: "2024-09-01"

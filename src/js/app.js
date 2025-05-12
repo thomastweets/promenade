@@ -1059,41 +1059,29 @@ function updateExhibitionUI() {
     if (window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname === '') {
         // Start page heading and text
         if (config.start_page) {
-            let introHeading = document.getElementById('exhibition-intro-heading');
-            let introText = document.getElementById('exhibition-intro-text');
-            if (!introHeading) {
-                introHeading = document.createElement('h2');
-                introHeading.id = 'exhibition-intro-heading';
-                introHeading.className = 'exhibition-block';
+            let introBlock = document.getElementById('exhibition-intro-block');
+            if (!introBlock) {
+                introBlock = document.createElement('div');
+                introBlock.className = 'exhibition-block';
+                introBlock.id = 'exhibition-intro-block';
                 const main = document.querySelector('main');
-                if (main) main.insertBefore(introHeading, main.firstChild);
+                if (main) main.insertBefore(introBlock, main.firstChild);
             }
-            if (!introText) {
-                introText = document.createElement('div');
-                introText.id = 'exhibition-intro-text';
-                introText.className = 'exhibition-block';
-                const main = document.querySelector('main');
-                if (main) main.insertBefore(introText, introHeading.nextSibling);
-            }
+            let headingHtml = '';
             if (config.start_page.heading && config.start_page.heading[lang]) {
-                introHeading.textContent = config.start_page.heading[lang];
-                introHeading.style.display = '';
-            } else {
-                introHeading.style.display = 'none';
+                headingHtml = `<h2>${config.start_page.heading[lang]}</h2>`;
             }
+            let textHtml = '';
             if (config.start_page.text && config.start_page.text[lang]) {
-                introText.innerHTML = config.start_page.text[lang].replace(/\n/g, '<br>');
-                introText.style.display = '';
-            } else {
-                introText.style.display = 'none';
+                textHtml = `<div>${config.start_page.text[lang].replace(/\n/g, '<br>')}</div>`;
             }
+            introBlock.innerHTML = `${headingHtml}${textHtml}`;
+            introBlock.style.display = (headingHtml || textHtml) ? '' : 'none';
         }
     } else {
         // Remove start page intro if present on other pages
-        let introHeading = document.getElementById('exhibition-intro-heading');
-        let introText = document.getElementById('exhibition-intro-text');
-        if (introHeading) introHeading.remove();
-        if (introText) introText.remove();
+        let introBlock = document.getElementById('exhibition-intro-block');
+        if (introBlock) introBlock.remove();
     }
 
     // Vita (artist bio) section for homepage (index.html)
@@ -1105,10 +1093,10 @@ function updateExhibitionUI() {
                 vitaSection = document.createElement('div');
                 vitaSection.className = 'content-section exhibition-block';
                 vitaSection.id = 'vita-section';
-                // Insert after the start page intro
-                const introText = document.getElementById('exhibition-intro-text');
-                if (introText && introText.parentElement) {
-                    introText.parentElement.insertBefore(vitaSection, introText.nextSibling);
+                // Insert after the intro block if it exists
+                const introBlock = document.getElementById('exhibition-intro-block');
+                if (introBlock && introBlock.parentElement) {
+                    introBlock.parentElement.insertBefore(vitaSection, introBlock.nextSibling);
                 } else if (main) {
                     main.insertBefore(vitaSection, main.firstChild);
                 }
@@ -1193,11 +1181,19 @@ function updateExhibitionUI() {
     if (config.organisation && config.organisation.social) {
         const social = config.organisation.social;
         const icons = { twitter: 'fab fa-twitter', instagram: 'fab fa-instagram', facebook: 'fab fa-facebook' };
-        const links = Object.entries(icons)
-            .filter(([key]) => social[key])
-            .map(([key, icon]) => `<a href="${social[key]}" target="_blank" rel="noopener"><i class="${icon}"></i></a>`)
-            .join(' ');
-        if (links) html += `<div class="social">${links}</div>`;
+        let links = '';
+        Object.entries(icons).forEach(([key, icon]) => {
+            if (social[key]) {
+                if (key === 'instagram') {
+                    // Show Instagram icon and handle
+                    const handle = config.organisation.social.instagram_handle ? `<span class="instagram-handle">${config.organisation.social.instagram_handle}</span>` : '';
+                    links += `<a href="${social[key]}" target="_blank" rel="noopener" class="social-link instagram-link"><i class="${icon}"></i>${handle}</a> `;
+                } else {
+                    links += `<a href="${social[key]}" target="_blank" rel="noopener" class="social-link"><i class="${icon}"></i></a> `;
+                }
+            }
+        });
+        if (links) html += `<div class="social">${links.trim()}</div>`;
     }
     // Footer text
     if (config.footer && config.footer.text && config.footer.text[lang]) {
