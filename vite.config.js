@@ -12,6 +12,7 @@ export default defineConfig({
         about: path.resolve(__dirname, 'src/about.html'),
         artworks: path.resolve(__dirname, 'src/artworks.html'),
         help: path.resolve(__dirname, 'src/help.html'),
+        handout: path.resolve(__dirname, 'src/handout.html'),
       },
       output: {
         assetFileNames: 'assets/[name].[hash][extname]',

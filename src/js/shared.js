@@ -1,3 +1,5 @@
+import jsyaml from 'js-yaml';
+
 class SharedUI {
     constructor() {
         // Initialize theme
@@ -62,4 +64,27 @@ document.addEventListener('DOMContentLoaded', () => {
             navLinks.classList.toggle('show');
         });
     }
-}); 
+});
+
+// Helper to safely get the current language
+export function getCurrentLang() {
+    return (window.i18n && window.i18n.currentLang) ? window.i18n.currentLang : 'de';
+}
+
+// Load and parse exhibition config from public/exhibition.md
+export async function loadExhibitionConfig() {
+    try {
+        const response = await fetch('/exhibition.md');
+        if (!response.ok) throw new Error('Exhibition config not found');
+        const text = await response.text();
+        const match = text.match(/^---\n([\s\S]*?)\n---/);
+        if (!match) throw new Error('Invalid exhibition config format');
+        const config = jsyaml.load(match[1]);
+        window.exhibitionConfig = config;
+        return config;
+    } catch (e) {
+        console.error('Failed to load exhibition config:', e);
+        window.exhibitionConfig = {};
+        return {};
+    }
+} 

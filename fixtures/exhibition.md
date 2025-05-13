@@ -50,4 +50,6 @@ footer:
     de: "© 2024 Museum Beispiel. Alle Rechte vorbehalten."
     en: "© 2024 Example Museum. All rights reserved."
 logo: "/assets/custom/logo.png"
+print_logo: "/assets/custom/logo-print.png"
+baseDomain: "https://exhibition.example.com"
 --- 

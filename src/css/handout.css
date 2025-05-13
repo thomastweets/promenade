@@ -1,0 +1,190 @@
+@media print {
+  .print-btn {
+    display: none !important;
+  }
+  body, html {
+    background: #fff !important;
+    color: #000 !important;
+  }
+  .handout-app {
+    box-shadow: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .handout-logo:not(.handout-print-logo) {
+    display: none !important;
+  }
+  .handout-print-logo {
+    display: block !important;
+  }
+  .handout-qr-section {
+    page-break-before: always;
+    break-before: page;
+  }
+  #handoutQR canvas {
+    width: 100% !important;
+    max-width: 18cm !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+  }
+}
+
+.handout-app {
+  max-width: 21cm;
+  min-height: 29.7cm;
+  margin: 1.5cm auto;
+  background: #fff;
+  color: #222;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  padding: 2.5cm 2cm 2cm 2cm;
+  font-family: 'Inter', 'Arial', sans-serif;
+}
+
+.handout-header {
+  text-align: center;
+  margin-bottom: 1.5em;
+  background: none !important;
+}
+
+.handout-logo {
+  display: block;
+}
+
+.handout-print-logo {
+  display: none;
+}
+
+.handout-logo img {
+  max-height: 80px;
+  margin-bottom: 0.5em;
+}
+
+.handout-title {
+  font-size: 2.2em;
+  font-weight: 700;
+  margin: 0.2em 0 0.1em 0;
+}
+
+.handout-subtitle {
+  font-size: 1.1em;
+  color: #888;
+  margin-bottom: 1em;
+}
+
+.handout-content {
+  margin-bottom: 1.5em;
+  font-size: 1.1em;
+}
+
+.artwork-meta {
+  margin-bottom: 0.7em;
+  font-size: 1em;
+}
+
+.artwork-description {
+  margin-top: 0.5em;
+  font-size: 1.05em;
+  color: #333;
+}
+
+.handout-image {
+  text-align: center;
+  margin-bottom: 1.2em;
+}
+
+.handout-image img {
+  max-width: 100%;
+  max-height: 350px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.handout-qr-section {
+  display: flex;
+  align-items: center;
+  gap: 2em;
+  margin-top: 2em;
+  justify-content: center;
+  flex-direction: row;
+}
+
+#handoutQR {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+#handoutQR canvas {
+  display: block;
+  margin: 0 auto;
+  width: 100% !important;
+  max-width: 18cm !important;
+  height: auto !important;
+  box-sizing: border-box;
+}
+
+.handout-qr-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 1.5em 0 0 0;
+}
+
+.handout-link {
+  font-size: 1.1em;
+  color: #555;
+  word-break: break-all;
+  text-align: center;
+  max-width: 18cm;
+  margin: 1em 0 0.5em 0;
+}
+
+.handout-headphone-number {
+  display: flex;
+  align-items: center;
+  font-size: 3em;
+  font-weight: bold;
+  color: #0055a5;
+  margin-top: 0.5em;
+}
+
+.handout-headphone-number i {
+  font-size: 1.5em;
+  margin-right: 0.3em;
+}
+
+.handout-artwork-number {
+  font-size: 1.2em;
+  margin-left: 0.2em;
+}
+
+.print-btn {
+  display: block;
+  margin: 2em auto 0 auto;
+  padding: 0.7em 2.5em;
+  font-size: 1.1em;
+  background: #0055a5;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  transition: background 0.2s;
+}
+.print-btn:hover {
+  background: #003e7a;
+}
+
+#qrSectionLabel {
+  font-size: 1.2em;
+  color: #0055a5;
+  text-align: center;
+  margin-bottom: 1em;
+  font-weight: 500;
+  max-width: 18cm;
+  margin-left: auto;
+  margin-right: auto;
+} 

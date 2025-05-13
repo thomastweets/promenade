@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artwork Handout</title>
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="assets/icon-512.png">
+    <link rel="shortcut icon" type="image/png" href="assets/icon-192.png">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/handout.css">
+</head>
+<body>
+    <div class="handout-app">
+        <header>
+            <div class="handout-header">
+                <div class="handout-logo" id="handoutLogo"></div>
+                <div class="handout-logo handout-print-logo" id="handoutPrintLogo" style="display:none;"></div>
+                <h1 id="handoutTitle"></h1>
+                <div class="handout-subtitle" id="handoutSubtitle"></div>
+            </div>
+        </header>
+        <main>
+            <div class="handout-content" id="handoutContent">
+                <!-- Artwork info will be injected here -->
+            </div>
+            <div class="handout-image" id="handoutImage"></div>
+            <div class="handout-qr-section">
+                <div id="qrSectionLabel"></div>
+                <div id="handoutQR"></div>
+                <div class="handout-link" id="handoutLink"></div>
+            </div>
+            <button class="print-btn" onclick="window.print()">Print</button>
+        </main>
+    </div>
+    <script type="module" src="js/handout.js"></script>
+</body>
+</html> 
