@@ -23,37 +23,15 @@ class AudioGuideApp {
     }
 
     initializeUI() {
-        // Initialize theme toggle
-        const themeToggle = document.querySelector('.theme-toggle');
-        if (themeToggle) {
-            const lightIcon = themeToggle.querySelector('.light-icon');
-            const darkIcon = themeToggle.querySelector('.dark-icon');
-            
-            // Set initial state
-            const currentTheme = localStorage.getItem('theme') || 'light';
-            document.documentElement.setAttribute('data-theme', currentTheme);
-            this.updateThemeIcons(lightIcon, darkIcon, currentTheme);
-
-            themeToggle.addEventListener('click', () => {
-                const currentTheme = document.documentElement.getAttribute('data-theme');
-                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-                document.documentElement.setAttribute('data-theme', newTheme);
-                localStorage.setItem('theme', newTheme);
-                this.updateThemeIcons(lightIcon, darkIcon, newTheme);
-            });
-        }
-
         // Check if we're on an artwork page
         const params = new URLSearchParams(window.location.search);
         const isArtworkPage = params.has('artwork');
-        
         // Add appropriate class to body
         if (isArtworkPage) {
             document.body.classList.add('has-artwork');
         } else {
             document.body.classList.remove('has-artwork');
         }
-
         // Initialize artwork menu button
         const menuButton = document.querySelector('.artwork-menu-toggle');
         if (menuButton) {
@@ -63,12 +41,10 @@ class AudioGuideApp {
                 this.toggleArtworkMenu();
             });
         }
-
         // Initialize input tabs on root page only
         if (!isArtworkPage) {
             this.initializeInputTabs();
         }
-        
         // Navigation - update with artwork numbers
         const prevBtn = document.getElementById('prevArtwork');
         const nextBtn = document.getElementById('nextArtwork');
@@ -80,7 +56,6 @@ class AudioGuideApp {
             nextBtn.innerHTML = `<i class="fas fa-chevron-right"></i>`;
             nextBtn.addEventListener('click', () => this.navigateArtwork(1));
         }
-
         // Hide player initially if we're on the root page
         const player = document.getElementById('audio-player');
         if (player) {
@@ -90,7 +65,6 @@ class AudioGuideApp {
                 player.classList.add('show');
             }
         }
-
         // Update input placeholder translation
         const input = document.getElementById('artworkNumber');
         if (input && window.i18n) {

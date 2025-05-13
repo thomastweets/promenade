@@ -303,7 +303,7 @@ header {
     color: var(--primary-color, #0055a5);
     margin-left: 0.1em;
     font-weight: 500;
-    font-size: 1.0em;
+    font-size: 0.8em;
     letter-spacing: 0.01em;
     vertical-align: middle;
 }
@@ -1635,4 +1635,11 @@ body.has-artwork .artwork-menu-toggle {
     display: inline-flex;
     align-items: center;
     gap: 0.5em;
+}
+
+.theme-toggle .icon {
+    display: none;
+}
+.theme-toggle .icon.active {
+    display: flex;
 }
