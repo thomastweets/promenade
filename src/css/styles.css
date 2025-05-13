@@ -394,6 +394,7 @@ header {
 
 /* Artwork Menu Toggle Button - Main CTA */
 .artwork-menu-toggle {
+    display: flex !important;
     padding: 0.5rem 1rem;
     background: var(--primary-color);
     color: white;
@@ -402,9 +403,13 @@ header {
     font-size: 1rem;
     cursor: pointer;
     transition: all 0.2s ease;
-    display: flex;
     align-items: center;
     gap: 0.5rem;
+    position: static;
+    width: auto;
+    height: auto;
+    box-shadow: none;
+    z-index: auto;
 }
 
 .artwork-menu-toggle i {
@@ -476,6 +481,7 @@ header {
     .artwork-menu-toggle {
         width: 100%;
         justify-content: center;
+        margin: 0.5rem 0;
     }
 
     .artwork-swiper {
@@ -504,15 +510,6 @@ header {
         background: none;
         box-shadow: none;
     }
-}
-
-/* Remove old floating button styles */
-.artwork-menu-toggle {
-    position: static;
-    width: auto;
-    height: auto;
-    box-shadow: none;
-    z-index: auto;
 }
 
 /* Input Section */
@@ -1426,7 +1423,7 @@ body:not(.has-artwork) .input-section {
 
 /* Show artwork menu toggle on all pages except home */
 .artwork-menu-toggle {
-    display: none !important;
+    display: flex !important;
 }
 
 body.has-artwork .artwork-menu-toggle {

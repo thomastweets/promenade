@@ -15,11 +15,24 @@ class AudioGuideApp {
         this.artworkContent = document.getElementById('artwork-content');
         this.swiper = null;
         this.isScanning = false;
+        this.artworkIndex = null; // Will hold the loaded index.json
+        this.artworkIndexLoaded = this.loadArtworkIndex();
         
         this.initializeUI();
         this.initializeAudioPlayer();
         this.initializeLanguageButtons();
         this.loadArtworkFromURL();
+    }
+
+    async loadArtworkIndex() {
+        try {
+            const response = await fetch('/artworks/content/index.json');
+            if (!response.ok) throw new Error('Failed to load artwork index');
+            this.artworkIndex = await response.json();
+        } catch (e) {
+            console.error('Failed to load artwork index:', e);
+            this.artworkIndex = {};
+        }
     }
 
     initializeUI() {
@@ -32,7 +45,7 @@ class AudioGuideApp {
         } else {
             document.body.classList.remove('has-artwork');
         }
-        // Initialize artwork menu button
+        // Initialize artwork menu button (always visible)
         const menuButton = document.querySelector('.artwork-menu-toggle');
         if (menuButton) {
             menuButton.addEventListener('click', (e) => {
@@ -92,6 +105,21 @@ class AudioGuideApp {
         if (!menu) {
             menu = this.createArtworkMenu();
             document.body.appendChild(menu);
+            // If index not loaded, wait and re-render
+            if (!this.artworkIndex) {
+                this.artworkIndexLoaded.then(() => {
+                    const grid = menu.querySelector('.artwork-menu-grid');
+                    if (grid) grid.innerHTML = this.generateArtworkCards();
+                    // Re-bind click handlers for new cards
+                    menu.querySelectorAll('.artwork-mini-card').forEach(card => {
+                        card.addEventListener('click', () => {
+                            const artworkId = card.dataset.artwork;
+                            this.loadArtwork(artworkId);
+                            this.toggleArtworkMenu();
+                        });
+                    });
+                });
+            }
             // Trigger animation after a small delay
             requestAnimationFrame(() => {
                 menu.classList.add('show');
@@ -187,15 +215,19 @@ class AudioGuideApp {
     }
 
     generateArtworkCards() {
-        // Generate 10 artwork cards (or however many you have)
-        return Array.from({ length: 10 }, (_, i) => {
-            const number = (i + 1).toString().padStart(2, '0');
+        if (!this.artworkIndex) {
+            // Not loaded yet, show loading
+            return `<div style="padding:2em;text-align:center;"><i class='fas fa-spinner fa-spin'></i> Loading...</div>`;
+        }
+        // Sort by artwork id (as number)
+        const sorted = Object.keys(this.artworkIndex).sort((a, b) => parseInt(a) - parseInt(b));
+        return sorted.map(id => {
+            const artwork = this.artworkIndex[id];
             return `
-                <div class="artwork-mini-card" data-artwork="${number}">
-                    <i class="fas fa-headphones"></i>
+                <div class="artwork-mini-card" data-artwork="${artwork.id}">
                     <span class="artwork-number">
                         <i class="fas fa-headphones"></i>
-                        ${number}
+                        ${artwork.id}
                     </span>
                 </div>
             `;
