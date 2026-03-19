@@ -1,0 +1,47 @@
+{
+	# Global options
+	admin off
+	auto_https off
+}
+
+:80 {
+	# Root directory for the site
+	root * /usr/share/caddy
+
+	# Enable file server
+	file_server
+
+	# Compress responses
+	encode gzip
+
+	# Serve index.html for root and directory requests
+	try_files {path} {path}/index.html /index.html
+
+	# Enable logging
+	log {
+		output stdout
+		format json
+	}
+
+	# Headers for security and caching
+	header {
+		# Security headers
+		Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "DENY"
+		X-XSS-Protection "1; mode=block"
+		Referrer-Policy "no-referrer-when-downgrade"
+
+		# Cache static assets
+		@static {
+			path *.ico *.css *.js *.gif *.jpg *.jpeg *.png *.svg *.woff *.woff2 *.ttf *.eot
+		}
+		header @static Cache-Control "public, max-age=31536000, immutable"
+
+		# Cache HTML
+		@html {
+			path *.html
+		}
+		header @html Cache-Control "public, max-age=3600"
+	}
+}

@@ -1,0 +1,66 @@
+{
+  "id": "05",
+  "number": 5,
+  "slug": "guernica",
+  "artist": "Pablo Picasso",
+  "year": "1937",
+  "title": {
+    "de": "Guernica",
+    "en": "Guernica"
+  },
+  "description": {
+    "de": "Ein monumentales Anti-Kriegs-Gemälde, das die Bombardierung der baskischen Stadt Guernica darstellt. In kraftvollen kubistischen Formen zeigt es die Schrecken und die Sinnlosigkeit des Krieges.",
+    "en": "A monumental anti-war painting depicting the bombing of the Basque town of Guernica. Using powerful cubist forms, it shows the horrors and senselessness of war."
+  },
+  "material": {
+    "de": "",
+    "en": ""
+  },
+  "dimensions": "",
+  "images": [
+    {
+      "src": "/shows/demo-show/media/images/05-main.svg",
+      "alt": {
+        "de": "Guernica – Ansicht 1",
+        "en": "Guernica – View 1"
+      },
+      "kind": "hero"
+    },
+    {
+      "src": "/shows/demo-show/media/images/05-detail-1.svg",
+      "alt": {
+        "de": "Guernica – Ansicht 2",
+        "en": "Guernica – View 2"
+      },
+      "kind": "detail"
+    },
+    {
+      "src": "/shows/demo-show/media/images/05-detail-2.svg",
+      "alt": {
+        "de": "Guernica – Ansicht 3",
+        "en": "Guernica – View 3"
+      },
+      "kind": "detail"
+    }
+  ],
+  "audioCues": {
+    "de": "Gedämpfte, beklemmende Präsenz... der Raum füllt sich mit einer schweren, monochromen Stille.\nLangsam und bedacht; lassen Sie den Blick von Form zu Form wandern und verweilen.\nVisueller Schwerpunkt: das schreiende Pferd — kantige Linien, gebrochenes Volumen.\nPause: zwei Sekunden; „Guernica“ langsam aussprechen, drei Silben, Betonung auf der zweiten — Gwer‑NI‑ka.",
+    "en": "Atmosphere: The work holds a heavy hush — aftermath made visible, compressed grief and urgent tension lingering in the space around it.\nPacing: Begin steady and deliberate, then quicken into clipped beats as you mark collision and shock, finally easing into a long, breath-held cadence.\nVisual focus: Let the eye follow the powerful cubist forms — overlapping, fractured planes and angular figures that push and pull across the surface, routing attention from one rupture to the next.\nPauses/emphasis: Pause briefly after the title and date — Guernica, 1937 — and linger on the phrase horrors and senselessness of war, allowing that meaning to settle."
+  },
+  "audio": {
+    "de": "/shows/demo-show/media/audio/05-de.wav",
+    "en": "/shows/demo-show/media/audio/05-en.wav"
+  },
+  "translationStatus": {
+    "de": "human",
+    "en": "approved"
+  },
+  "audioCueStatus": {
+    "de": "ready",
+    "en": "ready"
+  },
+  "audioStatus": {
+    "de": "draft",
+    "en": "draft"
+  }
+}

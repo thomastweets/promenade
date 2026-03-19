@@ -1,0 +1,58 @@
+{
+  "id": "10",
+  "number": 10,
+  "slug": "the-creation-of-adam",
+  "artist": "Michelangelo",
+  "year": "1512",
+  "title": {
+    "de": "Die Erschaffung Adams",
+    "en": "The Creation of Adam"
+  },
+  "description": {
+    "de": "Ein ikonischer Teil der Sixtinischen Kapelle, der den Moment zeigt, in dem Gott Adam das Leben gibt. Die dramatische Komposition und die meisterhafte Anatomie machen es zu einem der berühmtesten Kunstwerke der Welt.",
+    "en": "An iconic part of the Sistine Chapel showing the moment God gives life to Adam. The dramatic composition and masterful anatomy make it one of the world's most famous artworks."
+  },
+  "material": {
+    "de": "",
+    "en": ""
+  },
+  "dimensions": "",
+  "images": [
+    {
+      "src": "/shows/demo-show/media/images/10-main.svg",
+      "alt": {
+        "de": "Die Erschaffung Adams – Ansicht 1",
+        "en": "The Creation of Adam – View 1"
+      },
+      "kind": "hero"
+    },
+    {
+      "src": "/shows/demo-show/media/images/10-detail-1.svg",
+      "alt": {
+        "de": "Die Erschaffung Adams – Ansicht 2",
+        "en": "The Creation of Adam – View 2"
+      },
+      "kind": "detail"
+    },
+    {
+      "src": "/shows/demo-show/media/images/10-detail-2.svg",
+      "alt": {
+        "de": "Die Erschaffung Adams – Ansicht 3",
+        "en": "The Creation of Adam – View 3"
+      },
+      "kind": "detail"
+    }
+  ],
+  "audio": {
+    "de": "/shows/demo-show/media/audio/10-de.wav",
+    "en": "/shows/demo-show/media/audio/10-en.wav"
+  },
+  "translationStatus": {
+    "de": "human",
+    "en": "approved"
+  },
+  "audioStatus": {
+    "de": "ready",
+    "en": "ready"
+  }
+}

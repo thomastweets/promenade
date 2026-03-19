@@ -1,0 +1,66 @@
+{
+  "id": "02",
+  "number": 2,
+  "slug": "mona-lisa",
+  "artist": "Leonardo da Vinci",
+  "year": "1503",
+  "title": {
+    "de": "Die Mona Lisa",
+    "en": "Mona Lisa"
+  },
+  "description": {
+    "de": "Das berühmteste Porträt der Welt, bekannt für das geheimnisvolle Lächeln der dargestellten Frau. Die innovative Sfumato-Technik und die faszinierende Atmosphäre machen dieses Werk zu einem Meilenstein der Kunstgeschichte.",
+    "en": "The world's most famous portrait, known for its subject's mysterious smile. The innovative sfumato technique and captivating atmosphere make this work a milestone in art history."
+  },
+  "material": {
+    "de": "Öl auf Pappelholz",
+    "en": "Oil on poplar panel"
+  },
+  "dimensions": "77cm x 53cm",
+  "images": [
+    {
+      "src": "/shows/demo-show/media/images/02-main.svg",
+      "alt": {
+        "de": "Die Mona Lisa – Ansicht 1",
+        "en": "Mona Lisa – View 1"
+      },
+      "kind": "hero"
+    },
+    {
+      "src": "/shows/demo-show/media/images/02-detail-1.svg",
+      "alt": {
+        "de": "Die Mona Lisa – Ansicht 2",
+        "en": "Mona Lisa – View 2"
+      },
+      "kind": "detail"
+    },
+    {
+      "src": "/shows/demo-show/media/images/02-detail-2.svg",
+      "alt": {
+        "de": "Die Mona Lisa – Ansicht 3",
+        "en": "Mona Lisa – View 3"
+      },
+      "kind": "detail"
+    }
+  ],
+  "audioCues": {
+    "de": "Atmosphaere: Die Oberfläche aus Öl auf Pappelholz wirkt warm und dicht; die Sfumato-Kanten lassen das Licht weich werden — das Lächeln bleibt dabei wie ein leiser Atemzug.\nTempo: Beginnen Sie gemessen, erlauben Sie eine leichte Beschleunigung zur Bildmitte, dann sachte zurücknehmen, sodass der Schluss des Satzes nachklingen kann.\nBildfokus: Wandern Sie vom Mundwinkel über die weiche Sfumato-Übergang zur Wange und nehmen Sie die feine Formbeziehung zwischen Mundpartie und Augenpartie wahr.\nPausen/Betonung: Betonen Sie das Wort „geheimnisvoll“ dezent, dann ca. 600 ms Pause; vor „Sfumato“ kurz anhalten (≈300 ms); das Wort „Lächeln“ weich ausklingen lassen.",
+    "en": ""
+  },
+  "audio": {
+    "de": "/shows/demo-show/media/audio/02-de.mp3",
+    "en": "/shows/demo-show/media/audio/02-en.wav"
+  },
+  "translationStatus": {
+    "de": "human",
+    "en": "approved"
+  },
+  "audioCueStatus": {
+    "de": "ready",
+    "en": "missing"
+  },
+  "audioStatus": {
+    "de": "draft",
+    "en": "ready"
+  }
+}

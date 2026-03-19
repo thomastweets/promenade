@@ -1,0 +1,58 @@
+{
+  "id": "08",
+  "number": 8,
+  "slug": "the-night-watch",
+  "artist": "Rembrandt van Rijn",
+  "year": "1642",
+  "title": {
+    "de": "Die Nachtwache",
+    "en": "The Night Watch"
+  },
+  "description": {
+    "de": "Ein monumentales Gruppenporträt der Amsterdamer Bürgerwehr. Das dramatische Spiel von Licht und Schatten und die lebendige Komposition machen es zu einem Höhepunkt des niederländischen Goldenen Zeitalters.",
+    "en": "A monumental group portrait of Amsterdam's civic guard. The dramatic play of light and shadow and the dynamic composition make it a highlight of the Dutch Golden Age."
+  },
+  "material": {
+    "de": "",
+    "en": ""
+  },
+  "dimensions": "",
+  "images": [
+    {
+      "src": "/shows/demo-show/media/images/08-main.svg",
+      "alt": {
+        "de": "Die Nachtwache – Ansicht 1",
+        "en": "The Night Watch – View 1"
+      },
+      "kind": "hero"
+    },
+    {
+      "src": "/shows/demo-show/media/images/08-detail-1.svg",
+      "alt": {
+        "de": "Die Nachtwache – Ansicht 2",
+        "en": "The Night Watch – View 2"
+      },
+      "kind": "detail"
+    },
+    {
+      "src": "/shows/demo-show/media/images/08-detail-2.svg",
+      "alt": {
+        "de": "Die Nachtwache – Ansicht 3",
+        "en": "The Night Watch – View 3"
+      },
+      "kind": "detail"
+    }
+  ],
+  "audio": {
+    "de": "/shows/demo-show/media/audio/08-de.wav",
+    "en": "/shows/demo-show/media/audio/08-en.wav"
+  },
+  "translationStatus": {
+    "de": "human",
+    "en": "approved"
+  },
+  "audioStatus": {
+    "de": "ready",
+    "en": "ready"
+  }
+}

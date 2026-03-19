@@ -1,0 +1,58 @@
+{
+  "id": "07",
+  "number": 7,
+  "slug": "water-lilies",
+  "artist": "Claude Monet",
+  "year": "1919",
+  "title": {
+    "de": "Wasserlilien",
+    "en": "Water Lilies"
+  },
+  "description": {
+    "de": "Teil einer berühmten Serie von Gemälden, die Monets Garten in Giverny zeigen. Die impressionistischen Pinselstriche und die Reflexionen auf dem Wasser schaffen eine meditative Atmosphäre.",
+    "en": "Part of a famous series of paintings showing Monet's garden at Giverny. The impressionist brushstrokes and reflections on the water create a meditative atmosphere."
+  },
+  "material": {
+    "de": "",
+    "en": ""
+  },
+  "dimensions": "",
+  "images": [
+    {
+      "src": "/shows/demo-show/media/images/07-main.svg",
+      "alt": {
+        "de": "Wasserlilien – Ansicht 1",
+        "en": "Water Lilies – View 1"
+      },
+      "kind": "hero"
+    },
+    {
+      "src": "/shows/demo-show/media/images/07-detail-1.svg",
+      "alt": {
+        "de": "Wasserlilien – Ansicht 2",
+        "en": "Water Lilies – View 2"
+      },
+      "kind": "detail"
+    },
+    {
+      "src": "/shows/demo-show/media/images/07-detail-2.svg",
+      "alt": {
+        "de": "Wasserlilien – Ansicht 3",
+        "en": "Water Lilies – View 3"
+      },
+      "kind": "detail"
+    }
+  ],
+  "audio": {
+    "de": "/shows/demo-show/media/audio/07-de.wav",
+    "en": "/shows/demo-show/media/audio/07-en.wav"
+  },
+  "translationStatus": {
+    "de": "human",
+    "en": "approved"
+  },
+  "audioStatus": {
+    "de": "ready",
+    "en": "ready"
+  }
+}

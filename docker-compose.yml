@@ -1,40 +1,81 @@
-version: '3.8'
-
 services:
-  caddy:
-    image: caddy:2.7-alpine
-    container_name: promenade-caddy
-    restart: unless-stopped
-    volumes:
-      - ./public:/usr/share/caddy:ro
-      - ./Caddyfile:/etc/caddy/Caddyfile:ro
-      - caddy_data:/data
-      - caddy_config:/config
+  promenade-dev:
+    build:
+      context: .
+      target: dev
+    command: bash -lc "npm install && npm run dev:all"
+    env_file:
+      - .env
+    ports:
+      - "4321:4321"
+      - "4173:4173"
+      - "8787:8787"
     networks:
-      - traefik-proxy
-      - internal
+      - default
+      - traefik
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.promenade.rule=Host(`promenade.example.com`)" # Change to your domain
-      - "traefik.http.routers.promenade.entrypoints=websecure"
-      - "traefik.http.routers.promenade.tls=true"
-      - "traefik.http.routers.promenade.tls.certresolver=letsencrypt"
+      - "traefik.constraint-label=traefik"
+      - "traefik.docker.network=traefik"
+      - "traefik.http.routers.promenade-studio-http.entrypoints=http"
+      - "traefik.http.routers.promenade-studio-http.rule=Host(`${STUDIO_HOSTNAME:-studio-promenade.example.com}`)"
+      - "traefik.http.routers.promenade-studio-http.middlewares=https-redirect@docker"
+      - "traefik.http.routers.promenade-studio-http.service=promenade-studio-ui"
+      - "traefik.http.routers.promenade-studio-https.entrypoints=https"
+      - "traefik.http.routers.promenade-studio-https.rule=Host(`${STUDIO_HOSTNAME:-studio-promenade.example.com}`)"
+      - "traefik.http.routers.promenade-studio-https.tls=true"
+      - "traefik.http.routers.promenade-studio-https.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.promenade-studio-https.service=promenade-studio-ui"
+      - "traefik.http.routers.promenade-studio-api-http.entrypoints=http"
+      - "traefik.http.routers.promenade-studio-api-http.rule=Host(`${STUDIO_HOSTNAME:-studio-promenade.example.com}`) && (PathPrefix(`/api`) || PathPrefix(`/shows`) || PathPrefix(`/icons`))"
+      - "traefik.http.routers.promenade-studio-api-http.middlewares=https-redirect@docker"
+      - "traefik.http.routers.promenade-studio-api-http.service=promenade-studio-api"
+      - "traefik.http.routers.promenade-studio-api-https.entrypoints=https"
+      - "traefik.http.routers.promenade-studio-api-https.rule=Host(`${STUDIO_HOSTNAME:-studio-promenade.example.com}`) && (PathPrefix(`/api`) || PathPrefix(`/shows`) || PathPrefix(`/icons`))"
+      - "traefik.http.routers.promenade-studio-api-https.priority=100"
+      - "traefik.http.routers.promenade-studio-api-https.tls=true"
+      - "traefik.http.routers.promenade-studio-api-https.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.promenade-studio-api-https.service=promenade-studio-api"
+      - "traefik.http.services.promenade-studio-ui.loadbalancer.server.port=4173"
+      - "traefik.http.services.promenade-studio-api.loadbalancer.server.port=8787"
+    volumes:
+      - .:/app
+      - promenade_node_modules:/app/node_modules
+  promenade-web:
+    build:
+      context: .
+      target: static
+      args:
+        SHOW: ${SHOW:-demo-show}
+        DEFAULT_LOCALE: ${DEFAULT_LOCALE:-de}
+        PUBLIC_SITE_URL: ${PUBLIC_SITE_URL:-https://promenade.example.com}
+        PUBLIC_ANALYTICS_PROVIDER: ${PUBLIC_ANALYTICS_PROVIDER:-none}
+        PUBLIC_ANALYTICS_DOMAIN: ${PUBLIC_ANALYTICS_DOMAIN:-}
+    restart: unless-stopped
+    networks:
+      - default
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.constraint-label=traefik"
+      - "traefik.docker.network=traefik"
+      - "traefik.http.routers.promenade-http.entrypoints=http"
+      - "traefik.http.routers.promenade-http.rule=Host(`${PUBLIC_HOSTNAME:-promenade.example.com}`)"
+      - "traefik.http.routers.promenade-http.middlewares=https-redirect@docker"
+      - "traefik.http.routers.promenade-http.service=promenade"
+      - "traefik.http.routers.promenade-https.entrypoints=https"
+      - "traefik.http.routers.promenade-https.rule=Host(`${PUBLIC_HOSTNAME:-promenade.example.com}`)"
+      - "traefik.http.routers.promenade-https.tls=true"
+      - "traefik.http.routers.promenade-https.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.promenade-https.service=promenade"
       - "traefik.http.services.promenade.loadbalancer.server.port=80"
-      - "traefik.docker.network=traefik-proxy"
-      # Health check
       - "traefik.http.services.promenade.loadbalancer.healthcheck.path=/"
       - "traefik.http.services.promenade.loadbalancer.healthcheck.interval=10s"
       - "traefik.http.services.promenade.loadbalancer.healthcheck.timeout=5s"
-      # Optional middlewares for security
-      - "traefik.http.routers.promenade.middlewares=secure-headers@file"
 
 volumes:
-  caddy_data:
-  caddy_config:
+  promenade_node_modules:
 
 networks:
-  internal:
-    name: promenade-internal
-  traefik-proxy:
+  traefik:
     external: true
-    name: traefik-proxy 

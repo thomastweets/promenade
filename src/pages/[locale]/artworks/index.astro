@@ -1,0 +1,36 @@
+---
+import { loadShowBundleSync } from "@lib/content"
+import { localize } from "@lib/i18n"
+import type { Locale } from "@lib/schema"
+import ArtworkCard from "@web/components/ArtworkCard.astro"
+import BaseLayout from "@web/layouts/BaseLayout.astro"
+
+export function getStaticPaths() {
+  return [{ params: { locale: "de" } }, { params: { locale: "en" } }]
+}
+
+const locale = Astro.params.locale as Locale
+const bundle = loadShowBundleSync()
+---
+
+<BaseLayout
+  currentPath={Astro.url.pathname}
+  description={localize(locale, bundle.show.subtitle)}
+  locale={locale}
+  show={bundle.show}
+  title={`${localize(locale, bundle.show.title)} · Gallery`}
+>
+  <section class="mx-auto max-w-7xl px-4 py-14 md:px-8">
+    <div class="max-w-3xl">
+      <p class="text-sm font-semibold uppercase tracking-[0.35em] text-[color:var(--brand-accent)]">
+        Collection
+      </p>
+      <h1 class="display-type mt-4 text-5xl text-slate-950 dark:text-white">{localize(locale, bundle.show.title)}</h1>
+      <p class="mt-4 text-lg leading-8 text-slate-600 dark:text-slate-300">{localize(locale, bundle.show.intro)}</p>
+    </div>
+
+    <div class="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+      {bundle.artworks.map((artwork) => <ArtworkCard artwork={artwork} locale={locale} />)}
+    </div>
+  </section>
+</BaseLayout>

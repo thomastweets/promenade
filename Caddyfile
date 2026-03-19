@@ -1,47 +1,37 @@
-{
-	# Global options
-	admin off
-	auto_https off
-}
-
 :80 {
-	# Root directory for the site
-	root * /usr/share/caddy
+  root * /usr/share/caddy
+  encode gzip zstd
+  file_server
 
-	# Enable file server
-	file_server
+  try_files {path} {path}/index.html /index.html
 
-	# Compress responses
-	encode gzip
+  @hashed_assets {
+    path /_astro/*
+  }
 
-	# Serve index.html for root and directory requests
-	try_files {path} {path}/index.html /index.html
+  @service_worker {
+    path /sw.js
+  }
 
-	# Enable logging
-	log {
-		output stdout
-		format json
-	}
+  @html {
+    path / *.html /de /de/* /en /en/*
+  }
 
-	# Headers for security and caching
-	header {
-		# Security headers
-		Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-		X-Content-Type-Options "nosniff"
-		X-Frame-Options "DENY"
-		X-XSS-Protection "1; mode=block"
-		Referrer-Policy "no-referrer-when-downgrade"
+  @show_assets {
+    path /shows/*
+  }
 
-		# Cache static assets
-		@static {
-			path *.ico *.css *.js *.gif *.jpg *.jpeg *.png *.svg *.woff *.woff2 *.ttf *.eot
-		}
-		header @static Cache-Control "public, max-age=31536000, immutable"
+  @site_meta {
+    path /site.webmanifest *.json *.ico *.svg
+  }
 
-		# Cache HTML
-		@html {
-			path *.html
-		}
-		header @html Cache-Control "public, max-age=3600"
-	}
+  header @hashed_assets Cache-Control "public, max-age=31536000, immutable"
+  header @service_worker Cache-Control "no-cache, no-store, must-revalidate"
+  header @html Cache-Control "no-cache, must-revalidate"
+  header @show_assets Cache-Control "public, max-age=0, must-revalidate"
+  header @site_meta Cache-Control "public, max-age=0, must-revalidate"
+  header {
+    X-Content-Type-Options "nosniff"
+    Referrer-Policy "strict-origin-when-cross-origin"
+  }
 }

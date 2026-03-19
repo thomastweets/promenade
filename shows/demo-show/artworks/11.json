@@ -1,0 +1,33 @@
+{
+  "id": "11",
+  "number": 11,
+  "slug": "artwork-11",
+  "artist": "",
+  "year": "",
+  "title": {
+    "de": "Test",
+    "en": "Test en"
+  },
+  "description": {
+    "de": "",
+    "en": ""
+  },
+  "material": {
+    "de": "",
+    "en": ""
+  },
+  "dimensions": "",
+  "images": [],
+  "audio": {
+    "de": "",
+    "en": ""
+  },
+  "translationStatus": {
+    "de": "human",
+    "en": "missing"
+  },
+  "audioStatus": {
+    "de": "missing",
+    "en": "missing"
+  }
+}

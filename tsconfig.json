@@ -1,0 +1,24 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": [
+    "dist",
+    "legacy",
+    "playwright-report",
+    "test-results",
+    "coverage",
+    ".playwright-shows"
+  ],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "moduleResolution": "Bundler",
+    "types": ["node", "vitest/globals", "@testing-library/jest-dom"],
+    "paths": {
+      "@lib/*": ["lib/*"],
+      "@web/*": ["src/*"],
+      "@studio/*": ["studio/src/*"]
+    }
+  }
+}

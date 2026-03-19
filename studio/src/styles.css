@@ -1,0 +1,209 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  color-scheme: light dark;
+}
+
+html[data-theme="light"] {
+  color-scheme: light;
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+body {
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(24, 79, 93, 0.12),
+      transparent 24%
+    ),
+    linear-gradient(180deg, #f8f6f1 0%, #ffffff 100%);
+  color: #17211d;
+  font-family: Inter, "Avenir Next", "Segoe UI", sans-serif;
+  margin: 0;
+  transition:
+    background 180ms ease,
+    color 180ms ease;
+}
+
+html[data-theme="dark"] body {
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(80, 160, 181, 0.16),
+      transparent 22%
+    ),
+    linear-gradient(180deg, #08111a 0%, #0e1723 100%);
+  color: #edf4f7;
+}
+
+.studio-panel {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(24, 79, 93, 0.08);
+  box-shadow: 0 24px 60px rgba(23, 33, 29, 0.08);
+}
+
+html[data-theme="dark"] .studio-panel {
+  background: rgba(12, 19, 30, 0.88);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+}
+
+.studio-input,
+.studio-textarea,
+.studio-select {
+  width: 100%;
+  border-radius: 1rem;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  background: white;
+  padding: 0.85rem 1rem;
+  font: inherit;
+}
+
+html[data-theme="dark"] .studio-input,
+html[data-theme="dark"] .studio-textarea,
+html[data-theme="dark"] .studio-select {
+  border-color: rgba(255, 255, 255, 0.12);
+  background: rgba(15, 23, 36, 0.9);
+  color: #edf4f7;
+}
+
+.studio-textarea {
+  min-height: 8rem;
+  resize: vertical;
+}
+
+.studio-label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #54606d;
+  margin-bottom: 0.55rem;
+}
+
+html[data-theme="dark"] .studio-label {
+  color: #8fa5b9;
+}
+
+.print-card {
+  background: white;
+  break-inside: avoid;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 1rem;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 0.9rem;
+}
+
+.print-sheet-stack {
+  display: grid;
+  gap: 2rem;
+}
+
+.print-page-preview {
+  display: grid;
+  gap: 0.75rem;
+  justify-items: center;
+}
+
+.print-page {
+  width: min(100%, 210mm);
+  min-height: 297mm;
+  background: white;
+  color: black;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.12);
+  padding: 10mm;
+}
+
+.print-page-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 8mm;
+  min-height: calc(297mm - 20mm);
+}
+
+.print-card-title {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.print-card-qr {
+  min-height: 0;
+  display: grid;
+  place-items: center;
+}
+
+.print-card-qr img {
+  max-height: 48mm;
+  object-fit: contain;
+}
+
+.print-card-url {
+  overflow-wrap: anywhere;
+}
+
+.print-card-placeholder {
+  visibility: hidden;
+}
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+
+  body {
+    background: white;
+    margin: 0;
+  }
+
+  .studio-panel {
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+  }
+
+  .print-sheet-stack {
+    gap: 0;
+    margin: 0;
+  }
+
+  .print-page-preview {
+    break-after: page;
+    page-break-after: always;
+    gap: 0;
+  }
+
+  .print-page-preview:last-child {
+    break-after: auto;
+    page-break-after: auto;
+  }
+
+  .print-page {
+    box-shadow: none;
+    min-height: 297mm;
+    width: 210mm;
+    padding: 10mm;
+  }
+
+  .print-page-grid {
+    height: calc(297mm - 20mm);
+  }
+
+  .print-card {
+    border-radius: 5mm;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    padding: 6mm;
+  }
+}
