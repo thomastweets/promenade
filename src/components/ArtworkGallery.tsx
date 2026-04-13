@@ -14,6 +14,7 @@ type Props = {
 export function ArtworkGallery({ locale, items }: Props) {
   const [activeIndex, setActiveIndex] = useState(0)
   const activeItem = items[activeIndex]
+  const showThumbnails = items.length > 1
 
   if (!activeItem) {
     return (
@@ -32,34 +33,41 @@ export function ArtworkGallery({ locale, items }: Props) {
   }
 
   return (
-    <div className="space-y-4">
+    <div className={showThumbnails ? "space-y-4" : undefined}>
       <div className="surface-card overflow-hidden rounded-[2rem] border border-white/60 dark:border-white/10">
         <img
           alt={activeItem.alt?.[locale] || ""}
           className="artwork-image"
+          decoding="async"
+          fetchPriority="high"
+          loading="eager"
           src={activeItem.src}
         />
       </div>
-      <div className="grid grid-cols-3 gap-3">
-        {items.map((item, index) => (
-          <button
-            className={`overflow-hidden rounded-[1.3rem] border transition ${
-              index === activeIndex
-                ? "border-[color:var(--brand-accent)] shadow-lg"
-                : "border-white/60 opacity-75 hover:opacity-100 dark:border-white/10"
-            }`}
-            key={item.src}
-            onClick={() => setActiveIndex(index)}
-            type="button"
-          >
-            <img
-              alt={item.alt?.[locale] || ""}
-              className="artwork-image"
-              src={item.src}
-            />
-          </button>
-        ))}
-      </div>
+      {showThumbnails ? (
+        <div className="grid grid-cols-3 gap-3">
+          {items.map((item, index) => (
+            <button
+              className={`overflow-hidden rounded-[1.3rem] border transition ${
+                index === activeIndex
+                  ? "border-[color:var(--brand-accent)] shadow-lg"
+                  : "border-white/60 opacity-75 hover:opacity-100 dark:border-white/10"
+              }`}
+              key={item.src}
+              onClick={() => setActiveIndex(index)}
+              type="button"
+            >
+              <img
+                alt={item.alt?.[locale] || ""}
+                className="artwork-image"
+                decoding="async"
+                loading="lazy"
+                src={item.src}
+              />
+            </button>
+          ))}
+        </div>
+      ) : null}
     </div>
   )
 }

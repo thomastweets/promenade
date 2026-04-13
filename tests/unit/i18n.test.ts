@@ -1,4 +1,9 @@
-import { normalizeLocale, resolvePreferredLocale } from "@lib/i18n"
+import {
+  bestLocalizedValue,
+  getAlternateLocales,
+  normalizeLocale,
+  resolvePreferredLocale
+} from "@lib/i18n"
 import { describe, expect, it } from "vitest"
 
 describe("locale helpers", () => {
@@ -29,5 +34,26 @@ describe("locale helpers", () => {
         browserLocales: ["en-GB"]
       })
     ).toBe("en")
+  })
+
+  it("uses show-scoped locales for alternates and content fallback", () => {
+    expect(
+      getAlternateLocales("de", {
+        locales: ["de", "en", "es"],
+        publicLocales: ["de", "es"],
+        defaultLocale: "de"
+      })
+    ).toEqual(["es"])
+
+    expect(
+      bestLocalizedValue(
+        {
+          de: "",
+          en: "",
+          es: "Sueño celeste"
+        },
+        ["es", "de"]
+      )
+    ).toBe("Sueño celeste")
   })
 })

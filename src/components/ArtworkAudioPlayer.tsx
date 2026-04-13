@@ -7,6 +7,7 @@ type Props = {
   autoStartMedia?: string
   locale: Locale
   src: string
+  subtitle?: string
   title: string
 }
 
@@ -21,6 +22,7 @@ export function ArtworkAudioPlayer({
   autoStartMedia,
   locale,
   src,
+  subtitle,
   title
 }: Props) {
   const copy = audioCopy[locale]
@@ -136,7 +138,14 @@ export function ArtworkAudioPlayer({
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400">
             {copy.duration}
           </p>
-          <h3 className="mt-1 text-lg font-semibold text-slate-900 dark:text-white">{title}</h3>
+          <h3 className="mt-1 text-lg font-semibold text-slate-900 dark:text-white">
+            {title}
+          </h3>
+          {subtitle ? (
+            <p className="mt-1 text-sm italic text-slate-500 dark:text-slate-400">
+              {subtitle}
+            </p>
+          ) : null}
         </div>
         <button
           className="ring-brand min-w-[7.5rem] rounded-full bg-[color:var(--brand-accent)] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_16px_36px_-18px_var(--brand-accent)] transition hover:-translate-y-0.5 hover:shadow-[0_20px_40px_-18px_var(--brand-accent)]"

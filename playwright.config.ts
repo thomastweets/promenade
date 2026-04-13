@@ -10,6 +10,7 @@ export default defineConfig({
   testDir: "./tests/e2e",
   globalSetup: "./tests/e2e/global.setup.ts",
   timeout: 60_000,
+  workers: 1,
   expect: {
     timeout: 10_000
   },
@@ -26,7 +27,7 @@ export default defineConfig({
       reuseExistingServer: false
     },
     {
-      command: `export SHOW=demo-show SHOWS_DIR=${showDir} PORT=${apiPort} STUDIO_API_ORIGIN=http://127.0.0.1:${apiPort} STUDIO_ALLOW_MOCK_AI=true && npx tsx watch studio/server/index.ts`,
+      command: `unset OPENAI_API_KEY ELEVENLABS_API_KEY ELEVENLABS_VOICE_IDS ELEVENLABS_DE_VOICE_ID ELEVENLABS_EN_VOICE_ID ELEVENLABS_ES_VOICE_ID && export SHOW=demo-show SHOWS_DIR=${showDir} PORT=${apiPort} STUDIO_API_ORIGIN=http://127.0.0.1:${apiPort} STUDIO_ALLOW_MOCK_AI=true && npx tsx watch studio/server/index.ts`,
       url: `http://127.0.0.1:${apiPort}/health`,
       reuseExistingServer: false
     },

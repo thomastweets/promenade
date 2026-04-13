@@ -6,15 +6,23 @@
   "year": "1908",
   "title": {
     "de": "Der Kuss",
-    "en": "The Kiss"
+    "en": "The Kiss",
+    "es": ""
+  },
+  "sourceDescription": {
+    "de": "Ein Meisterwerk des Jugendstils, das ein sich umarmendes Paar in goldenen Ornamenten zeigt. Die reiche Verwendung von Gold und die dekorativen Muster sind charakteristisch für Klimts einzigartigen Stil.",
+    "en": "A masterpiece of Art Nouveau showing an embracing couple in golden ornaments. The rich use of gold and decorative patterns are characteristic of Klimt's unique style.",
+    "es": ""
   },
   "description": {
     "de": "Ein Meisterwerk des Jugendstils, das ein sich umarmendes Paar in goldenen Ornamenten zeigt. Die reiche Verwendung von Gold und die dekorativen Muster sind charakteristisch für Klimts einzigartigen Stil.",
-    "en": "A masterpiece of Art Nouveau showing an embracing couple in golden ornaments. The rich use of gold and decorative patterns are characteristic of Klimt's unique style."
+    "en": "A masterpiece of Art Nouveau showing an embracing couple in golden ornaments. The rich use of gold and decorative patterns are characteristic of Klimt's unique style.",
+    "es": ""
   },
   "material": {
     "de": "",
-    "en": ""
+    "en": "",
+    "es": ""
   },
   "dimensions": "",
   "images": [
@@ -22,7 +30,8 @@
       "src": "/shows/demo-show/media/images/09-main.svg",
       "alt": {
         "de": "Der Kuss – Ansicht 1",
-        "en": "The Kiss – View 1"
+        "en": "The Kiss – View 1",
+        "es": ""
       },
       "kind": "hero"
     },
@@ -30,7 +39,8 @@
       "src": "/shows/demo-show/media/images/09-detail-1.svg",
       "alt": {
         "de": "Der Kuss – Ansicht 2",
-        "en": "The Kiss – View 2"
+        "en": "The Kiss – View 2",
+        "es": ""
       },
       "kind": "detail"
     },
@@ -38,21 +48,35 @@
       "src": "/shows/demo-show/media/images/09-detail-2.svg",
       "alt": {
         "de": "Der Kuss – Ansicht 3",
-        "en": "The Kiss – View 3"
+        "en": "The Kiss – View 3",
+        "es": ""
       },
       "kind": "detail"
     }
   ],
+  "audioCues": {
+    "de": "",
+    "en": "",
+    "es": ""
+  },
   "audio": {
     "de": "/shows/demo-show/media/audio/09-de.wav",
-    "en": "/shows/demo-show/media/audio/09-en.wav"
+    "en": "/shows/demo-show/media/audio/09-en.wav",
+    "es": ""
   },
   "translationStatus": {
     "de": "human",
-    "en": "approved"
+    "en": "approved",
+    "es": "missing"
+  },
+  "audioCueStatus": {
+    "de": "missing",
+    "en": "missing",
+    "es": "missing"
   },
   "audioStatus": {
     "de": "ready",
-    "en": "ready"
+    "en": "ready",
+    "es": "missing"
   }
 }

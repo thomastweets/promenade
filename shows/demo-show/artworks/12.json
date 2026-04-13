@@ -1,0 +1,55 @@
+{
+  "id": "12",
+  "number": 12,
+  "slug": "still-life-study-in-ochre",
+  "guideMode": "signage-only",
+  "artist": "Eva Schneider",
+  "year": "2026",
+  "title": {
+    "de": "Stillleben in Ocker",
+    "en": "Still Life in Ochre",
+    "es": ""
+  },
+  "sourceDescription": {
+    "de": "",
+    "en": "",
+    "es": ""
+  },
+  "description": {
+    "de": "",
+    "en": "",
+    "es": ""
+  },
+  "material": {
+    "de": "Eitempera und Kreide auf Holz",
+    "en": "Egg tempera and chalk on panel",
+    "es": ""
+  },
+  "dimensions": "120 × 90 cm",
+  "images": [],
+  "audioCues": {
+    "de": "",
+    "en": "",
+    "es": ""
+  },
+  "audio": {
+    "de": "",
+    "en": "",
+    "es": ""
+  },
+  "translationStatus": {
+    "de": "human",
+    "en": "approved",
+    "es": "missing"
+  },
+  "audioCueStatus": {
+    "de": "missing",
+    "en": "missing",
+    "es": "missing"
+  },
+  "audioStatus": {
+    "de": "missing",
+    "en": "missing",
+    "es": "missing"
+  }
+}

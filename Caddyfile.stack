@@ -1,0 +1,90 @@
+:80 {
+  @studio_session header_regexp Cookie "(^|;\\s*)studio_session={$STUDIO_SESSION_TOKEN}(;|$)"
+
+  route {
+    redir /studio /studio/ 308
+
+    @studio_api path /studio/api /studio/api/* /studio/shows /studio/shows/* /studio/icons /studio/icons/*
+    handle @studio_api {
+      route {
+        handle @studio_session {
+          uri strip_prefix /studio
+          reverse_proxy studio-api:8787 {
+            header_up X-Forwarded-Proto {http.request.header.X-Forwarded-Proto}
+            header_up X-Forwarded-Host {http.request.header.X-Forwarded-Host}
+          }
+        }
+
+        basic_auth {
+          {$STUDIO_USERNAME} {$STUDIO_PASSWORD_HASH}
+        }
+        header +Set-Cookie "studio_session={$STUDIO_SESSION_TOKEN}; Path=/studio; HttpOnly; SameSite=Lax; Max-Age=604800"
+        uri strip_prefix /studio
+        reverse_proxy studio-api:8787 {
+          header_up X-Forwarded-Proto {http.request.header.X-Forwarded-Proto}
+          header_up X-Forwarded-Host {http.request.header.X-Forwarded-Host}
+        }
+      }
+    }
+
+    @studio_ui path /studio/*
+    handle @studio_ui {
+      route {
+        handle @studio_session {
+          uri strip_prefix /studio
+          reverse_proxy studio-ui:80 {
+            header_up X-Forwarded-Proto {http.request.header.X-Forwarded-Proto}
+            header_up X-Forwarded-Host {http.request.header.X-Forwarded-Host}
+          }
+        }
+
+        basic_auth {
+          {$STUDIO_USERNAME} {$STUDIO_PASSWORD_HASH}
+        }
+        header +Set-Cookie "studio_session={$STUDIO_SESSION_TOKEN}; Path=/studio; HttpOnly; SameSite=Lax; Max-Age=604800"
+        uri strip_prefix /studio
+        reverse_proxy studio-ui:80 {
+          header_up X-Forwarded-Proto {http.request.header.X-Forwarded-Proto}
+          header_up X-Forwarded-Host {http.request.header.X-Forwarded-Host}
+        }
+      }
+    }
+
+    handle {
+      root * /srv/dist
+      encode gzip zstd
+      try_files {path} {path}/index.html /index.html
+      file_server
+
+      @hashed_assets {
+        path /_astro/*
+      }
+
+      @service_worker {
+        path /sw.js
+      }
+
+      @html {
+        path / *.html /de /de/* /en /en/* /es /es/*
+      }
+
+      @show_assets {
+        path /shows/*
+      }
+
+      @site_meta {
+        path /site.webmanifest *.json *.ico *.svg
+      }
+
+      header @hashed_assets Cache-Control "public, max-age=31536000, immutable"
+      header @service_worker Cache-Control "no-cache, no-store, must-revalidate"
+      header @html Cache-Control "no-cache, must-revalidate"
+      header @show_assets Cache-Control "public, max-age=0, must-revalidate"
+      header @site_meta Cache-Control "public, max-age=0, must-revalidate"
+      header {
+        X-Content-Type-Options "nosniff"
+        Referrer-Policy "strict-origin-when-cross-origin"
+      }
+    }
+  }
+}

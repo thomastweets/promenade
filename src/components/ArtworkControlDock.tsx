@@ -13,12 +13,13 @@ type Props = {
   autoStart?: boolean
   autoStartMedia?: string
   artist: string
-  artworkId: string
+  guideNumber: string
   locale: Locale
   nextArtwork?: DockTarget
   previousArtwork?: DockTarget
   showId: string
   src?: string
+  subtitle?: string
   title: string
   year?: string
 }
@@ -35,12 +36,13 @@ export function ArtworkControlDock({
   autoStart = false,
   autoStartMedia,
   artist,
-  artworkId,
+  guideNumber,
   locale,
   nextArtwork,
   previousArtwork,
   showId,
   src,
+  subtitle,
   title,
   year
 }: Props) {
@@ -295,12 +297,17 @@ export function ArtworkControlDock({
       >
         <div className="flex items-center gap-3">
           <div className="rounded-full bg-[color:var(--brand-accent-soft)] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.28em] text-[color:var(--brand-accent)] dark:bg-white/10 dark:text-white">
-            {artworkId}
+            {guideNumber}
           </div>
           <div className="min-w-0 flex-1">
             <p className="truncate text-sm font-semibold text-slate-950 dark:text-white">
               {title}
             </p>
+            {subtitle ? (
+              <p className="truncate text-[11px] italic text-slate-500 dark:text-slate-400">
+                {subtitle}
+              </p>
+            ) : null}
             <p className="truncate text-[12px] text-slate-600 dark:text-slate-300">
               {metaLine || dockLabels.currentArtwork}
             </p>
@@ -393,7 +400,9 @@ export function ArtworkControlDock({
           </button>
         </div>
 
-        {src ? <audio ref={audioRef} preload="metadata" src={src}></audio> : null}
+        {src ? (
+          <audio ref={audioRef} preload="metadata" src={src}></audio>
+        ) : null}
       </div>
     </div>
   )

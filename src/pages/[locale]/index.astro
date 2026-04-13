@@ -1,21 +1,31 @@
 ---
 import { loadShowBundleSync } from "@lib/content"
+import { buildGuideStationLookup } from "@lib/guide-stations"
 import { localize } from "@lib/i18n"
 import { buildLocalePath } from "@lib/routing"
-import type { Locale } from "@lib/schema"
+import { getShowPublicLocales, isGuidedArtwork, type Locale } from "@lib/schema"
 import { homeCopy } from "@lib/ui"
 import ArtworkCard from "@web/components/ArtworkCard.astro"
 import { EntryPanel } from "@web/components/EntryPanel"
 import BaseLayout from "@web/layouts/BaseLayout.astro"
 
 export function getStaticPaths() {
-  return [{ params: { locale: "de" } }, { params: { locale: "en" } }]
+  const bundle = loadShowBundleSync()
+  return getShowPublicLocales(bundle.show).map((locale) => ({
+    params: { locale }
+  }))
 }
 
 const locale = Astro.params.locale as Locale
 const bundle = loadShowBundleSync()
+const guideArtworks = bundle.artworks.filter(isGuidedArtwork)
+const guideStations = buildGuideStationLookup(bundle.artworks)
+const publicLocales = getShowPublicLocales(bundle.show)
 const copy = homeCopy[locale]
-const highlights = bundle.artworks.slice(0, 3)
+const highlights = guideArtworks.slice(0, 3)
+const artistCount = new Set(
+  guideArtworks.map((artwork) => artwork.artist.trim()).filter(Boolean)
+).size
 ---
 
 <BaseLayout
@@ -23,10 +33,10 @@ const highlights = bundle.artworks.slice(0, 3)
   description={localize(locale, bundle.show.subtitle)}
   locale={locale}
   show={bundle.show}
-  title={`${localize(locale, bundle.show.title)} · Promenade`}
+  title={`${localize(locale, bundle.show.title)} · ${bundle.show.organization.name}`}
 >
   <section class="hero-grid border-b border-white/50 dark:border-white/10">
-    <div class="mx-auto grid max-w-7xl gap-10 px-4 py-14 md:grid-cols-[1.15fr_0.85fr] md:px-8 md:py-20">
+    <div class="mx-auto grid max-w-7xl gap-10 px-4 py-14 md:grid-cols-[1.12fr_0.88fr] md:px-8 md:py-20">
       <div>
         <p class="text-sm font-semibold uppercase tracking-[0.4em] text-[color:var(--brand-accent)]">
           {copy.kicker}
@@ -43,15 +53,15 @@ const highlights = bundle.artworks.slice(0, 3)
         <div class="mt-8 grid max-w-2xl grid-cols-3 gap-4">
           <div class="surface-card rounded-[1.5rem] p-4">
             <p class="text-xs uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400">{copy.statsArtworks}</p>
-            <p class="mt-2 text-3xl font-semibold text-slate-900 dark:text-white">{bundle.artworks.length}</p>
+            <p class="mt-2 text-3xl font-semibold text-slate-900 dark:text-white">{guideArtworks.length}</p>
+          </div>
+          <div class="surface-card rounded-[1.5rem] p-4">
+            <p class="text-xs uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400">{copy.statsArtists}</p>
+            <p class="mt-2 text-3xl font-semibold text-slate-900 dark:text-white">{artistCount}</p>
           </div>
           <div class="surface-card rounded-[1.5rem] p-4">
             <p class="text-xs uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400">{copy.statsLocales}</p>
-            <p class="mt-2 text-3xl font-semibold text-slate-900 dark:text-white">{bundle.show.locales.length}</p>
-          </div>
-          <div class="surface-card rounded-[1.5rem] p-4">
-            <p class="text-xs uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400">{copy.statsMode}</p>
-            <p class="mt-2 text-sm font-semibold text-slate-900 dark:text-white">{copy.statsModeValue}</p>
+            <p class="mt-2 text-3xl font-semibold text-slate-900 dark:text-white">{publicLocales.length}</p>
           </div>
         </div>
       </div>
@@ -75,7 +85,7 @@ const highlights = bundle.artworks.slice(0, 3)
     <div class="mb-8 flex items-end justify-between gap-6">
       <div>
         <p class="text-sm font-semibold uppercase tracking-[0.35em] text-[color:var(--brand-accent)]">
-          Promenade
+          {copy.highlightsEyebrow}
         </p>
         <h2 class="display-type mt-3 text-4xl text-slate-950 dark:text-white">{copy.highlightsHeading}</h2>
       </div>
@@ -83,8 +93,24 @@ const highlights = bundle.artworks.slice(0, 3)
         {copy.browseButton}
       </a>
     </div>
-    <div class="grid gap-6 md:grid-cols-3">
-      {highlights.map((artwork) => <ArtworkCard artwork={artwork} locale={locale} />)}
-    </div>
+    {highlights.length ? (
+      <div class="grid gap-6 md:grid-cols-3">
+        {highlights.map((artwork) => (
+          <ArtworkCard
+            artwork={artwork}
+            locale={locale}
+            stationId={guideStations.get(artwork.id)?.stationId ?? artwork.id}
+          />
+        ))}
+      </div>
+    ) : (
+      <div class="surface-card rounded-[1.75rem] p-6 text-sm leading-7 text-slate-600 dark:text-slate-300">
+        {locale === "de"
+          ? "Die ersten Audioguide-Werke erscheinen hier, sobald sie fuer Besucherinnen und Besucher freigeschaltet sind."
+          : locale === "es"
+            ? "Las primeras obras de la audioguía aparecerán aquí en cuanto se publiquen para las y los visitantes."
+            : "Audio-guide works will appear here once they are released for visitors."}
+      </div>
+    )}
   </section>
 </BaseLayout>

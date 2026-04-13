@@ -1,5 +1,5 @@
 import {
-  buildArtworkPath,
+  buildGuideArtworkPath,
   formatArtworkId,
   parseArtworkTargetFromQrInput
 } from "@lib/routing"
@@ -95,7 +95,7 @@ export function useArtworkEntry({ locale, showId }: Options) {
 
     setError("")
     window.location.assign(
-      buildArtworkPath(locale, { id: formatArtworkId(value) })
+      buildGuideArtworkPath(locale, formatArtworkId(value))
     )
   }
 

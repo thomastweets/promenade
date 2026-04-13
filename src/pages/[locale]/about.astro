@@ -1,12 +1,15 @@
 ---
 import { loadShowBundleSync } from "@lib/content"
 import { localize } from "@lib/i18n"
-import type { Locale } from "@lib/schema"
+import { getShowPublicLocales, type Locale } from "@lib/schema"
 import ProseBlock from "@web/components/ProseBlock.astro"
 import BaseLayout from "@web/layouts/BaseLayout.astro"
 
 export function getStaticPaths() {
-  return [{ params: { locale: "de" } }, { params: { locale: "en" } }]
+  const bundle = loadShowBundleSync()
+  return getShowPublicLocales(bundle.show).map((locale) => ({
+    params: { locale }
+  }))
 }
 
 const locale = Astro.params.locale as Locale
@@ -44,7 +47,7 @@ const bundle = loadShowBundleSync()
     <div class="space-y-8">
       <div>
         <p class="text-sm font-semibold uppercase tracking-[0.35em] text-[color:var(--brand-accent)]">
-          Promenade
+          {bundle.show.organization.name}
         </p>
         <h2 class="display-type mt-3 text-5xl text-slate-950 dark:text-white">{localize(locale, bundle.show.title)}</h2>
       </div>

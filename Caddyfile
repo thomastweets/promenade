@@ -14,7 +14,7 @@
   }
 
   @html {
-    path / *.html /de /de/* /en /en/*
+    path / *.html /de /de/* /en /en/* /es /es/*
   }
 
   @show_assets {

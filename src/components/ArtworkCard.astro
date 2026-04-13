@@ -1,14 +1,22 @@
 ---
+import { getArtworkTitleParts } from "@lib/artwork-title"
 import { localize } from "@lib/i18n"
-import { buildArtworkPath } from "@lib/routing"
+import { buildGuideArtworkPath } from "@lib/routing"
 import type { Artwork, Locale } from "@lib/schema"
 
-const { artwork, locale } = Astro.props as {
+const { artwork, locale, stationId } = Astro.props as {
   artwork: Artwork
   locale: Locale
+  stationId: string
 }
 
-const href = buildArtworkPath(locale, artwork)
+const href = buildGuideArtworkPath(locale, stationId)
+const description = localize(locale, artwork.description).trim()
+const titleParts = getArtworkTitleParts(artwork, locale)
+const teaser =
+  description.length > 180
+    ? `${description.slice(0, 177).replace(/\s+\S*$/, "")}…`
+    : description
 ---
 
 <a
@@ -18,20 +26,27 @@ const href = buildArtworkPath(locale, artwork)
   <img
     class="artwork-image"
     src={artwork.images[0]?.src}
-    alt={localize(locale, artwork.images[0]?.alt ?? { de: artwork.artist, en: artwork.artist })}
+    alt={localize(locale, artwork.images[0]?.alt ?? { de: artwork.artist, en: artwork.artist, es: artwork.artist })}
     loading="lazy"
   />
   <div class="flex flex-1 flex-col gap-3 p-5">
     <span class="text-sm font-medium uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400">
-      {artwork.id}
+      {stationId}
     </span>
-    <h3 class="display-type text-2xl text-slate-900 dark:text-white">{localize(locale, artwork.title)}</h3>
+    <div class="space-y-0.5">
+      <h3 class="display-type line-clamp-2 text-2xl leading-[1.02] text-slate-900 dark:text-white">
+        {titleParts.title}
+      </h3>
+      <p class:list={["min-h-[0.95rem] line-clamp-1 text-[0.76rem] leading-[0.95rem] italic text-slate-500 dark:text-slate-400", !titleParts.subtitle && "invisible"]}>
+        {titleParts.subtitle || " "}
+      </p>
+    </div>
     <p class="text-sm font-medium text-[color:var(--brand-accent)]">
       {artwork.artist}
       {artwork.year ? ` · ${artwork.year}` : ""}
     </p>
     <p class="line-clamp-4 text-sm leading-6 text-slate-600 dark:text-slate-300">
-      {localize(locale, artwork.description)}
+      {teaser}
     </p>
   </div>
 </a>

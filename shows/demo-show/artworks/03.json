@@ -6,15 +6,23 @@
   "year": "1485",
   "title": {
     "de": "Die Geburt der Venus",
-    "en": "The Birth of Venus"
+    "en": "The Birth of Venus",
+    "es": ""
+  },
+  "sourceDescription": {
+    "de": "Ein Meisterwerk der italienischen Renaissance, das die römische Göttin Venus darstellt, wie sie an der Küste ankommt. Die anmutige Komposition und die mythologische Symbolik machen es zu einem der bedeutendsten Werke seiner Zeit.",
+    "en": "A masterpiece of Italian Renaissance depicting the Roman goddess Venus arriving at the shore. The graceful composition and mythological symbolism make it one of the most significant works of its time.",
+    "es": ""
   },
   "description": {
     "de": "Ein Meisterwerk der italienischen Renaissance, das die römische Göttin Venus darstellt, wie sie an der Küste ankommt. Die anmutige Komposition und die mythologische Symbolik machen es zu einem der bedeutendsten Werke seiner Zeit.",
-    "en": "A masterpiece of Italian Renaissance depicting the Roman goddess Venus arriving at the shore. The graceful composition and mythological symbolism make it one of the most significant works of its time."
+    "en": "A masterpiece of Italian Renaissance depicting the Roman goddess Venus arriving at the shore. The graceful composition and mythological symbolism make it one of the most significant works of its time.",
+    "es": ""
   },
   "material": {
     "de": "",
-    "en": ""
+    "en": "",
+    "es": ""
   },
   "dimensions": "",
   "images": [
@@ -22,7 +30,8 @@
       "src": "/shows/demo-show/media/images/03-main.svg",
       "alt": {
         "de": "Die Geburt der Venus – Ansicht 1",
-        "en": "The Birth of Venus – View 1"
+        "en": "The Birth of Venus – View 1",
+        "es": ""
       },
       "kind": "hero"
     },
@@ -30,7 +39,8 @@
       "src": "/shows/demo-show/media/images/03-detail-1.svg",
       "alt": {
         "de": "Die Geburt der Venus – Ansicht 2",
-        "en": "The Birth of Venus – View 2"
+        "en": "The Birth of Venus – View 2",
+        "es": ""
       },
       "kind": "detail"
     },
@@ -38,21 +48,35 @@
       "src": "/shows/demo-show/media/images/03-detail-2.svg",
       "alt": {
         "de": "Die Geburt der Venus – Ansicht 3",
-        "en": "The Birth of Venus – View 3"
+        "en": "The Birth of Venus – View 3",
+        "es": ""
       },
       "kind": "detail"
     }
   ],
+  "audioCues": {
+    "de": "",
+    "en": "",
+    "es": ""
+  },
   "audio": {
     "de": "/shows/demo-show/media/audio/03-de.wav",
-    "en": "/shows/demo-show/media/audio/03-en.wav"
+    "en": "/shows/demo-show/media/audio/03-en.wav",
+    "es": ""
   },
   "translationStatus": {
     "de": "human",
-    "en": "approved"
+    "en": "approved",
+    "es": "missing"
+  },
+  "audioCueStatus": {
+    "de": "missing",
+    "en": "missing",
+    "es": "missing"
   },
   "audioStatus": {
     "de": "ready",
-    "en": "ready"
+    "en": "ready",
+    "es": "missing"
   }
 }

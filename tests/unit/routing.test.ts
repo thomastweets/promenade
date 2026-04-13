@@ -1,21 +1,35 @@
-import { buildArtworkPath, parseArtworkTargetFromQrInput } from "@lib/routing"
+import {
+  buildArtworkPath,
+  buildGuideArtworkPath,
+  parseArtworkTargetFromQrInput
+} from "@lib/routing"
 import { describe, expect, it } from "vitest"
 
 describe("qr routing", () => {
-  it("maps plain artwork numbers to locale paths", () => {
+  it("maps plain guide numbers to guide paths", () => {
     expect(parseArtworkTargetFromQrInput("7", "de", { id: "demo-show" })).toBe(
-      buildArtworkPath("de", { id: "07" })
+      buildGuideArtworkPath("de", "07")
     )
   })
 
-  it("maps absolute URLs with route paths", () => {
+  it("maps absolute URLs with guide paths", () => {
+    expect(
+      parseArtworkTargetFromQrInput(
+        "https://promenade.example.com/en/guide/03/",
+        "de",
+        { id: "demo-show" }
+      )
+    ).toBe("/de/guide/03/")
+  })
+
+  it("keeps legacy artwork-id paths intact", () => {
     expect(
       parseArtworkTargetFromQrInput(
         "https://promenade.example.com/en/artworks/03/",
         "de",
         { id: "demo-show" }
       )
-    ).toBe("/de/artworks/03/")
+    ).toBe(buildArtworkPath("de", { id: "03" }))
   })
 
   it("maps legacy query-string URLs", () => {

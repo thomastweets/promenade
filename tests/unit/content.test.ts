@@ -32,9 +32,16 @@ describe("content authoring drafts", () => {
     const artwork = createEmptyArtwork()
 
     expect(artwork.artist).toBe("")
+    expect(artwork.guideMode).toBe("guided")
     expect(artwork.images).toEqual([])
-    expect(artwork.audioCues).toEqual({ de: "", en: "" })
+    expect(artwork.audioCues).toEqual({ de: "", en: "", es: "" })
+    expect(artwork.sourceLocale).toBe("de")
+    expect(artwork.titleLocale).toBe("de")
+    expect(artwork.sourceDescription).toEqual({ de: "", en: "", es: "" })
+    expect(artwork.narrationRecord.de.speechText).toBe("")
+    expect(artwork.narrationRecord.de.provider).toBe("none")
     expect(artwork.title.de).toBe("")
+    expect(artwork.titleSubtitle).toEqual({ de: "", en: "", es: "" })
     expect(artwork.audioCueStatus.de).toBe("missing")
     expect(artwork.audioStatus.de).toBe("missing")
   })
@@ -49,5 +56,25 @@ describe("content authoring drafts", () => {
     expect(artwork.id).toBe(`${expectedNumber}`.padStart(2, "0"))
     expect(artwork.number).toBe(expectedNumber)
     expect(artwork.slug).toBe(`artwork-${`${expectedNumber}`.padStart(2, "0")}`)
+  })
+
+  it("exposes a filtered guide-artwork list for the public app", async () => {
+    const { loadGuideArtworksSync, loadArtworksSync, writeArtworkSync } =
+      await loadSeededContentModule()
+    const artworks = loadArtworksSync()
+    const initialGuideArtworks = loadGuideArtworksSync()
+    const signageOnly = {
+      ...artworks[0],
+      guideMode: "signage-only" as const
+    }
+
+    writeArtworkSync("demo-show", signageOnly)
+
+    const guideArtworks = loadGuideArtworksSync()
+
+    expect(guideArtworks).toHaveLength(initialGuideArtworks.length - 1)
+    expect(guideArtworks.some((artwork) => artwork.id === signageOnly.id)).toBe(
+      false
+    )
   })
 })

@@ -1,12 +1,15 @@
 ---
 import { loadShowBundleSync } from "@lib/content"
 import { localize } from "@lib/i18n"
-import type { Locale } from "@lib/schema"
+import { getShowPublicLocales, type Locale } from "@lib/schema"
 import { helpLabels } from "@lib/ui"
 import BaseLayout from "@web/layouts/BaseLayout.astro"
 
 export function getStaticPaths() {
-  return [{ params: { locale: "de" } }, { params: { locale: "en" } }]
+  const bundle = loadShowBundleSync()
+  return getShowPublicLocales(bundle.show).map((locale) => ({
+    params: { locale }
+  }))
 }
 
 const locale = Astro.params.locale as Locale

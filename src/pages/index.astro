@@ -1,24 +1,27 @@
 ---
-import { getServerEnv } from "@lib/env.server"
+import { loadShowBundleSync } from "@lib/content"
+import { localize } from "@lib/i18n"
+import { getShowPublicLocales } from "@lib/schema"
 
-const fallbackLocale = getServerEnv().DEFAULT_LOCALE
+const show = loadShowBundleSync().show
+const fallbackLocale = show.defaultLocale
+const supportedLocales = getShowPublicLocales(show)
 ---
 
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1" name="viewport" />
-    <title>Promenade</title>
+    <title>{localize(show.defaultLocale, show.title)}</title>
   </head>
   <body>
-    <script define:vars={{ fallbackLocale }} is:inline>
+    <script define:vars={{ fallbackLocale, supportedLocales }} is:inline>
       const stored = window.localStorage.getItem("promenade-locale");
       const languages = navigator.languages ?? [navigator.language];
-      const supported = ["de", "en"];
       const normalize = (value) => {
         if (!value) return null;
         const short = value.toLowerCase().split("-")[0];
-        return supported.includes(short) ? short : null;
+        return supportedLocales.includes(short) ? short : null;
       };
       const locale =
         normalize(stored) ||
@@ -32,4 +35,3 @@ const fallbackLocale = getServerEnv().DEFAULT_LOCALE
     </p>
   </body>
 </html>
-

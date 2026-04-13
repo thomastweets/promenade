@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./font-faces.css";
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
@@ -12,8 +13,9 @@
 
 @theme {
   --font-display:
-    "Iowan Old Style", "Palatino Linotype", "Book Antiqua", "Georgia", serif;
-  --font-sans: "Inter", "Avenir Next", "Segoe UI", sans-serif;
+    "Source Serif 4", "Iowan Old Style", "Palatino Linotype", "Book Antiqua",
+    "Georgia", serif;
+  --font-sans: "Source Sans 3", "Inter", "Avenir Next", "Segoe UI", sans-serif;
 }
 
 html[data-theme="light"] {
@@ -58,6 +60,7 @@ html[data-theme="dark"] body {
 
 .display-type {
   font-family: var(--font-display);
+  font-optical-sizing: auto;
 }
 
 .surface-card {

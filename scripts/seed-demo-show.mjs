@@ -4,8 +4,247 @@ import yaml from "js-yaml"
 
 const seedPrompt = {
   de: "Sprich wie eine kluge, ruhige Museumsbegleitung: warm, klar, aufmerksam und nie effekthascherisch. Betone Atmosphäre, Materialität und räumliche Wahrnehmung, lasse kurze Pausen nach gedanklich dichten Sätzen und formuliere so, dass Besucherinnen und Besucher gern weiter zuhören.",
-  en: "Speak like a thoughtful museum guide: warm, observant, calm, and never theatrical. Emphasize atmosphere, materiality, and spatial perception, leave short pauses after dense ideas, and phrase the narration so visitors want to keep listening."
+  en: "Speak like a thoughtful museum guide: warm, observant, calm, and never theatrical. Emphasize atmosphere, materiality, and spatial perception, leave short pauses after dense ideas, and phrase the narration so visitors want to keep listening.",
+  es: ""
 }
+
+function withEmptySpanish(record) {
+  return {
+    ...record,
+    es: record.es ?? ""
+  }
+}
+
+function createAuthoritativeTitleRecord(title) {
+  const normalized = `${title ?? ""}`.trim()
+  return {
+    de: normalized,
+    en: normalized,
+    es: normalized
+  }
+}
+
+function createTitleSubtitleRecord(
+  record,
+  authoritativeTitle,
+  titleLocale = "de"
+) {
+  const normalizedTitle = `${authoritativeTitle ?? ""}`.trim()
+  const values = withEmptySpanish(record || {})
+
+  return {
+    de:
+      titleLocale === "de" || `${values.de ?? ""}`.trim() === normalizedTitle
+        ? ""
+        : `${values.de ?? ""}`.trim(),
+    en:
+      titleLocale === "en" || `${values.en ?? ""}`.trim() === normalizedTitle
+        ? ""
+        : `${values.en ?? ""}`.trim(),
+    es:
+      titleLocale === "es" || `${values.es ?? ""}`.trim() === normalizedTitle
+        ? ""
+        : `${values.es ?? ""}`.trim()
+  }
+}
+
+function withDefaultLocaleStatuses(
+  record,
+  defaultLocale = "de",
+  fallback = "missing"
+) {
+  return {
+    de: record.de ?? (defaultLocale === "de" ? "human" : fallback),
+    en: record.en ?? (defaultLocale === "en" ? "human" : fallback),
+    es: record.es ?? (defaultLocale === "es" ? "human" : fallback)
+  }
+}
+
+const signageOnlyFixtures = [
+  {
+    id: "12",
+    number: 12,
+    slug: "still-life-study-in-ochre",
+    guideMode: "signage-only",
+    artist: "Eva Schneider",
+    year: "2026",
+    sourceLocale: "de",
+    titleLocale: "de",
+    title: createAuthoritativeTitleRecord("Stillleben in Ocker"),
+    titleSubtitle: createTitleSubtitleRecord(
+      {
+        de: "Stillleben in Ocker",
+        en: "Still Life in Ochre",
+        es: ""
+      },
+      "Stillleben in Ocker"
+    ),
+    sourceDescription: {
+      de: "",
+      en: "",
+      es: ""
+    },
+    description: {
+      de: "",
+      en: "",
+      es: ""
+    },
+    material: {
+      de: "Eitempera und Kreide auf Holz",
+      en: "Egg tempera and chalk on panel",
+      es: ""
+    },
+    dimensions: "120 × 90 cm",
+    images: [],
+    audioCues: {
+      de: "",
+      en: "",
+      es: ""
+    },
+    audio: {
+      de: "",
+      en: "",
+      es: ""
+    },
+    translationStatus: {
+      de: "human",
+      en: "approved",
+      es: "missing"
+    },
+    audioCueStatus: {
+      de: "missing",
+      en: "missing",
+      es: "missing"
+    },
+    audioStatus: {
+      de: "missing",
+      en: "missing",
+      es: "missing"
+    }
+  },
+  {
+    id: "13",
+    number: 13,
+    slug: "archive-of-traces",
+    guideMode: "signage-only",
+    artist: "Murat Kaya",
+    year: "",
+    sourceLocale: "de",
+    titleLocale: "de",
+    title: createAuthoritativeTitleRecord("Archiv der Spuren"),
+    titleSubtitle: createTitleSubtitleRecord(
+      {
+        de: "Archiv der Spuren",
+        en: "Archive of Traces",
+        es: ""
+      },
+      "Archiv der Spuren"
+    ),
+    sourceDescription: {
+      de: "",
+      en: "",
+      es: ""
+    },
+    description: {
+      de: "",
+      en: "",
+      es: ""
+    },
+    material: {
+      de: "Pigment, Wachs und Papier",
+      en: "Pigment, wax, and paper",
+      es: ""
+    },
+    dimensions: "180 × 60 cm",
+    images: [],
+    audioCues: {
+      de: "",
+      en: "",
+      es: ""
+    },
+    audio: {
+      de: "",
+      en: "",
+      es: ""
+    },
+    translationStatus: {
+      de: "human",
+      en: "approved",
+      es: "missing"
+    },
+    audioCueStatus: {
+      de: "missing",
+      en: "missing",
+      es: "missing"
+    },
+    audioStatus: {
+      de: "missing",
+      en: "missing",
+      es: "missing"
+    }
+  },
+  {
+    id: "14",
+    number: 14,
+    slug: "untitled-blue-study",
+    guideMode: "signage-only",
+    artist: "Leonie Hartmann",
+    year: "2025",
+    sourceLocale: "de",
+    titleLocale: "de",
+    title: createAuthoritativeTitleRecord("Ohne Titel (Blaue Studie)"),
+    titleSubtitle: createTitleSubtitleRecord(
+      {
+        de: "Ohne Titel (Blaue Studie)",
+        en: "Untitled (Blue Study)",
+        es: ""
+      },
+      "Ohne Titel (Blaue Studie)"
+    ),
+    sourceDescription: {
+      de: "",
+      en: "",
+      es: ""
+    },
+    description: {
+      de: "",
+      en: "",
+      es: ""
+    },
+    material: {
+      de: "",
+      en: "",
+      es: ""
+    },
+    dimensions: "",
+    images: [],
+    audioCues: {
+      de: "",
+      en: "",
+      es: ""
+    },
+    audio: {
+      de: "",
+      en: "",
+      es: ""
+    },
+    translationStatus: {
+      de: "human",
+      en: "approved",
+      es: "missing"
+    },
+    audioCueStatus: {
+      de: "missing",
+      en: "missing",
+      es: "missing"
+    },
+    audioStatus: {
+      de: "missing",
+      en: "missing",
+      es: "missing"
+    }
+  }
+]
 
 function parseFrontmatter(filePath) {
   const raw = fs.readFileSync(filePath, "utf8")
@@ -52,7 +291,7 @@ function createSvgMarkup(artwork, variantIndex) {
   <circle cx="${1020 - variantIndex * 90}" cy="${720 - variantIndex * 45}" r="${210 - variantIndex * 15}" fill="${ink}" opacity="0.10" />
   <rect x="96" y="120" width="1088" height="720" rx="42" fill="none" stroke="${ink}" stroke-width="8" opacity="0.72" />
   <text x="130" y="240" fill="${ink}" font-family="Georgia, serif" font-size="38" letter-spacing="3">PROMENADE</text>
-  <text x="130" y="360" fill="${ink}" font-family="Georgia, serif" font-size="84" font-weight="700">${artwork.title.en}</text>
+  <text x="130" y="360" fill="${ink}" font-family="Georgia, serif" font-size="84" font-weight="700">${artwork.titleSubtitle.en || artwork.title.en}</text>
   <text x="130" y="440" fill="${ink}" font-family="Arial, sans-serif" font-size="34">${artwork.artist} · ${artwork.year}</text>
   <text x="130" y="620" fill="${ink}" font-family="Arial, sans-serif" font-size="30">${artwork.description.en.slice(0, 120)}</text>
   <text x="130" y="760" fill="${ink}" font-family="Arial, sans-serif" font-size="28" opacity="0.78">Sample placeholder image ${variantIndex + 1}</text>
@@ -143,18 +382,25 @@ export async function seedDemoShow({
     id: showId,
     slug: "promenade-demo-show",
     locales: ["de", "en"],
+    publicLocales: ["de", "en"],
     defaultLocale: "de",
-    title: exhibition.title,
-    subtitle: exhibition.subtitle,
-    intro: exhibition.start_page.text,
-    about: exhibition.vita.text,
+    title: withEmptySpanish(exhibition.title),
+    subtitle: withEmptySpanish(exhibition.subtitle),
+    intro: withEmptySpanish(exhibition.start_page.text),
+    about: withEmptySpanish(exhibition.vita.text),
+    researchNotes: {
+      de: "",
+      en: "",
+      es: ""
+    },
     help: {
       de: "Scannen Sie den QR-Code am Werk oder geben Sie die Werknummer ein. Bilder und Audio werden nach dem ersten Aufruf lokal zwischengespeichert, damit der Rundgang stabil weiterläuft.",
-      en: "Scan the QR code next to an artwork or enter the work number manually. Images and audio are cached after the first request so the tour remains usable with unstable connectivity."
+      en: "Scan the QR code next to an artwork or enter the work number manually. Images and audio are cached after the first request so the tour remains usable with unstable connectivity.",
+      es: ""
     },
-    footer: exhibition.footer.text,
+    footer: withEmptySpanish(exhibition.footer.text),
     organization: {
-      name: "Promenade Kunstverein",
+      name: "Promenade Gallery",
       website: exhibition.organisation.homepage,
       email: exhibition.organisation.contact.email,
       instagram: exhibition.organisation.social.instagram_handle
@@ -173,7 +419,8 @@ export async function seedDemoShow({
     },
     translationStatus: {
       de: "human",
-      en: "approved"
+      en: "approved",
+      es: "missing"
     },
     audioGuideStyle: seedPrompt
   }
@@ -194,6 +441,8 @@ export async function seedDemoShow({
     )
     const id = rawArtwork.id
     const number = Number.parseInt(id, 10)
+    const authoritativeTitle =
+      rawArtwork.title.de || rawArtwork.title.en || rawArtwork.title.es || ""
     const imageFiles = [
       `${id}-main.svg`,
       `${id}-detail-1.svg`,
@@ -206,39 +455,55 @@ export async function seedDemoShow({
     const artwork = {
       id,
       number,
-      slug: slugify(
-        rawArtwork.title.en || rawArtwork.title.de || `artwork-${id}`
-      ),
+      slug: slugify(authoritativeTitle || `artwork-${id}`),
       artist: rawArtwork.artist,
       year: `${rawArtwork.year || ""}`,
-      title: rawArtwork.title,
-      description: rawArtwork.description,
-      material: rawArtwork.material || { de: "", en: "" },
+      sourceLocale: "de",
+      titleLocale: "de",
+      title: createAuthoritativeTitleRecord(authoritativeTitle),
+      titleSubtitle: createTitleSubtitleRecord(
+        rawArtwork.title,
+        authoritativeTitle
+      ),
+      sourceDescription: withEmptySpanish(rawArtwork.description),
+      description: withEmptySpanish(rawArtwork.description),
+      material: withEmptySpanish(rawArtwork.material || { de: "", en: "" }),
       dimensions: rawArtwork.dimensions || "",
       images: imageFiles.map((imageFile, variantIndex) => ({
         src: `/shows/${showId}/media/images/${imageFile}`,
         alt: {
-          de: `${rawArtwork.title.de} – Ansicht ${variantIndex + 1}`,
-          en: `${rawArtwork.title.en} – View ${variantIndex + 1}`
+          de: `${authoritativeTitle} – Ansicht ${variantIndex + 1}`,
+          en: `${rawArtwork.title.en || authoritativeTitle} – View ${variantIndex + 1}`,
+          es: ""
         },
         kind: variantIndex === 0 ? "hero" : "detail"
       })),
       audioCues: {
         de: "",
-        en: ""
+        en: "",
+        es: ""
       },
-      audio: audioFiles,
-      translationStatus: {
-        de: "human",
-        en: "approved"
+      audio: {
+        ...audioFiles,
+        es: ""
       },
+      translationStatus: withDefaultLocaleStatuses(
+        {
+          de: "human",
+          en: "approved"
+        },
+        "de",
+        "missing"
+      ),
       audioCueStatus: {
         de: "missing",
-        en: "missing"
+        en: "missing",
+        es: "missing"
       },
       audioStatus: {
         de: "ready",
-        en: "ready"
+        en: "ready",
+        es: "missing"
       }
     }
 
@@ -267,6 +532,13 @@ export async function seedDemoShow({
     fs.writeFileSync(
       path.join(audioRoot, `${id}-en.wav`),
       createToneWavBuffer(number + 12)
+    )
+  }
+
+  for (const artwork of signageOnlyFixtures) {
+    fs.writeFileSync(
+      path.join(artworkRoot, `${artwork.id}.json`),
+      JSON.stringify(artwork, null, 2)
     )
   }
 }

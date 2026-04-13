@@ -1,5 +1,5 @@
-import type { Locale } from "./schema"
-import { supportedLocales } from "./schema"
+import type { Locale, LocalizedText, Show } from "./schema"
+import { getShowPublicLocales, supportedLocales } from "./schema"
 
 const localeSet = new Set<Locale>(supportedLocales)
 
@@ -37,10 +37,44 @@ export function resolvePreferredLocale(options: {
   return fallbackLocale
 }
 
-export function localize(locale: Locale, values: Record<Locale, string>) {
-  return values[locale] || values.de
+export function bestLocalizedValue(
+  values: LocalizedText,
+  preferredLocales: readonly Locale[] = supportedLocales
+) {
+  for (const locale of preferredLocales) {
+    const value = values[locale]?.trim()
+
+    if (value) {
+      return value
+    }
+  }
+
+  for (const locale of supportedLocales) {
+    const value = values[locale]?.trim()
+
+    if (value) {
+      return value
+    }
+  }
+
+  return ""
 }
 
-export function otherLocale(locale: Locale): Locale {
-  return locale === "de" ? "en" : "de"
+export function localize(
+  locale: Locale,
+  values: LocalizedText,
+  fallbackLocale: Locale = "de"
+) {
+  return (
+    values[locale]?.trim() ||
+    values[fallbackLocale]?.trim() ||
+    bestLocalizedValue(values)
+  )
+}
+
+export function getAlternateLocales(
+  locale: Locale,
+  show: Pick<Show, "locales" | "publicLocales" | "defaultLocale">
+) {
+  return getShowPublicLocales(show).filter((candidate) => candidate !== locale)
 }

@@ -15,9 +15,15 @@ node_modules/
 .env.docker
 .rewrite/
 .playwright-shows/
+.playwright-shows/.active-show
 tmp/
+.deploy/
+import/
+shows/.active-show
 shows/*/generated/
+shows/*-archive-*/
 public/shows/*/generated/
+public/shows/*-archive-*/
 
 # editors
 .idea/

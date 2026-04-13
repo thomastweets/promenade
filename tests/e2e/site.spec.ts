@@ -46,11 +46,35 @@ test("public guide follows system theme and persists overrides", async ({
   await page.goto("/de/")
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark")
 
+  await page.getByLabel("Ansicht").click()
   await page.getByRole("button", { name: "Hell" }).click()
   await expect(page.locator("html")).toHaveAttribute("data-theme", "light")
 
   await page.reload()
   await expect(page.locator("html")).toHaveAttribute("data-theme", "light")
+})
+
+test("public guide does not keep a service worker on localhost", async ({
+  page
+}, testInfo) => {
+  test.skip(
+    testInfo.project.name !== "chromium",
+    "The localhost service-worker policy is asserted on the desktop Chromium project."
+  )
+
+  await page.goto("/de/")
+  await expect
+    .poll(async () =>
+      page.evaluate(async () => {
+        if (!("serviceWorker" in navigator)) {
+          return 0
+        }
+
+        const registrations = await navigator.serviceWorker.getRegistrations()
+        return registrations.length
+      })
+    )
+    .toBe(0)
 })
 
 test("mobile artwork view keeps the guide dock on screen", async ({
@@ -97,5 +121,5 @@ test("mobile artwork view keeps the guide dock on screen", async ({
   await expect(artworkInput).toBeFocused()
 
   await dock.getByRole("button", { name: /^Nächstes Werk:/ }).click()
-  await expect(page).toHaveURL(/\/de\/artworks\/02\/$/)
+  await expect(page).toHaveURL(/\/de\/guide\/02\/$/)
 })

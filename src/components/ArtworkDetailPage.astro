@@ -1,0 +1,146 @@
+---
+import { getArtworkTitleParts } from "@lib/artwork-title"
+import { buildGuideStationLookup } from "@lib/guide-stations"
+import { localize } from "@lib/i18n"
+import { buildGuideArtworkPath } from "@lib/routing"
+import type { Artwork, Locale, Show } from "@lib/schema"
+import { ArtworkAudioPlayer } from "@web/components/ArtworkAudioPlayer"
+import { ArtworkControlDock } from "@web/components/ArtworkControlDock"
+import { ArtworkGallery } from "@web/components/ArtworkGallery"
+import ProseBlock from "@web/components/ProseBlock.astro"
+import BaseLayout from "@web/layouts/BaseLayout.astro"
+
+const { artwork, guideArtworks, locale, show } = Astro.props as {
+  artwork: Artwork
+  guideArtworks: Artwork[]
+  locale: Locale
+  show: Show
+}
+
+const guideStations = buildGuideStationLookup(guideArtworks)
+const guideStation = guideStations.get(artwork.id)
+const artworkIndex = guideArtworks.findIndex((entry) => entry.id === artwork.id)
+const previousArtwork = guideArtworks[artworkIndex - 1]
+const nextArtwork = guideArtworks[artworkIndex + 1]
+const previousGuideStation = previousArtwork
+  ? guideStations.get(previousArtwork.id)
+  : null
+const nextGuideStation = nextArtwork ? guideStations.get(nextArtwork.id) : null
+const titleParts = getArtworkTitleParts(artwork, locale)
+const stationId = guideStation?.stationId ?? artwork.id
+---
+
+<BaseLayout
+  compactMobileHeader={true}
+  currentPath={Astro.url.pathname}
+  description={localize(locale, artwork.description)}
+  hideFooterOnMobile={true}
+  locale={locale}
+  show={show}
+  title={`${titleParts.title} · ${artwork.artist}`}
+>
+  <ArtworkControlDock
+    autoStart={true}
+    autoStartMedia="(max-width: 767px)"
+    artist={artwork.artist}
+    guideNumber={stationId}
+    client:load
+    locale={locale}
+    nextArtwork={nextArtwork
+      ? {
+          href: buildGuideArtworkPath(
+            locale,
+            nextGuideStation?.stationId ?? nextArtwork.id
+          ),
+          id: nextGuideStation?.stationId ?? nextArtwork.id,
+          title: getArtworkTitleParts(nextArtwork, locale).title
+        }
+      : undefined}
+    previousArtwork={previousArtwork
+      ? {
+          href: buildGuideArtworkPath(
+            locale,
+            previousGuideStation?.stationId ?? previousArtwork.id
+          ),
+          id: previousGuideStation?.stationId ?? previousArtwork.id,
+          title: getArtworkTitleParts(previousArtwork, locale).title
+        }
+      : undefined}
+    showId={show.id}
+    src={artwork.audio[locale]}
+    subtitle={titleParts.subtitle}
+    title={titleParts.title}
+    year={artwork.year}
+  />
+
+  <div class="pb-[11.75rem] md:pb-0">
+    <section class="mx-auto grid max-w-7xl gap-6 px-4 py-5 md:grid-cols-[1.1fr_0.9fr] md:gap-10 md:px-8 md:py-12">
+      <div class="order-2 space-y-5 md:order-1 md:space-y-6">
+        <p class="hidden text-sm font-semibold uppercase tracking-[0.35em] text-[color:var(--brand-accent)] md:block">
+          {stationId}
+        </p>
+        <div class="space-y-1">
+          <h1 class="display-type text-[2.75rem] leading-[0.95] text-slate-950 dark:text-white md:text-5xl md:leading-tight">
+            {titleParts.title}
+          </h1>
+          <p class:list={["max-w-2xl min-h-5 text-base leading-5 italic text-slate-500 dark:text-slate-400 md:min-h-6 md:text-xl md:leading-6", !titleParts.subtitle && "invisible"]}>
+            {titleParts.subtitle || " "}
+          </p>
+        </div>
+        <p class="text-base text-slate-600 dark:text-slate-300 md:text-xl">
+          {artwork.artist}
+          {artwork.year ? ` · ${artwork.year}` : ""}
+        </p>
+        <div class="grid gap-3 sm:grid-cols-2">
+          <div class="surface-card rounded-[1.5rem] p-4">
+            <p class="text-xs uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400">Material</p>
+            <p class="mt-2 text-sm leading-6 text-slate-700 dark:text-slate-300">{localize(locale, artwork.material)}</p>
+          </div>
+          <div class="surface-card rounded-[1.5rem] p-4">
+            <p class="text-xs uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400">Dimensions</p>
+            <p class="mt-2 text-sm leading-6 text-slate-700 dark:text-slate-300">{artwork.dimensions || "—"}</p>
+          </div>
+        </div>
+        <ProseBlock className="max-w-2xl" text={localize(locale, artwork.description)} />
+      </div>
+
+      <div class="order-1 md:order-2">
+        <ArtworkGallery client:load items={artwork.images} locale={locale} />
+      </div>
+    </section>
+
+    <section class="mx-auto hidden max-w-7xl gap-10 px-4 pb-16 md:grid md:grid-cols-[0.9fr_1.1fr] md:px-8">
+      <div class="hidden md:block md:space-y-6">
+        {artwork.audio[locale] ? (
+          <ArtworkAudioPlayer
+            autoStart={true}
+            autoStartMedia="(min-width: 768px)"
+            client:load
+            locale={locale}
+            src={artwork.audio[locale]}
+            subtitle={titleParts.subtitle}
+            title={titleParts.title}
+          />
+        ) : null}
+      </div>
+
+      <div class="surface-card rounded-[2rem] p-6">
+        <p class="text-xs uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400">Navigation</p>
+        <div class="mt-4 grid gap-4 md:grid-cols-2">
+          {previousArtwork ? (
+            <a class="rounded-[1.5rem] border border-slate-200 p-4 dark:border-white/10" href={buildGuideArtworkPath(locale, previousGuideStation?.stationId ?? previousArtwork.id)}>
+              <p class="text-xs uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400">Previous</p>
+              <p class="mt-2 font-semibold text-slate-900 dark:text-white">{getArtworkTitleParts(previousArtwork, locale).title}</p>
+            </a>
+          ) : null}
+          {nextArtwork ? (
+            <a class="rounded-[1.5rem] border border-slate-200 p-4 dark:border-white/10" href={buildGuideArtworkPath(locale, nextGuideStation?.stationId ?? nextArtwork.id)}>
+              <p class="text-xs uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400">Next</p>
+              <p class="mt-2 font-semibold text-slate-900 dark:text-white">{getArtworkTitleParts(nextArtwork, locale).title}</p>
+            </a>
+          ) : null}
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

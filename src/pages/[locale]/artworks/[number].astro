@@ -1,19 +1,14 @@
 ---
 import { loadShowBundleSync } from "@lib/content"
-import { localize } from "@lib/i18n"
-import { buildArtworkPath } from "@lib/routing"
-import type { Locale } from "@lib/schema"
-import { ArtworkAudioPlayer } from "@web/components/ArtworkAudioPlayer"
-import { ArtworkControlDock } from "@web/components/ArtworkControlDock"
-import { ArtworkGallery } from "@web/components/ArtworkGallery"
-import ProseBlock from "@web/components/ProseBlock.astro"
-import BaseLayout from "@web/layouts/BaseLayout.astro"
+import { getShowPublicLocales, isGuidedArtwork, type Locale } from "@lib/schema"
+import ArtworkDetailPage from "@web/components/ArtworkDetailPage.astro"
 
 export function getStaticPaths() {
   const bundle = loadShowBundleSync()
+  const guideArtworks = bundle.artworks.filter(isGuidedArtwork)
 
-  return bundle.artworks.flatMap((artwork) =>
-    ["de", "en"].map((locale) => ({
+  return guideArtworks.flatMap((artwork) =>
+    getShowPublicLocales(bundle.show).map((locale) => ({
       params: {
         locale,
         number: artwork.id
@@ -24,119 +19,17 @@ export function getStaticPaths() {
 
 const locale = Astro.params.locale as Locale
 const bundle = loadShowBundleSync()
-const artwork = bundle.artworks.find(
-  (entry) => entry.id === Astro.params.number
-)
+const guideArtworks = bundle.artworks.filter(isGuidedArtwork)
+const artwork = guideArtworks.find((entry) => entry.id === Astro.params.number)
 
 if (!artwork) {
   throw new Error(`Unknown artwork ${Astro.params.number}`)
 }
-
-const artworkIndex = bundle.artworks.findIndex(
-  (entry) => entry.id === artwork.id
-)
-const previousArtwork = bundle.artworks[artworkIndex - 1]
-const nextArtwork = bundle.artworks[artworkIndex + 1]
 ---
 
-<BaseLayout
-  compactMobileHeader={true}
-  currentPath={Astro.url.pathname}
-  description={localize(locale, artwork.description)}
-  hideFooterOnMobile={true}
+<ArtworkDetailPage
+  artwork={artwork}
+  guideArtworks={guideArtworks}
   locale={locale}
   show={bundle.show}
-  title={`${localize(locale, artwork.title)} · ${artwork.artist}`}
->
-  <ArtworkControlDock
-    autoStart={true}
-    autoStartMedia="(max-width: 767px)"
-    artist={artwork.artist}
-    artworkId={artwork.id}
-    client:load
-    locale={locale}
-    nextArtwork={nextArtwork
-      ? {
-          href: buildArtworkPath(locale, nextArtwork),
-          id: nextArtwork.id,
-          title: localize(locale, nextArtwork.title)
-        }
-      : undefined}
-    previousArtwork={previousArtwork
-      ? {
-          href: buildArtworkPath(locale, previousArtwork),
-          id: previousArtwork.id,
-          title: localize(locale, previousArtwork.title)
-        }
-      : undefined}
-    showId={bundle.show.id}
-    src={artwork.audio[locale]}
-    title={localize(locale, artwork.title)}
-    year={artwork.year}
-  />
-
-  <div class="pb-[11.75rem] md:pb-0">
-    <section class="mx-auto grid max-w-7xl gap-6 px-4 py-5 md:grid-cols-[1.1fr_0.9fr] md:gap-10 md:px-8 md:py-12">
-      <div class="order-2 space-y-5 md:order-1 md:space-y-6">
-        <p class="hidden text-sm font-semibold uppercase tracking-[0.35em] text-[color:var(--brand-accent)] md:block">
-          {artwork.id}
-        </p>
-        <h1 class="display-type text-[2.75rem] leading-[0.95] text-slate-950 dark:text-white md:text-5xl md:leading-tight">
-          {localize(locale, artwork.title)}
-        </h1>
-        <p class="text-base text-slate-600 dark:text-slate-300 md:text-xl">
-          {artwork.artist}
-          {artwork.year ? ` · ${artwork.year}` : ""}
-        </p>
-        <div class="grid gap-3 sm:grid-cols-2">
-          <div class="surface-card rounded-[1.5rem] p-4">
-            <p class="text-xs uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400">Material</p>
-            <p class="mt-2 text-sm leading-6 text-slate-700 dark:text-slate-300">{localize(locale, artwork.material)}</p>
-          </div>
-          <div class="surface-card rounded-[1.5rem] p-4">
-            <p class="text-xs uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400">Dimensions</p>
-            <p class="mt-2 text-sm leading-6 text-slate-700 dark:text-slate-300">{artwork.dimensions || "—"}</p>
-          </div>
-        </div>
-        <ProseBlock className="max-w-2xl" text={localize(locale, artwork.description)} />
-      </div>
-
-      <div class="order-1 md:order-2">
-        <ArtworkGallery client:load items={artwork.images} locale={locale} />
-      </div>
-    </section>
-
-    <section class="mx-auto hidden max-w-7xl gap-10 px-4 pb-16 md:grid md:grid-cols-[0.9fr_1.1fr] md:px-8">
-      <div class="hidden md:block md:space-y-6">
-        {artwork.audio[locale] ? (
-          <ArtworkAudioPlayer
-            autoStart={true}
-            autoStartMedia="(min-width: 768px)"
-            client:load
-            locale={locale}
-            src={artwork.audio[locale]}
-            title={localize(locale, artwork.title)}
-          />
-        ) : null}
-      </div>
-
-      <div class="surface-card rounded-[2rem] p-6">
-        <p class="text-xs uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400">Navigation</p>
-        <div class="mt-4 grid gap-4 md:grid-cols-2">
-          {previousArtwork ? (
-            <a class="rounded-[1.5rem] border border-slate-200 p-4 dark:border-white/10" href={buildArtworkPath(locale, previousArtwork)}>
-              <p class="text-xs uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400">Previous</p>
-              <p class="mt-2 font-semibold text-slate-900 dark:text-white">{localize(locale, previousArtwork.title)}</p>
-            </a>
-          ) : null}
-          {nextArtwork ? (
-            <a class="rounded-[1.5rem] border border-slate-200 p-4 dark:border-white/10" href={buildArtworkPath(locale, nextArtwork)}>
-              <p class="text-xs uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400">Next</p>
-              <p class="mt-2 font-semibold text-slate-900 dark:text-white">{localize(locale, nextArtwork.title)}</p>
-            </a>
-          ) : null}
-        </div>
-      </div>
-    </section>
-  </div>
-</BaseLayout>
+/>

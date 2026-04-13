@@ -1,6 +1,6 @@
 # Promenade Rework Plan
 
-Last updated: 2026-03-18 UTC
+Last updated: 2026-04-07 UTC
 Status: implemented baseline on `feature/astro-static-rebuild`
 
 ## Implemented Baseline
@@ -12,8 +12,9 @@ Implemented:
 - static Astro visitor guide
 - local React + Express authoring studio
 - file-backed show model
+- side-by-side show backup/import/activate lifecycle
 - QR parsing plus printable QR sheets
-- bilingual routing and locale resolution
+- show-defined locale routing and locale resolution
 - cue-generation and TTS pipeline
 - translation approval gating before export
 - Docker-first development workflow
@@ -38,6 +39,8 @@ Implemented:
 - media uploads
 - translation draft generation
 - cue generation between text authoring and TTS
+- deterministic audio generation from canonical per-locale guide descriptions
+- persisted narration snapshots for each generated audio file
 - ElevenLabs/OpenAI/mock audio generation
 - QR download and A4 print preview
 - export-readiness auditing
@@ -67,6 +70,6 @@ These are refinements, not blockers for the rewritten baseline.
 - one active show per deployment
 - static `dist/` output for production
 - local-first authoring workflow
-- German and English as first-class locales
-- explicit approval required for AI-generated English translations before export
+- supported locale set currently includes `de`, `en`, and `es`, while each show chooses its own enabled and published locales
+- explicit approval required for AI-generated translations in every published locale before export
 - the public bundle must never depend on secret keys

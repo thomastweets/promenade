@@ -6,15 +6,23 @@
   "year": "1889",
   "title": {
     "de": "Die Sternennacht222",
-    "en": "The Starry Night"
+    "en": "The Starry Night",
+    "es": ""
+  },
+  "sourceDescription": {
+    "de": "Ein ikonisches Gemälde, das den Nachthimmel über Saint-Rémy-de-Provence zeigt. Die wirbelnden Wolken, die strahlenden Sterne und der leuchtende Mond über dem ruhigen Dorf erschaffen eine unvergessliche Szene voller Bewegung und Emotion.",
+    "en": "An iconic painting depicting the night sky over Saint-Rémy-de-Provence. The swirling clouds, brilliant stars, and glowing moon over the quiet village create an unforgettable scene full of movement and emotion.",
+    "es": ""
   },
   "description": {
     "de": "Ein ikonisches Gemälde, das den Nachthimmel über Saint-Rémy-de-Provence zeigt. Die wirbelnden Wolken, die strahlenden Sterne und der leuchtende Mond über dem ruhigen Dorf erschaffen eine unvergessliche Szene voller Bewegung und Emotion.",
-    "en": "An iconic painting depicting the night sky over Saint-Rémy-de-Provence. The swirling clouds, brilliant stars, and glowing moon over the quiet village create an unforgettable scene full of movement and emotion."
+    "en": "An iconic painting depicting the night sky over Saint-Rémy-de-Provence. The swirling clouds, brilliant stars, and glowing moon over the quiet village create an unforgettable scene full of movement and emotion.",
+    "es": ""
   },
   "material": {
     "de": "Öl auf Leinwand",
-    "en": "Oil on canvas"
+    "en": "Oil on canvas",
+    "es": ""
   },
   "dimensions": "73.7cm x 92.1cm",
   "images": [
@@ -22,7 +30,8 @@
       "src": "/shows/demo-show/media/images/01-main.svg",
       "alt": {
         "de": "Die Sternennacht222 – Ansicht 1",
-        "en": "The Starry Night – View 1"
+        "en": "The Starry Night – View 1",
+        "es": ""
       },
       "kind": "hero"
     },
@@ -30,7 +39,8 @@
       "src": "/shows/demo-show/media/images/01-detail-1.svg",
       "alt": {
         "de": "Die Sternennacht222 – Ansicht 2",
-        "en": "The Starry Night – View 2"
+        "en": "The Starry Night – View 2",
+        "es": ""
       },
       "kind": "detail"
     },
@@ -38,29 +48,35 @@
       "src": "/shows/demo-show/media/images/01-detail-2.svg",
       "alt": {
         "de": "Die Sternennacht222 – Ansicht 3",
-        "en": "The Starry Night – View 3"
+        "en": "The Starry Night – View 3",
+        "es": ""
       },
       "kind": "detail"
     }
   ],
   "audioCues": {
-    "de": "Atmosphaere: Eine kühle Nacht; das Firmament wirkt dicht und in Bewegung, die Sterne stehen hell, der Mond wirft ein beständiges Licht über das ruhige Dorf von Saint-Rémy-de-Provence.\nTempo: Beginnen Sie getragen, mit gleichmäßigem Puls; wenn Sie die wirbelnden Formen beschreiben, steigern Sie das Tempo leicht, dann lassen Sie es für die Dorfszenerie wieder sacht ausklingen.\nBildfokus: Richten Sie den Blick auf die gegenübergestellten Formen — die Drehung der Wolken contra die ruhigen Dachlinien — und führen Sie die Stimme vom leuchtenden Mond zu den strahlenden Sternpunkten.\nPausen/Betonung: Nach »wirbelnden Wolken« eine kurze Pause (ca. 0,5 s); vor »ruhiges Dorf« mehr Raum (ca. 0,8–1 s); betonen Sie »leuchtender Mond« leicht und lassen Sie die letzte Silbe nachklingen.",
-    "en": ""
+    "de": "",
+    "en": "",
+    "es": ""
   },
   "audio": {
-    "de": "/shows/demo-show/media/audio/01-de.mp3",
-    "en": "/shows/demo-show/media/audio/01-en.wav"
+    "de": "/shows/demo-show/media/audio/01-de.wav",
+    "en": "/shows/demo-show/media/audio/01-en.wav",
+    "es": ""
   },
   "translationStatus": {
     "de": "human",
-    "en": "approved"
+    "en": "approved",
+    "es": "missing"
   },
   "audioCueStatus": {
-    "de": "ready",
-    "en": "missing"
+    "de": "missing",
+    "en": "missing",
+    "es": "missing"
   },
   "audioStatus": {
-    "de": "draft",
-    "en": "ready"
+    "de": "ready",
+    "en": "ready",
+    "es": "missing"
   }
 }

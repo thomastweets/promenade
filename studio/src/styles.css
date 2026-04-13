@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "../../src/styles/font-faces.css";
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
@@ -22,7 +23,7 @@ body {
     ),
     linear-gradient(180deg, #f8f6f1 0%, #ffffff 100%);
   color: #17211d;
-  font-family: Inter, "Avenir Next", "Segoe UI", sans-serif;
+  font-family: "Source Sans 3", Inter, "Avenir Next", "Segoe UI", sans-serif;
   margin: 0;
   transition:
     background 180ms ease,
@@ -79,7 +80,7 @@ html[data-theme="dark"] .studio-select {
 .studio-label {
   display: block;
   font-size: 0.78rem;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: #54606d;
@@ -93,13 +94,159 @@ html[data-theme="dark"] .studio-label {
 .print-card {
   background: white;
   break-inside: avoid;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  border-radius: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.16);
+  border-radius: 0.3rem;
   color: black;
   display: flex;
   flex-direction: column;
   min-height: 0;
-  padding: 0.9rem;
+  padding: 1rem;
+}
+
+.print-card-head {
+  align-items: flex-start;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.print-card-brand {
+  align-items: center;
+  display: flex;
+  gap: 0.8rem;
+  min-width: 0;
+}
+
+.print-card-logo {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 0.18rem;
+  height: 3rem;
+  object-fit: cover;
+  width: 3rem;
+}
+
+.print-card-kind,
+.print-card-org,
+.print-card-id,
+.print-guide-badge-label,
+.print-guide-badge-id {
+  margin: 0;
+}
+
+.print-card-kind {
+  color: rgba(0, 0, 0, 0.55);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.print-card-org {
+  color: rgba(0, 0, 0, 0.72);
+  font-size: 0.82rem;
+  margin-top: 0.3rem;
+}
+
+.print-card-id {
+  color: rgba(0, 0, 0, 0.52);
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-align: right;
+}
+
+.print-guide-badge {
+  align-items: center;
+  display: flex;
+  gap: 1.5mm;
+  min-width: 0;
+}
+
+.print-guide-badge-compact {
+  align-items: center;
+  background: rgba(0, 0, 0, 0.018);
+  border: 0.22mm solid rgba(0, 0, 0, 0.14);
+  border-radius: 2mm;
+  gap: 1.35mm;
+  justify-self: end;
+  padding: 1.2mm 2mm 1.05mm;
+}
+
+.print-guide-badge-signage {
+  background: transparent;
+  border: 0.2mm solid #000000;
+  border-radius: 2.6mm;
+  gap: 1.45mm;
+  justify-content: center;
+  min-height: 9.6mm;
+  padding: 1.7mm 1.75mm 1.5mm;
+  width: 100%;
+}
+
+.print-guide-badge-icon {
+  color: rgba(0, 0, 0, 0.54);
+  display: inline-flex;
+  flex: 0 0 auto;
+  height: 4.1mm;
+  width: 4.1mm;
+}
+
+.print-guide-badge-compact .print-guide-badge-icon {
+  height: 3.9mm;
+  width: 3.9mm;
+}
+
+.print-guide-badge-signage .print-guide-badge-icon {
+  color: #000000;
+  height: 6.7mm;
+  width: 6.7mm;
+}
+
+.print-guide-badge-copy-inline {
+  align-items: baseline;
+  display: flex;
+  gap: 0.95mm;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.print-guide-badge-label {
+  color: rgba(0, 0, 0, 0.46);
+  font-size: 1.9mm;
+  letter-spacing: 0.06em;
+  line-height: 1.08;
+  text-transform: uppercase;
+}
+
+.print-guide-badge-compact .print-guide-badge-label {
+  font-size: 1.75mm;
+}
+
+.print-guide-badge-signage .print-guide-badge-label {
+  color: #000000;
+  font-size: 2.2mm;
+  font-weight: 600;
+  letter-spacing: 0.055em;
+  line-height: 1;
+}
+
+.print-guide-badge-id {
+  color: rgba(0, 0, 0, 0.9);
+  font-size: 4.2mm;
+  font-variant-numeric: lining-nums tabular-nums;
+  font-weight: 650;
+  letter-spacing: 0.012em;
+  line-height: 1;
+  margin-top: 0.45mm;
+}
+
+.print-guide-badge-compact .print-guide-badge-id {
+  font-size: 3.45mm;
+}
+
+.print-guide-badge-signage .print-guide-badge-id {
+  color: #000000;
+  font-size: 6.1mm;
+  margin-top: 0;
 }
 
 .print-sheet-stack {
@@ -122,6 +269,12 @@ html[data-theme="dark"] .studio-label {
   padding: 10mm;
 }
 
+.print-page-sign {
+  width: min(100%, 297mm);
+  min-height: 210mm;
+  padding: 19mm 22.5mm;
+}
+
 .print-page-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -130,11 +283,389 @@ html[data-theme="dark"] .studio-label {
   min-height: calc(297mm - 20mm);
 }
 
+.print-page-grid-sign {
+  grid-template-columns: repeat(2, 120mm);
+  grid-template-rows: repeat(2, 80mm);
+  justify-content: start;
+  align-content: start;
+  gap: 12mm;
+  min-height: calc(210mm - 38mm);
+}
+
+.print-page-entrance {
+  background: var(--print-paper, #fffdf8);
+  padding: 15mm 14mm;
+}
+
+.print-entrance {
+  --print-accent: #111111;
+  --print-accent-soft: #f2efe9;
+  --print-paper: #fffdf8;
+  --print-ink: #111111;
+  --print-ink-soft: #4f4f4f;
+  --print-line: #d6d0c5;
+  --print-surface: #ffffff;
+  background: var(--print-surface);
+  border: 0.35mm solid var(--print-accent-soft);
+  border-radius: 5.5mm;
+  color: var(--print-ink);
+  display: grid;
+  gap: 9mm;
+  min-height: calc(297mm - 30mm);
+  overflow: hidden;
+  padding: 12mm 11.5mm 11mm;
+  position: relative;
+}
+
+.print-entrance::before {
+  background: var(--print-accent);
+  content: "";
+  height: 6.5mm;
+  inset: 0 auto auto 0;
+  position: absolute;
+  width: 100%;
+}
+
+.print-entrance-brand,
+.print-entrance-brand p,
+.print-entrance-step-title,
+.print-entrance-footer-copy,
+.print-entrance-languages-label,
+.print-entrance-url,
+.print-entrance-url-label,
+.print-entrance-qr-label,
+.print-entrance-show-note {
+  margin: 0;
+}
+
+.print-entrance-brand,
+.print-entrance-hero,
+.print-entrance-grid,
+.print-entrance-footer {
+  position: relative;
+  z-index: 1;
+}
+
+.print-entrance-brand {
+  align-items: flex-start;
+  display: flex;
+  gap: 8mm;
+  justify-content: space-between;
+  padding-top: 3.2mm;
+}
+
+.print-entrance-brand-left {
+  align-items: center;
+  display: flex;
+  gap: 4mm;
+  min-width: 0;
+}
+
+.print-entrance-logo {
+  height: 13mm;
+  object-fit: contain;
+  width: 13mm;
+}
+
+.print-entrance-org {
+  font-size: 3.25mm;
+  font-weight: 620;
+  letter-spacing: 0.045em;
+  line-height: 1.12;
+}
+
+.print-entrance-show {
+  color: var(--print-ink-soft);
+  font-size: 2.7mm;
+  letter-spacing: 0.025em;
+  line-height: 1.18;
+  margin-top: 0.8mm;
+}
+
+.print-entrance-eyebrow {
+  align-items: center;
+  background: var(--print-surface);
+  border: 0.22mm solid var(--print-line);
+  border-radius: 999px;
+  display: inline-flex;
+  font-size: 2.5mm;
+  font-weight: 650;
+  gap: 1.9mm;
+  letter-spacing: 0.085em;
+  line-height: 1;
+  padding: 1.8mm 3.1mm 1.65mm;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.print-entrance-eyebrow-icon {
+  color: var(--print-accent);
+  flex: 0 0 auto;
+  height: 4.5mm;
+  width: 4.5mm;
+}
+
+.print-entrance-hero {
+  display: grid;
+  gap: 3.3mm;
+  max-width: 146mm;
+}
+
+.print-entrance-kicker {
+  color: var(--print-accent);
+  font-size: 3.1mm;
+  font-weight: 680;
+  letter-spacing: 0.12em;
+  line-height: 1.05;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.print-entrance-title {
+  color: var(--print-ink);
+  font-family:
+    "Source Serif 4", "Iowan Old Style", "Palatino Linotype", "Book Antiqua",
+    Palatino, "Times New Roman", serif;
+  font-size: 18.4mm;
+  font-style: italic;
+  font-weight: 640;
+  letter-spacing: -0.03em;
+  line-height: 0.94;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.print-entrance-subtitle {
+  color: var(--print-ink);
+  font-size: 5.4mm;
+  font-weight: 620;
+  line-height: 1.12;
+  margin: 0;
+  max-width: 132mm;
+  text-wrap: balance;
+}
+
+.print-entrance-show-note {
+  color: var(--print-ink-soft);
+  font-size: 3.55mm;
+  line-height: 1.22;
+  max-width: 132mm;
+  text-wrap: balance;
+}
+
+.print-entrance-grid {
+  align-items: start;
+  display: grid;
+  gap: 8mm;
+  grid-template-columns: minmax(0, 1.03fr) 73mm;
+}
+
+.print-entrance-copy {
+  display: grid;
+  gap: 6mm;
+  padding-top: 1.5mm;
+}
+
+.print-entrance-lead {
+  font-size: 5.1mm;
+  font-weight: 520;
+  line-height: 1.24;
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.print-entrance-steps {
+  display: grid;
+  gap: 3.1mm;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.print-entrance-step {
+  align-items: start;
+  background: var(--print-accent-soft);
+  border: 0.22mm solid var(--print-line);
+  border-radius: 4mm;
+  display: grid;
+  gap: 3.2mm;
+  grid-template-columns: 8.6mm minmax(0, 1fr);
+  padding: 3.6mm 4mm 3.7mm 3.4mm;
+}
+
+.print-entrance-step-index {
+  background: var(--print-accent);
+  border-radius: 999px;
+  color: #ffffff;
+  display: grid;
+  font-size: 4mm;
+  font-variant-numeric: lining-nums tabular-nums;
+  font-weight: 700;
+  height: 8.6mm;
+  line-height: 1;
+  place-items: center;
+  width: 8.6mm;
+}
+
+.print-entrance-step-title {
+  font-size: 3.7mm;
+  font-weight: 630;
+  line-height: 1.2;
+  text-wrap: pretty;
+}
+
+.print-entrance-qr-panel {
+  align-content: start;
+  background: var(--print-surface);
+  border: 0.3mm solid var(--print-line);
+  border-radius: 5mm;
+  display: grid;
+  gap: 3.7mm;
+  padding: 5.6mm 5.4mm 5.2mm;
+}
+
+.print-entrance-qr-label {
+  color: var(--print-accent);
+  font-size: 2.85mm;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1.05;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.print-entrance-qr-frame {
+  background: var(--print-surface);
+  border: 0.24mm solid var(--print-line);
+  border-radius: 3.8mm;
+  display: grid;
+  padding: 3.6mm;
+  place-items: center;
+  width: 100%;
+}
+
+.print-entrance-qr-image {
+  display: block;
+  height: 57.5mm;
+  object-fit: contain;
+  width: 57.5mm;
+}
+
+.print-entrance-qr-copy {
+  display: grid;
+  gap: 1.4mm;
+}
+
+.print-entrance-url-label {
+  color: var(--print-ink-soft);
+  font-size: 2.45mm;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  line-height: 1.05;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.print-entrance-url {
+  font-size: 3.6mm;
+  font-weight: 620;
+  line-height: 1.24;
+  overflow-wrap: anywhere;
+  text-align: center;
+}
+
+.print-entrance-footer {
+  border-top: 0.22mm solid var(--print-line);
+  display: grid;
+  gap: 4.5mm;
+  margin-top: auto;
+  padding-top: 2mm;
+}
+
+.print-entrance-footer-copy {
+  color: var(--print-ink-soft);
+  font-size: 3.15mm;
+  line-height: 1.28;
+  text-wrap: pretty;
+}
+
+.print-entrance-languages {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.1mm;
+}
+
+.print-entrance-languages-label {
+  color: var(--print-ink-soft);
+  font-size: 2.45mm;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+.print-entrance-language-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.1mm;
+}
+
+.print-entrance-language-chip {
+  align-items: center;
+  background: var(--print-surface);
+  border: 0.22mm solid var(--print-line);
+  border-radius: 999px;
+  color: var(--print-ink);
+  display: inline-flex;
+  font-size: 2.75mm;
+  font-weight: 560;
+  line-height: 1;
+  padding: 1.45mm 2.65mm 1.3mm;
+  white-space: nowrap;
+}
+
+.print-entrance-loading {
+  align-items: center;
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 7mm;
+  color: rgba(0, 0, 0, 0.56);
+  display: grid;
+  font-size: 1rem;
+  min-height: calc(297mm - 30mm);
+  place-items: center;
+}
+
 .print-card-title {
   display: -webkit-box;
+  font-family:
+    "Source Serif 4", "Iowan Old Style", "Palatino Linotype", "Book Antiqua",
+    Palatino, "Times New Roman", serif;
+  font-size: 1.18rem;
+  font-style: italic;
+  font-weight: 600;
+  line-height: 1.08;
+  margin: 0;
   overflow: hidden;
+  padding-bottom: 0.85mm;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+}
+
+.print-card-title-subtitle {
+  color: rgba(0, 0, 0, 0.78);
+  font-size: 0.8rem;
+  font-style: italic;
+  line-height: 1.28;
+  margin: 0.1rem 0 0;
+}
+
+.print-card-artist {
+  color: rgba(0, 0, 0, 0.76);
+  font-size: 0.92rem;
+  line-height: 1.28;
+  margin: 0;
 }
 
 .print-card-qr {
@@ -150,6 +681,197 @@ html[data-theme="dark"] .studio-label {
 
 .print-card-url {
   overflow-wrap: anywhere;
+}
+
+.print-sign {
+  display: flex;
+  min-height: 80mm;
+}
+
+.print-sign-shell {
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 0.2mm;
+  color: #111111;
+  display: grid;
+  gap: 4.8mm;
+  grid-template-columns: minmax(0, 1fr) 28.4mm;
+  min-height: 100%;
+  overflow: hidden;
+  padding: 7.2mm 8mm 7mm;
+  width: 100%;
+}
+
+.print-sign-shell-signage-only {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.print-sign-main {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-width: 0;
+}
+
+.print-sign-brand,
+.print-sign-artist,
+.print-sign-meta p,
+.print-sign-qr-label,
+.print-sign-qr-id {
+  margin: 0;
+}
+
+.print-sign-brand {
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  display: flex;
+  gap: 2.1mm;
+  min-width: 0;
+  padding-bottom: 2.1mm;
+}
+
+.print-sign-brand-copy {
+  min-width: 0;
+}
+
+.print-sign-logo {
+  height: 7.2mm;
+  object-fit: contain;
+  width: 7.2mm;
+}
+
+.print-sign-brand-name {
+  color: #000000;
+  font-size: 2.7mm;
+  font-weight: 560;
+  letter-spacing: 0.035em;
+  line-height: 1.14;
+  margin: 0;
+}
+
+.print-sign-show-title {
+  color: #000000;
+  font-size: 2.25mm;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1.18;
+  margin: 0.7mm 0 0;
+}
+
+.print-sign-copy {
+  align-content: start;
+  display: grid;
+  gap: 3.15mm;
+  min-width: 0;
+  padding-top: 3.8mm;
+}
+
+.print-sign-artist {
+  color: #000000;
+  font-size: 5.05mm;
+  font-weight: 620;
+  letter-spacing: 0.022em;
+  line-height: 1.14;
+}
+
+.print-sign-title {
+  display: -webkit-box;
+  font-family:
+    "Source Serif 4", "Iowan Old Style", "Palatino Linotype", "Book Antiqua",
+    Palatino, "Times New Roman", serif;
+  font-size: 6.85mm;
+  font-style: italic;
+  font-weight: 640;
+  letter-spacing: -0.012em;
+  line-height: 1.12;
+  margin: 0;
+  overflow: hidden;
+  padding-bottom: 0.75mm;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.print-sign-title-subtitle {
+  color: rgba(0, 0, 0, 0.78);
+  font-size: 3.2mm;
+  font-weight: 560;
+  line-height: 1.22;
+  margin: -0.3mm 0 0;
+  overflow-wrap: anywhere;
+}
+
+.print-sign-meta {
+  display: grid;
+  gap: 1.35mm;
+  padding-top: 1.1mm;
+}
+
+.print-sign-meta p {
+  color: #000000;
+  font-size: 3.55mm;
+  line-height: 1.32;
+}
+
+.print-sign-qr-panel {
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  min-width: 0;
+  padding-left: 3.7mm;
+}
+
+.print-sign-qr-stack {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.print-sign-guide-group {
+  display: grid;
+  gap: 1.9mm;
+  justify-items: center;
+  margin-top: 0.8mm;
+  width: 100%;
+}
+
+.print-sign-guide-label {
+  color: #000000;
+  font-size: 2.4mm;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1.1;
+  margin: 0;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.print-sign-qr-frame {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  display: grid;
+  justify-self: center;
+  min-height: 23.2mm;
+  padding: 0;
+  width: 24mm;
+}
+
+.print-sign-qr-image {
+  height: 100%;
+  max-height: 23.2mm;
+  object-fit: contain;
+  width: 100%;
+}
+
+.print-sign-qr-label {
+  color: rgba(0, 0, 0, 0.56);
+  font-size: 2.35mm;
+  line-height: 1.25;
+}
+
+.print-sign-qr-id {
+  color: rgba(0, 0, 0, 0.74);
+  font-size: 2.55mm;
+  letter-spacing: 0.08em;
 }
 
 .print-card-placeholder {
@@ -200,10 +922,42 @@ html[data-theme="dark"] .studio-label {
     height: calc(297mm - 20mm);
   }
 
+  .print-page-entrance {
+    min-height: 297mm;
+    padding: 15mm 14mm;
+    width: 210mm;
+  }
+
+  .print-page-sign {
+    min-height: 210mm;
+    padding: 19mm 22.5mm;
+    width: 297mm;
+  }
+
+  .print-page-grid-sign {
+    height: calc(210mm - 38mm);
+    gap: 12mm;
+  }
+
   .print-card {
     border-radius: 5mm;
     break-inside: avoid;
     page-break-inside: avoid;
     padding: 6mm;
+  }
+
+  .print-sign {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .print-sign-shell {
+    border-radius: 0;
+  }
+
+  .print-entrance {
+    border-radius: 0;
+    box-shadow: none;
+    min-height: calc(297mm - 30mm);
   }
 }

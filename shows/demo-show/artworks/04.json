@@ -6,15 +6,23 @@
   "year": "1893",
   "title": {
     "de": "Der Schrei",
-    "en": "The Scream"
+    "en": "The Scream",
+    "es": ""
+  },
+  "sourceDescription": {
+    "de": "Ein expressionistisches Meisterwerk, das eine schreiende Figur vor einem blutroten Himmel zeigt. Das Werk vermittelt ein intensives Gefühl von Angst und existenzieller Krise, das bis heute Menschen auf der ganzen Welt berührt.",
+    "en": "An expressionist masterpiece showing a screaming figure against a blood-red sky. The work conveys an intense feeling of anxiety and existential crisis that continues to resonate with people worldwide.",
+    "es": ""
   },
   "description": {
     "de": "Ein expressionistisches Meisterwerk, das eine schreiende Figur vor einem blutroten Himmel zeigt. Das Werk vermittelt ein intensives Gefühl von Angst und existenzieller Krise, das bis heute Menschen auf der ganzen Welt berührt.",
-    "en": "An expressionist masterpiece showing a screaming figure against a blood-red sky. The work conveys an intense feeling of anxiety and existential crisis that continues to resonate with people worldwide."
+    "en": "An expressionist masterpiece showing a screaming figure against a blood-red sky. The work conveys an intense feeling of anxiety and existential crisis that continues to resonate with people worldwide.",
+    "es": ""
   },
   "material": {
     "de": "",
-    "en": ""
+    "en": "",
+    "es": ""
   },
   "dimensions": "",
   "images": [
@@ -22,7 +30,8 @@
       "src": "/shows/demo-show/media/images/04-main.svg",
       "alt": {
         "de": "Der Schrei – Ansicht 1",
-        "en": "The Scream – View 1"
+        "en": "The Scream – View 1",
+        "es": ""
       },
       "kind": "hero"
     },
@@ -30,7 +39,8 @@
       "src": "/shows/demo-show/media/images/04-detail-1.svg",
       "alt": {
         "de": "Der Schrei – Ansicht 2",
-        "en": "The Scream – View 2"
+        "en": "The Scream – View 2",
+        "es": ""
       },
       "kind": "detail"
     },
@@ -38,29 +48,35 @@
       "src": "/shows/demo-show/media/images/04-detail-2.svg",
       "alt": {
         "de": "Der Schrei – Ansicht 3",
-        "en": "The Scream – View 3"
+        "en": "The Scream – View 3",
+        "es": ""
       },
       "kind": "detail"
     }
   ],
   "audioCues": {
-    "de": "Atmosphaere: Ein blutroter Himmel spannt sich dicht über der Szene; die Atmosphäre ist drückend, eine stille Präsenz von Angst und existenzieller Krise.\nTempo: Starten Sie gemessen, lassen Sie die Stimme kurz ansteigen beim Nennen der schreienden Figur und kehren Sie dann in einen ruhigen Nachklang zurück.\nBildfokus: Lenken Sie den Blick zwischen der schreienden Figur im Vordergrund und dem blutroten Himmel im Hintergrund — beobachten Sie die Spannung zwischen Figur und Farbe.\nPausen/Betonung: Kurz pausieren nach „schreiende Figur“; betonen Sie „Angst“ und „existenzielle Krise“ mit einer gedehnten, dann fallenden Betonung.",
-    "en": ""
+    "de": "",
+    "en": "",
+    "es": ""
   },
   "audio": {
-    "de": "/shows/demo-show/media/audio/04-de.mp3",
-    "en": "/shows/demo-show/media/audio/04-en.wav"
+    "de": "/shows/demo-show/media/audio/04-de.wav",
+    "en": "/shows/demo-show/media/audio/04-en.wav",
+    "es": ""
   },
   "translationStatus": {
     "de": "human",
-    "en": "approved"
+    "en": "approved",
+    "es": "missing"
   },
   "audioCueStatus": {
-    "de": "ready",
-    "en": "missing"
+    "de": "missing",
+    "en": "missing",
+    "es": "missing"
   },
   "audioStatus": {
     "de": "ready",
-    "en": "ready"
+    "en": "ready",
+    "es": "missing"
   }
 }

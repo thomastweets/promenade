@@ -1,9 +1,14 @@
 ---
 import Analytics from "../components/Analytics.astro"
 import "../styles/global.css"
-import { localize, otherLocale } from "@lib/i18n"
+import { getAlternateLocales, localize } from "@lib/i18n"
 import { buildLocalePath, swapLocaleInPath } from "@lib/routing"
-import type { Locale, Show } from "@lib/schema"
+import {
+  getShowPublicLocales,
+  localeMeta,
+  type Locale,
+  type Show
+} from "@lib/schema"
 import { ThemeToggle } from "@lib/ThemeToggle"
 import { chromeCopy } from "@lib/ui"
 
@@ -27,8 +32,22 @@ const {
   hideFooterOnMobile = false
 } = Astro.props as Props
 const copy = chromeCopy[locale]
-const alternateLocale = otherLocale(locale)
-const alternatePath = swapLocaleInPath(currentPath, alternateLocale)
+const publicLocales = getShowPublicLocales(show)
+const alternateLocales = getAlternateLocales(locale, show)
+const localeLinks = publicLocales.map((targetLocale) => ({
+  locale: targetLocale,
+  href: swapLocaleInPath(currentPath, targetLocale)
+}))
+const logoSrc = show.branding.logoSrc
+const iconType = logoSrc.endsWith(".svg")
+  ? "image/svg+xml"
+  : logoSrc.endsWith(".png")
+    ? "image/png"
+    : logoSrc.endsWith(".webp")
+      ? "image/webp"
+      : logoSrc.endsWith(".jpg") || logoSrc.endsWith(".jpeg")
+        ? "image/jpeg"
+        : undefined
 ---
 
 <html lang={locale}>
@@ -40,11 +59,14 @@ const alternatePath = swapLocaleInPath(currentPath, alternateLocale)
     <meta content={show.title[locale]} property="og:title" />
     <meta content={description} property="og:description" />
     <meta content="website" property="og:type" />
-    <meta content="/favicon.svg" property="og:image" />
-    <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
-    <link href="/favicon.ico" rel="icon" />
+    <meta content={logoSrc} property="og:image" />
+    <meta content={show.branding.accent} name="theme-color" />
+    <link href={logoSrc} rel="icon" type={iconType} />
+    <link href={logoSrc} rel="apple-touch-icon" />
     <link href="/site.webmanifest" rel="manifest" />
-    <link href={alternatePath} hreflang={alternateLocale} rel="alternate" />
+    {localeLinks.map((item) => (
+      <link href={item.href} hreflang={item.locale} rel="alternate" />
+    ))}
     <title>{title}</title>
     <script is:inline>
       (() => {
@@ -109,13 +131,15 @@ const alternatePath = swapLocaleInPath(currentPath, alternateLocale)
                 <a class="rounded-full border border-slate-200 bg-white/80 px-3 py-2 text-xs font-semibold text-slate-700 dark:border-white/10 dark:bg-slate-900/80 dark:text-slate-200" href={buildLocalePath(locale, "artworks/")}>
                   {copy.artworks}
                 </a>
-                <a
-                  aria-label={copy.switchLabel}
-                  class="rounded-full border border-[color:var(--brand-accent)] px-3 py-2 text-xs font-semibold text-[color:var(--brand-accent)]"
-                  href={alternatePath}
-                >
-                  {copy.localeName}
-                </a>
+                {alternateLocales.map((targetLocale) => (
+                  <a
+                    aria-label={`${copy.switchLabel}: ${localeMeta[targetLocale].autonym}`}
+                    class="rounded-full border border-[color:var(--brand-accent)] px-3 py-2 text-xs font-semibold text-[color:var(--brand-accent)]"
+                    href={swapLocaleInPath(currentPath, targetLocale)}
+                  >
+                    {localeMeta[targetLocale].autonym}
+                  </a>
+                ))}
               </>
             )}
             <details class="relative">
@@ -129,14 +153,18 @@ const alternatePath = swapLocaleInPath(currentPath, alternateLocale)
                   <a class="rounded-2xl bg-white/80 px-3 py-3 text-center dark:bg-slate-900/80" href={buildLocalePath(locale, "help/")}>{copy.help}</a>
                   <a class="rounded-2xl bg-white/80 px-3 py-3 text-center dark:bg-slate-900/80" href={buildLocalePath(locale, "about/")}>{copy.about}</a>
                 </div>
-                {compactMobileHeader ? (
-                  <a
-                    aria-label={copy.switchLabel}
-                    class="mt-3 block rounded-2xl border border-[color:var(--brand-accent)] px-3 py-3 text-center text-sm font-semibold text-[color:var(--brand-accent)]"
-                    href={alternatePath}
-                  >
-                    {copy.localeName}
-                  </a>
+                {alternateLocales.length ? (
+                  <div class="mt-3 grid grid-cols-2 gap-2">
+                    {alternateLocales.map((targetLocale) => (
+                      <a
+                        aria-label={`${copy.switchLabel}: ${localeMeta[targetLocale].autonym}`}
+                        class="rounded-2xl border border-[color:var(--brand-accent)] px-3 py-3 text-center text-sm font-semibold text-[color:var(--brand-accent)]"
+                        href={swapLocaleInPath(currentPath, targetLocale)}
+                      >
+                        {localeMeta[targetLocale].autonym}
+                      </a>
+                    ))}
+                  </div>
                 ) : null}
                 <div class="mt-4 border-t border-slate-200/80 pt-4 dark:border-white/10">
                   <ThemeToggle
@@ -179,18 +207,21 @@ const alternatePath = swapLocaleInPath(currentPath, alternateLocale)
             </a>
             <ThemeToggle
               client:load
+              compact
               darkLabel={copy.themeDark}
               label={copy.themeLabel}
               lightLabel={copy.themeLight}
               systemLabel={copy.themeSystem}
             />
-            <a
-              aria-label={copy.switchLabel}
-              class="rounded-full border border-[color:var(--brand-accent)] px-4 py-2 text-[color:var(--brand-accent)]"
-              href={alternatePath}
-            >
-              {copy.localeName}
-            </a>
+            {alternateLocales.map((targetLocale) => (
+              <a
+                aria-label={`${copy.switchLabel}: ${localeMeta[targetLocale].autonym}`}
+                class="rounded-full border border-[color:var(--brand-accent)] px-4 py-2 text-[color:var(--brand-accent)]"
+                href={swapLocaleInPath(currentPath, targetLocale)}
+              >
+                {localeMeta[targetLocale].autonym}
+              </a>
+            ))}
           </nav>
         </div>
       </header>
@@ -201,10 +232,28 @@ const alternatePath = swapLocaleInPath(currentPath, alternateLocale)
 
       <footer class:list={["border-t border-white/70 bg-white/60 dark:border-white/10 dark:bg-slate-950/60", hideFooterOnMobile && "hidden md:block"]}>
         <div class="mx-auto max-w-7xl px-4 py-10 md:px-8">
-          <div class="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.25em] text-slate-500 dark:text-slate-400">
-            <span class="rounded-full bg-white px-4 py-2 dark:bg-slate-900/80">{copy.offlineBadge}</span>
-            <span class="rounded-full bg-white px-4 py-2 dark:bg-slate-900/80">{copy.browseBadge}</span>
-            <span class="rounded-full bg-white px-4 py-2 dark:bg-slate-900/80">{copy.studioBadge}</span>
+          <div class="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
+            <div class="flex items-center gap-4">
+              <img
+                alt={show.organization.name}
+                class="h-14 w-14 rounded-[1.2rem] object-cover shadow-lg"
+                src={show.branding.logoSrc}
+              />
+              <div>
+                <p class="display-type text-xl text-slate-950 dark:text-white">{localize(locale, show.title)}</p>
+                <p class="mt-1 text-xs uppercase tracking-[0.28em] text-slate-500 dark:text-slate-400">
+                  {show.organization.name}
+                </p>
+              </div>
+            </div>
+            <nav class="flex flex-wrap gap-3 text-sm font-semibold text-slate-700 dark:text-slate-200">
+              <a class="rounded-full bg-white px-4 py-2 dark:bg-slate-900/80" href={buildLocalePath(locale, "artworks/")}>{copy.artworks}</a>
+              <a class="rounded-full bg-white px-4 py-2 dark:bg-slate-900/80" href={buildLocalePath(locale, "about/")}>{copy.about}</a>
+              <a class="rounded-full bg-white px-4 py-2 dark:bg-slate-900/80" href={buildLocalePath(locale, "help/")}>{copy.help}</a>
+              {show.organization.website ? (
+                <a class="rounded-full bg-white px-4 py-2 dark:bg-slate-900/80" href={show.organization.website} rel="noreferrer" target="_blank">{copy.visitWebsite}</a>
+              ) : null}
+            </nav>
           </div>
           <p class="mt-6 max-w-3xl text-sm leading-6 text-slate-600 dark:text-slate-300">
             {localize(locale, show.footer)}
@@ -218,6 +267,50 @@ const alternatePath = swapLocaleInPath(currentPath, alternateLocale)
     <script is:inline>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
+          const isLocalhost = ["localhost", "127.0.0.1", "::1"].includes(
+            window.location.hostname
+          );
+          const cleanupKey = "promenade-sw-cleanup";
+
+          if (isLocalhost) {
+            Promise.all([
+              navigator.serviceWorker
+                .getRegistrations()
+                .catch(() => []),
+              "caches" in window ? caches.keys().catch(() => []) : Promise.resolve([])
+            ])
+              .then(async ([registrations, cacheKeys]) => {
+                await Promise.all(
+                  registrations.map((registration) =>
+                    registration.unregister().catch(() => false)
+                  )
+                );
+                await Promise.all(
+                  cacheKeys
+                    .filter((cacheKey) =>
+                      ["promenade-", "pages-", "show-media-", "workbox-precache"]
+                        .some((prefix) => cacheKey.startsWith(prefix))
+                    )
+                    .map((cacheKey) => caches.delete(cacheKey).catch(() => false))
+                );
+
+                const needsReload =
+                  registrations.length > 0 || navigator.serviceWorker.controller;
+                const hasReloaded = window.sessionStorage.getItem(cleanupKey) === "1";
+
+                if (needsReload && !hasReloaded) {
+                  window.sessionStorage.setItem(cleanupKey, "1");
+                  window.location.reload();
+                  return;
+                }
+
+                window.sessionStorage.removeItem(cleanupKey);
+              })
+              .catch(() => undefined);
+
+            return;
+          }
+
           let reloading = false;
           navigator.serviceWorker.addEventListener("controllerchange", () => {
             if (reloading) return;

@@ -1,7 +1,13 @@
 import fs from "node:fs"
 import path from "node:path"
+import { getAuthoritativeArtworkTitle } from "./artwork-title"
 import type { Artwork, ShowBundle } from "./schema"
-import { isApprovedState } from "./schema"
+import {
+  getShowPublicLocales,
+  isApprovedState,
+  isGuidedArtwork,
+  type Locale
+} from "./schema"
 
 export type ExportIssue = {
   level: "error" | "warning"
@@ -10,15 +16,22 @@ export type ExportIssue = {
   message: string
 }
 
-function hasLocalizedValue(record: Record<"de" | "en", string>) {
-  return Boolean(record.de.trim() && record.en.trim())
+function hasLocalizedValue(
+  record: Record<Locale, string>,
+  requiredLocales: readonly Locale[]
+) {
+  return requiredLocales.every((locale) => Boolean(record[locale]?.trim()))
 }
 
-function resolvePublicAssetPath(assetPath: string) {
-  return path.resolve("public", assetPath.replace(/^\//, ""))
+function resolvePublicAssetPath(assetPath: string, publicRoot: string) {
+  return path.join(publicRoot, assetPath.replace(/^\//, ""))
 }
 
-function collectArtworkIssues(artwork: Artwork) {
+function collectArtworkIssues(
+  artwork: Artwork,
+  publicRoot: string,
+  requiredLocales: readonly Locale[]
+) {
   const issues: ExportIssue[] = []
 
   if (!artwork.artist.trim()) {
@@ -30,31 +43,33 @@ function collectArtworkIssues(artwork: Artwork) {
     })
   }
 
-  if (!hasLocalizedValue(artwork.title)) {
+  if (!getAuthoritativeArtworkTitle(artwork).trim()) {
     issues.push({
       level: "error",
       entity: "artwork",
       id: artwork.id,
-      message: "Both localized titles are required."
+      message: "Authoritative artwork title is missing."
     })
   }
 
-  if (!hasLocalizedValue(artwork.description)) {
+  if (!hasLocalizedValue(artwork.description, requiredLocales)) {
     issues.push({
       level: "error",
       entity: "artwork",
       id: artwork.id,
-      message: "Both localized descriptions are required."
+      message: `Descriptions are required for ${requiredLocales.join(", ")}.`
     })
   }
 
-  if (!isApprovedState(artwork.translationStatus.en)) {
-    issues.push({
-      level: "error",
-      entity: "artwork",
-      id: artwork.id,
-      message: "English translation is not approved."
-    })
+  for (const locale of requiredLocales) {
+    if (!isApprovedState(artwork.translationStatus[locale])) {
+      issues.push({
+        level: "error",
+        entity: "artwork",
+        id: artwork.id,
+        message: `${locale.toUpperCase()} translation is not approved.`
+      })
+    }
   }
 
   if (!artwork.images.length) {
@@ -67,7 +82,7 @@ function collectArtworkIssues(artwork: Artwork) {
   }
 
   for (const image of artwork.images) {
-    if (!fs.existsSync(resolvePublicAssetPath(image.src))) {
+    if (!fs.existsSync(resolvePublicAssetPath(image.src, publicRoot))) {
       issues.push({
         level: "error",
         entity: "artwork",
@@ -77,7 +92,7 @@ function collectArtworkIssues(artwork: Artwork) {
     }
   }
 
-  for (const locale of ["de", "en"] as const) {
+  for (const locale of requiredLocales) {
     if (!artwork.audio[locale]) {
       issues.push({
         level: "error",
@@ -97,7 +112,9 @@ function collectArtworkIssues(artwork: Artwork) {
       })
     }
 
-    if (!fs.existsSync(resolvePublicAssetPath(artwork.audio[locale]))) {
+    if (
+      !fs.existsSync(resolvePublicAssetPath(artwork.audio[locale], publicRoot))
+    ) {
       issues.push({
         level: "error",
         entity: "artwork",
@@ -110,28 +127,41 @@ function collectArtworkIssues(artwork: Artwork) {
   return issues
 }
 
-export function auditShowBundle(bundle: ShowBundle) {
+export function auditShowBundle(
+  bundle: ShowBundle,
+  options: {
+    publicRoot?: string
+  } = {}
+) {
+  const publicRoot = options.publicRoot ?? path.resolve("public")
   const issues: ExportIssue[] = []
+  const requiredLocales = getShowPublicLocales(bundle.show)
 
-  if (!hasLocalizedValue(bundle.show.title)) {
+  if (!hasLocalizedValue(bundle.show.title, requiredLocales)) {
     issues.push({
       level: "error",
       entity: "show",
       id: bundle.show.id,
-      message: "The show title requires both German and English text."
+      message: `The show title requires ${requiredLocales.join(", ")} text.`
     })
   }
 
-  if (!isApprovedState(bundle.show.translationStatus.en)) {
-    issues.push({
-      level: "error",
-      entity: "show",
-      id: bundle.show.id,
-      message: "The show-level English copy is not approved."
-    })
+  for (const locale of requiredLocales) {
+    if (!isApprovedState(bundle.show.translationStatus[locale])) {
+      issues.push({
+        level: "error",
+        entity: "show",
+        id: bundle.show.id,
+        message: `The show-level ${locale.toUpperCase()} copy is not approved.`
+      })
+    }
   }
 
-  if (!fs.existsSync(resolvePublicAssetPath(bundle.show.branding.logoSrc))) {
+  if (
+    !fs.existsSync(
+      resolvePublicAssetPath(bundle.show.branding.logoSrc, publicRoot)
+    )
+  ) {
     issues.push({
       level: "error",
       entity: "show",
@@ -140,8 +170,8 @@ export function auditShowBundle(bundle: ShowBundle) {
     })
   }
 
-  for (const artwork of bundle.artworks) {
-    issues.push(...collectArtworkIssues(artwork))
+  for (const artwork of bundle.artworks.filter(isGuidedArtwork)) {
+    issues.push(...collectArtworkIssues(artwork, publicRoot, requiredLocales))
   }
 
   return {
