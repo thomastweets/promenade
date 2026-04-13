@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Exhibition Studio</title>
+    <script>
+      (() => {
+        const key = "promenade-theme";
+        const stored = window.localStorage.getItem(key);
+        const preference =
+          stored === "light" || stored === "dark" || stored === "system"
+            ? stored
+            : "system";
+        const resolved =
+          preference === "system"
+            ? window.matchMedia("(prefers-color-scheme: dark)").matches
+              ? "dark"
+              : "light"
+            : preference;
+        const root = document.documentElement;
+        root.dataset.themePreference = preference;
+        root.dataset.theme = resolved;
+        root.style.colorScheme = resolved;
+        root.classList.toggle("dark", resolved === "dark");
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="/src/main.tsx" type="module"></script>
+  </body>
+</html>

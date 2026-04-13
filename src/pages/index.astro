@@ -1,0 +1,37 @@
+---
+import { loadShowBundleSync } from "@lib/content"
+import { localize } from "@lib/i18n"
+import { getShowPublicLocales } from "@lib/schema"
+
+const show = loadShowBundleSync().show
+const fallbackLocale = show.defaultLocale
+const supportedLocales = getShowPublicLocales(show)
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>{localize(show.defaultLocale, show.title)}</title>
+  </head>
+  <body>
+    <script define:vars={{ fallbackLocale, supportedLocales }} is:inline>
+      const stored = window.localStorage.getItem("promenade-locale");
+      const languages = navigator.languages ?? [navigator.language];
+      const normalize = (value) => {
+        if (!value) return null;
+        const short = value.toLowerCase().split("-")[0];
+        return supportedLocales.includes(short) ? short : null;
+      };
+      const locale =
+        normalize(stored) ||
+        languages.map(normalize).find(Boolean) ||
+        fallbackLocale;
+      window.location.replace(`/${locale}/`);
+    </script>
+    <p>
+      Redirecting. If this does not happen automatically, continue to
+      <a href={`/${fallbackLocale}/`}>the exhibition</a>.
+    </p>
+  </body>
+</html>

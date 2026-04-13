@@ -1,0 +1,44 @@
+services:
+  studio-api:
+    build:
+      context: ../..
+      target: studio-api
+    restart: unless-stopped
+    env_file:
+      - ../../.env
+      - ./.env
+    expose:
+      - "8787"
+    volumes:
+      - ../../shows:/app/shows
+      - ../../public/shows:/app/public/shows
+      - ../../public/icons:/app/public/icons
+      - ../../tmp:/app/tmp
+
+  studio-ui:
+    build:
+      context: ../..
+      target: studio-static
+    restart: unless-stopped
+    expose:
+      - "80"
+
+  studio-proxy:
+    image: caddy:2.8-alpine
+    restart: unless-stopped
+    depends_on:
+      - studio-api
+      - studio-ui
+    env_file:
+      - ./.env
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  caddy_data:
+  caddy_config:

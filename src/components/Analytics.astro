@@ -1,0 +1,29 @@
+---
+type Props = {
+  provider: "none" | "plausible" | "goatcounter"
+  domain: string
+}
+
+const { provider, domain } = Astro.props as Props
+---
+
+{
+  provider === "plausible" && domain ? (
+    <script
+      is:inline
+      defer
+      data-domain={domain}
+      src="https://plausible.io/js/script.js"
+    ></script>
+  ) : null
+}
+{
+  provider === "goatcounter" && domain ? (
+    <script
+      is:inline
+      async
+      data-goatcounter={`https://${domain}.goatcounter.com/count`}
+      src="//gc.zgo.at/count.js"
+    ></script>
+  ) : null
+}

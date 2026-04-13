@@ -1,0 +1,82 @@
+{
+  "id": "02",
+  "number": 2,
+  "slug": "mona-lisa",
+  "artist": "Leonardo da Vinci",
+  "year": "1503",
+  "title": {
+    "de": "Die Mona Lisa",
+    "en": "Mona Lisa",
+    "es": ""
+  },
+  "sourceDescription": {
+    "de": "Das berühmteste Porträt der Welt, bekannt für das geheimnisvolle Lächeln der dargestellten Frau. Die innovative Sfumato-Technik und die faszinierende Atmosphäre machen dieses Werk zu einem Meilenstein der Kunstgeschichte.",
+    "en": "The world's most famous portrait, known for its subject's mysterious smile. The innovative sfumato technique and captivating atmosphere make this work a milestone in art history.",
+    "es": ""
+  },
+  "description": {
+    "de": "Das berühmteste Porträt der Welt, bekannt für das geheimnisvolle Lächeln der dargestellten Frau. Die innovative Sfumato-Technik und die faszinierende Atmosphäre machen dieses Werk zu einem Meilenstein der Kunstgeschichte.",
+    "en": "The world's most famous portrait, known for its subject's mysterious smile. The innovative sfumato technique and captivating atmosphere make this work a milestone in art history.",
+    "es": ""
+  },
+  "material": {
+    "de": "Öl auf Pappelholz",
+    "en": "Oil on poplar panel",
+    "es": ""
+  },
+  "dimensions": "77cm x 53cm",
+  "images": [
+    {
+      "src": "/shows/demo-show/media/images/02-main.svg",
+      "alt": {
+        "de": "Die Mona Lisa – Ansicht 1",
+        "en": "Mona Lisa – View 1",
+        "es": ""
+      },
+      "kind": "hero"
+    },
+    {
+      "src": "/shows/demo-show/media/images/02-detail-1.svg",
+      "alt": {
+        "de": "Die Mona Lisa – Ansicht 2",
+        "en": "Mona Lisa – View 2",
+        "es": ""
+      },
+      "kind": "detail"
+    },
+    {
+      "src": "/shows/demo-show/media/images/02-detail-2.svg",
+      "alt": {
+        "de": "Die Mona Lisa – Ansicht 3",
+        "en": "Mona Lisa – View 3",
+        "es": ""
+      },
+      "kind": "detail"
+    }
+  ],
+  "audioCues": {
+    "de": "",
+    "en": "",
+    "es": ""
+  },
+  "audio": {
+    "de": "/shows/demo-show/media/audio/02-de.wav",
+    "en": "/shows/demo-show/media/audio/02-en.wav",
+    "es": ""
+  },
+  "translationStatus": {
+    "de": "human",
+    "en": "approved",
+    "es": "missing"
+  },
+  "audioCueStatus": {
+    "de": "missing",
+    "en": "missing",
+    "es": "missing"
+  },
+  "audioStatus": {
+    "de": "ready",
+    "en": "ready",
+    "es": "missing"
+  }
+}

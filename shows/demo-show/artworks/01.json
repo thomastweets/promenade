@@ -1,0 +1,82 @@
+{
+  "id": "01",
+  "number": 1,
+  "slug": "the-starry-night",
+  "artist": "Vincent van Gogh",
+  "year": "1889",
+  "title": {
+    "de": "Die Sternennacht222",
+    "en": "The Starry Night",
+    "es": ""
+  },
+  "sourceDescription": {
+    "de": "Ein ikonisches Gemälde, das den Nachthimmel über Saint-Rémy-de-Provence zeigt. Die wirbelnden Wolken, die strahlenden Sterne und der leuchtende Mond über dem ruhigen Dorf erschaffen eine unvergessliche Szene voller Bewegung und Emotion.",
+    "en": "An iconic painting depicting the night sky over Saint-Rémy-de-Provence. The swirling clouds, brilliant stars, and glowing moon over the quiet village create an unforgettable scene full of movement and emotion.",
+    "es": ""
+  },
+  "description": {
+    "de": "Ein ikonisches Gemälde, das den Nachthimmel über Saint-Rémy-de-Provence zeigt. Die wirbelnden Wolken, die strahlenden Sterne und der leuchtende Mond über dem ruhigen Dorf erschaffen eine unvergessliche Szene voller Bewegung und Emotion.",
+    "en": "An iconic painting depicting the night sky over Saint-Rémy-de-Provence. The swirling clouds, brilliant stars, and glowing moon over the quiet village create an unforgettable scene full of movement and emotion.",
+    "es": ""
+  },
+  "material": {
+    "de": "Öl auf Leinwand",
+    "en": "Oil on canvas",
+    "es": ""
+  },
+  "dimensions": "73.7cm x 92.1cm",
+  "images": [
+    {
+      "src": "/shows/demo-show/media/images/01-main.svg",
+      "alt": {
+        "de": "Die Sternennacht222 – Ansicht 1",
+        "en": "The Starry Night – View 1",
+        "es": ""
+      },
+      "kind": "hero"
+    },
+    {
+      "src": "/shows/demo-show/media/images/01-detail-1.svg",
+      "alt": {
+        "de": "Die Sternennacht222 – Ansicht 2",
+        "en": "The Starry Night – View 2",
+        "es": ""
+      },
+      "kind": "detail"
+    },
+    {
+      "src": "/shows/demo-show/media/images/01-detail-2.svg",
+      "alt": {
+        "de": "Die Sternennacht222 – Ansicht 3",
+        "en": "The Starry Night – View 3",
+        "es": ""
+      },
+      "kind": "detail"
+    }
+  ],
+  "audioCues": {
+    "de": "",
+    "en": "",
+    "es": ""
+  },
+  "audio": {
+    "de": "/shows/demo-show/media/audio/01-de.wav",
+    "en": "/shows/demo-show/media/audio/01-en.wav",
+    "es": ""
+  },
+  "translationStatus": {
+    "de": "human",
+    "en": "approved",
+    "es": "missing"
+  },
+  "audioCueStatus": {
+    "de": "missing",
+    "en": "missing",
+    "es": "missing"
+  },
+  "audioStatus": {
+    "de": "ready",
+    "en": "ready",
+    "es": "missing"
+  }
+}

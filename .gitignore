@@ -1,10 +1,29 @@
-.env
-dist/*
-public/exhibition.md
-public/artworks/audio/*
-public/artworks/content/*
-public/artworks/images/*
-public/assets/custom/*
-node_modules
+# build output
+dist/
+coverage/
+playwright-report/
+test-results/
+.astro/
 
-!/**/.gitkeep
+# dependencies
+node_modules/
+
+# temp and generated data
+.DS_Store
+.env
+.env.local
+.env.docker
+.rewrite/
+.playwright-shows/
+.playwright-shows/.active-show
+tmp/
+.deploy/
+import/
+shows/.active-show
+shows/*/generated/
+shows/*-archive-*/
+public/shows/*/generated/
+public/shows/*-archive-*/
+
+# editors
+.idea/

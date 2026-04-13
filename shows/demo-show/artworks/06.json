@@ -1,0 +1,82 @@
+{
+  "id": "06",
+  "number": 6,
+  "slug": "the-persistence-of-memory",
+  "artist": "Salvador Dalí",
+  "year": "1931",
+  "title": {
+    "de": "Die Persistenz der Erinnerung",
+    "en": "The Persistence of Memory",
+    "es": ""
+  },
+  "sourceDescription": {
+    "de": "Ein surrealistisches Meisterwerk mit seinen charakteristischen schmelzenden Uhren. Das Gemälde spielt mit unserer Wahrnehmung von Zeit und Realität in einer traumähnlichen Landschaft.",
+    "en": "A surrealist masterpiece featuring its characteristic melting clocks. The painting plays with our perception of time and reality in a dreamlike landscape.",
+    "es": ""
+  },
+  "description": {
+    "de": "Ein surrealistisches Meisterwerk mit seinen charakteristischen schmelzenden Uhren. Das Gemälde spielt mit unserer Wahrnehmung von Zeit und Realität in einer traumähnlichen Landschaft.",
+    "en": "A surrealist masterpiece featuring its characteristic melting clocks. The painting plays with our perception of time and reality in a dreamlike landscape.",
+    "es": ""
+  },
+  "material": {
+    "de": "",
+    "en": "",
+    "es": ""
+  },
+  "dimensions": "",
+  "images": [
+    {
+      "src": "/shows/demo-show/media/images/06-main.svg",
+      "alt": {
+        "de": "Die Persistenz der Erinnerung – Ansicht 1",
+        "en": "The Persistence of Memory – View 1",
+        "es": ""
+      },
+      "kind": "hero"
+    },
+    {
+      "src": "/shows/demo-show/media/images/06-detail-1.svg",
+      "alt": {
+        "de": "Die Persistenz der Erinnerung – Ansicht 2",
+        "en": "The Persistence of Memory – View 2",
+        "es": ""
+      },
+      "kind": "detail"
+    },
+    {
+      "src": "/shows/demo-show/media/images/06-detail-2.svg",
+      "alt": {
+        "de": "Die Persistenz der Erinnerung – Ansicht 3",
+        "en": "The Persistence of Memory – View 3",
+        "es": ""
+      },
+      "kind": "detail"
+    }
+  ],
+  "audioCues": {
+    "de": "",
+    "en": "",
+    "es": ""
+  },
+  "audio": {
+    "de": "/shows/demo-show/media/audio/06-de.wav",
+    "en": "/shows/demo-show/media/audio/06-en.wav",
+    "es": ""
+  },
+  "translationStatus": {
+    "de": "human",
+    "en": "approved",
+    "es": "missing"
+  },
+  "audioCueStatus": {
+    "de": "missing",
+    "en": "missing",
+    "es": "missing"
+  },
+  "audioStatus": {
+    "de": "ready",
+    "en": "ready",
+    "es": "missing"
+  }
+}

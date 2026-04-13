@@ -1,0 +1,55 @@
+{
+  "id": "13",
+  "number": 13,
+  "slug": "archive-of-traces",
+  "guideMode": "signage-only",
+  "artist": "Murat Kaya",
+  "year": "",
+  "title": {
+    "de": "Archiv der Spuren",
+    "en": "Archive of Traces",
+    "es": ""
+  },
+  "sourceDescription": {
+    "de": "",
+    "en": "",
+    "es": ""
+  },
+  "description": {
+    "de": "",
+    "en": "",
+    "es": ""
+  },
+  "material": {
+    "de": "Pigment, Wachs und Papier",
+    "en": "Pigment, wax, and paper",
+    "es": ""
+  },
+  "dimensions": "180 × 60 cm",
+  "images": [],
+  "audioCues": {
+    "de": "",
+    "en": "",
+    "es": ""
+  },
+  "audio": {
+    "de": "",
+    "en": "",
+    "es": ""
+  },
+  "translationStatus": {
+    "de": "human",
+    "en": "approved",
+    "es": "missing"
+  },
+  "audioCueStatus": {
+    "de": "missing",
+    "en": "missing",
+    "es": "missing"
+  },
+  "audioStatus": {
+    "de": "missing",
+    "en": "missing",
+    "es": "missing"
+  }
+}

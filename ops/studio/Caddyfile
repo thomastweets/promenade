@@ -1,0 +1,32 @@
+{$STUDIO_HOST} {
+  @studio_session header_regexp Cookie "(^|;\\s*)studio_session={$STUDIO_SESSION_TOKEN}(;|$)"
+
+  @api path /api/* /shows/* /icons/*
+  handle @api {
+    route {
+      handle @studio_session {
+        reverse_proxy studio-api:8787
+      }
+
+      basic_auth {
+        {$STUDIO_USERNAME} {$STUDIO_PASSWORD_HASH}
+      }
+      header +Set-Cookie "studio_session={$STUDIO_SESSION_TOKEN}; Path=/; HttpOnly; SameSite=Lax; Max-Age=604800"
+      reverse_proxy studio-api:8787
+    }
+  }
+
+  handle {
+    route {
+      handle @studio_session {
+        reverse_proxy studio-ui:80
+      }
+
+      basic_auth {
+        {$STUDIO_USERNAME} {$STUDIO_PASSWORD_HASH}
+      }
+      header +Set-Cookie "studio_session={$STUDIO_SESSION_TOKEN}; Path=/; HttpOnly; SameSite=Lax; Max-Age=604800"
+      reverse_proxy studio-ui:80
+    }
+  }
+}

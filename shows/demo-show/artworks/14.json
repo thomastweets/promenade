@@ -1,0 +1,55 @@
+{
+  "id": "14",
+  "number": 14,
+  "slug": "untitled-blue-study",
+  "guideMode": "signage-only",
+  "artist": "Leonie Hartmann",
+  "year": "2025",
+  "title": {
+    "de": "Ohne Titel (Blaue Studie)",
+    "en": "Untitled (Blue Study)",
+    "es": ""
+  },
+  "sourceDescription": {
+    "de": "",
+    "en": "",
+    "es": ""
+  },
+  "description": {
+    "de": "",
+    "en": "",
+    "es": ""
+  },
+  "material": {
+    "de": "",
+    "en": "",
+    "es": ""
+  },
+  "dimensions": "",
+  "images": [],
+  "audioCues": {
+    "de": "",
+    "en": "",
+    "es": ""
+  },
+  "audio": {
+    "de": "",
+    "en": "",
+    "es": ""
+  },
+  "translationStatus": {
+    "de": "human",
+    "en": "approved",
+    "es": "missing"
+  },
+  "audioCueStatus": {
+    "de": "missing",
+    "en": "missing",
+    "es": "missing"
+  },
+  "audioStatus": {
+    "de": "missing",
+    "en": "missing",
+    "es": "missing"
+  }
+}

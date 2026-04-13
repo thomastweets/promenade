@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="960" viewBox="0 0 1280 960">
+  <defs>
+    <linearGradient id="bg" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#f7dccc" />
+      <stop offset="100%" stop-color="#ffffff" />
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="960" fill="url(#bg)" />
+  <circle cx="460" cy="360" r="220" fill="#8b3a2d" opacity="0.14" />
+  <circle cx="840" cy="630" r="180" fill="#8b3a2d" opacity="0.10" />
+  <rect x="96" y="120" width="1088" height="720" rx="42" fill="none" stroke="#8b3a2d" stroke-width="8" opacity="0.72" />
+  <text x="130" y="240" fill="#8b3a2d" font-family="Georgia, serif" font-size="38" letter-spacing="3">PROMENADE</text>
+  <text x="130" y="360" fill="#8b3a2d" font-family="Georgia, serif" font-size="84" font-weight="700">The Birth of Venus</text>
+  <text x="130" y="440" fill="#8b3a2d" font-family="Arial, sans-serif" font-size="34">Sandro Botticelli · 1485</text>
+  <text x="130" y="620" fill="#8b3a2d" font-family="Arial, sans-serif" font-size="30">A masterpiece of Italian Renaissance depicting the Roman goddess Venus arriving at the shore. The graceful composition a</text>
+  <text x="130" y="760" fill="#8b3a2d" font-family="Arial, sans-serif" font-size="28" opacity="0.78">Sample placeholder image 3</text>
+</svg>

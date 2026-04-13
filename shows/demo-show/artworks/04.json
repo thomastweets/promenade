@@ -1,0 +1,82 @@
+{
+  "id": "04",
+  "number": 4,
+  "slug": "the-scream",
+  "artist": "Edvard Munch",
+  "year": "1893",
+  "title": {
+    "de": "Der Schrei",
+    "en": "The Scream",
+    "es": ""
+  },
+  "sourceDescription": {
+    "de": "Ein expressionistisches Meisterwerk, das eine schreiende Figur vor einem blutroten Himmel zeigt. Das Werk vermittelt ein intensives Gefühl von Angst und existenzieller Krise, das bis heute Menschen auf der ganzen Welt berührt.",
+    "en": "An expressionist masterpiece showing a screaming figure against a blood-red sky. The work conveys an intense feeling of anxiety and existential crisis that continues to resonate with people worldwide.",
+    "es": ""
+  },
+  "description": {
+    "de": "Ein expressionistisches Meisterwerk, das eine schreiende Figur vor einem blutroten Himmel zeigt. Das Werk vermittelt ein intensives Gefühl von Angst und existenzieller Krise, das bis heute Menschen auf der ganzen Welt berührt.",
+    "en": "An expressionist masterpiece showing a screaming figure against a blood-red sky. The work conveys an intense feeling of anxiety and existential crisis that continues to resonate with people worldwide.",
+    "es": ""
+  },
+  "material": {
+    "de": "",
+    "en": "",
+    "es": ""
+  },
+  "dimensions": "",
+  "images": [
+    {
+      "src": "/shows/demo-show/media/images/04-main.svg",
+      "alt": {
+        "de": "Der Schrei – Ansicht 1",
+        "en": "The Scream – View 1",
+        "es": ""
+      },
+      "kind": "hero"
+    },
+    {
+      "src": "/shows/demo-show/media/images/04-detail-1.svg",
+      "alt": {
+        "de": "Der Schrei – Ansicht 2",
+        "en": "The Scream – View 2",
+        "es": ""
+      },
+      "kind": "detail"
+    },
+    {
+      "src": "/shows/demo-show/media/images/04-detail-2.svg",
+      "alt": {
+        "de": "Der Schrei – Ansicht 3",
+        "en": "The Scream – View 3",
+        "es": ""
+      },
+      "kind": "detail"
+    }
+  ],
+  "audioCues": {
+    "de": "",
+    "en": "",
+    "es": ""
+  },
+  "audio": {
+    "de": "/shows/demo-show/media/audio/04-de.wav",
+    "en": "/shows/demo-show/media/audio/04-en.wav",
+    "es": ""
+  },
+  "translationStatus": {
+    "de": "human",
+    "en": "approved",
+    "es": "missing"
+  },
+  "audioCueStatus": {
+    "de": "missing",
+    "en": "missing",
+    "es": "missing"
+  },
+  "audioStatus": {
+    "de": "ready",
+    "en": "ready",
+    "es": "missing"
+  }
+}

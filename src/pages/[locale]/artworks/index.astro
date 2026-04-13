@@ -1,0 +1,58 @@
+---
+import { loadShowBundleSync } from "@lib/content"
+import { buildGuideStationLookup } from "@lib/guide-stations"
+import { localize } from "@lib/i18n"
+import { getShowPublicLocales, isGuidedArtwork, type Locale } from "@lib/schema"
+import ArtworkCard from "@web/components/ArtworkCard.astro"
+import BaseLayout from "@web/layouts/BaseLayout.astro"
+
+export function getStaticPaths() {
+  const bundle = loadShowBundleSync()
+  return getShowPublicLocales(bundle.show).map((locale) => ({
+    params: { locale }
+  }))
+}
+
+const locale = Astro.params.locale as Locale
+const bundle = loadShowBundleSync()
+const guideArtworks = bundle.artworks.filter(isGuidedArtwork)
+const guideStations = buildGuideStationLookup(bundle.artworks)
+---
+
+<BaseLayout
+  currentPath={Astro.url.pathname}
+  description={localize(locale, bundle.show.subtitle)}
+  locale={locale}
+  show={bundle.show}
+  title={`${localize(locale, bundle.show.title)} · Gallery`}
+>
+  <section class="mx-auto max-w-7xl px-4 py-14 md:px-8">
+    <div class="max-w-3xl">
+      <p class="text-sm font-semibold uppercase tracking-[0.35em] text-[color:var(--brand-accent)]">
+        Collection
+      </p>
+      <h1 class="display-type mt-4 text-5xl text-slate-950 dark:text-white">{localize(locale, bundle.show.title)}</h1>
+      <p class="mt-4 text-lg leading-8 text-slate-600 dark:text-slate-300">{localize(locale, bundle.show.intro)}</p>
+    </div>
+
+    {guideArtworks.length ? (
+      <div class="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+        {guideArtworks.map((artwork) => (
+          <ArtworkCard
+            artwork={artwork}
+            locale={locale}
+            stationId={guideStations.get(artwork.id)?.stationId ?? artwork.id}
+          />
+        ))}
+      </div>
+    ) : (
+      <div class="surface-card mt-10 rounded-[1.75rem] p-6 text-sm leading-7 text-slate-600 dark:text-slate-300">
+        {locale === "de"
+          ? "Der Audioguide fuer diese Ausstellung wird gerade vorbereitet."
+          : locale === "es"
+            ? "La audioguía de esta exposición todavía se está preparando."
+            : "The audio guide for this exhibition is still being prepared."}
+      </div>
+    )}
+  </section>
+</BaseLayout>

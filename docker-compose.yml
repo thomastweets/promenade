@@ -1,40 +1,50 @@
-version: '3.8'
-
 services:
-  caddy:
-    image: caddy:2.7-alpine
-    container_name: promenade-caddy
+  promenade:
+    build:
+      context: .
+      target: stack-proxy
+      args:
+        SHOW: ${SHOW:-demo-show}
+        DEFAULT_LOCALE: ${DEFAULT_LOCALE:-de}
+        PUBLIC_SITE_URL: ${PUBLIC_SITE_URL:-https://promenade.example.com}
+        PUBLIC_ANALYTICS_PROVIDER: ${PUBLIC_ANALYTICS_PROVIDER:-none}
+        PUBLIC_ANALYTICS_DOMAIN: ${PUBLIC_ANALYTICS_DOMAIN:-}
     restart: unless-stopped
+    env_file:
+      - ./tmp/studio-auth.env
+    depends_on:
+      - studio-api
+      - studio-ui
+    ports:
+      - "80:80"
     volumes:
-      - ./public:/usr/share/caddy:ro
-      - ./Caddyfile:/etc/caddy/Caddyfile:ro
-      - caddy_data:/data
-      - caddy_config:/config
-    networks:
-      - traefik-proxy
-      - internal
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.promenade.rule=Host(`promenade.example.com`)" # Change to your domain
-      - "traefik.http.routers.promenade.entrypoints=websecure"
-      - "traefik.http.routers.promenade.tls=true"
-      - "traefik.http.routers.promenade.tls.certresolver=letsencrypt"
-      - "traefik.http.services.promenade.loadbalancer.server.port=80"
-      - "traefik.docker.network=traefik-proxy"
-      # Health check
-      - "traefik.http.services.promenade.loadbalancer.healthcheck.path=/"
-      - "traefik.http.services.promenade.loadbalancer.healthcheck.interval=10s"
-      - "traefik.http.services.promenade.loadbalancer.healthcheck.timeout=5s"
-      # Optional middlewares for security
-      - "traefik.http.routers.promenade.middlewares=secure-headers@file"
+      - public_dist:/srv/dist
+
+  studio-api:
+    build:
+      context: .
+      target: studio-api
+    restart: unless-stopped
+    env_file:
+      - .env
+    expose:
+      - "8787"
+    volumes:
+      - ./shows:/app/shows
+      - ./public/shows:/app/public/shows
+      - ./public/icons:/app/public/icons
+      - ./tmp:/app/tmp
+      - public_dist:/app/dist
+
+  studio-ui:
+    build:
+      context: .
+      target: studio-static
+      args:
+        STUDIO_BASE_PATH: ${STUDIO_BASE_PATH:-/studio/}
+    restart: unless-stopped
+    expose:
+      - "80"
 
 volumes:
-  caddy_data:
-  caddy_config:
-
-networks:
-  internal:
-    name: promenade-internal
-  traefik-proxy:
-    external: true
-    name: traefik-proxy 
+  public_dist:

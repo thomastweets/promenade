@@ -1,0 +1,36 @@
+---
+import { buildGuideStations, findGuideStationByStationId } from "@lib/guide-stations"
+import { loadShowBundleSync } from "@lib/content"
+import { getShowPublicLocales, isGuidedArtwork, type Locale } from "@lib/schema"
+import ArtworkDetailPage from "@web/components/ArtworkDetailPage.astro"
+
+export function getStaticPaths() {
+  const bundle = loadShowBundleSync()
+  const guideStations = buildGuideStations(bundle.artworks)
+
+  return guideStations.flatMap((station) =>
+    getShowPublicLocales(bundle.show).map((locale) => ({
+      params: {
+        locale,
+        station: station.stationId
+      }
+    }))
+  )
+}
+
+const locale = Astro.params.locale as Locale
+const bundle = loadShowBundleSync()
+const guideArtworks = bundle.artworks.filter(isGuidedArtwork)
+const station = findGuideStationByStationId(bundle.artworks, `${Astro.params.station ?? ""}`)
+
+if (!station) {
+  throw new Error(`Unknown guide station ${Astro.params.station}`)
+}
+---
+
+<ArtworkDetailPage
+  artwork={station.artwork}
+  guideArtworks={guideArtworks}
+  locale={locale}
+  show={bundle.show}
+/>

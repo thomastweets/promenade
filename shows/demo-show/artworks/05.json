@@ -1,0 +1,82 @@
+{
+  "id": "05",
+  "number": 5,
+  "slug": "guernica",
+  "artist": "Pablo Picasso",
+  "year": "1937",
+  "title": {
+    "de": "Guernica",
+    "en": "Guernica",
+    "es": ""
+  },
+  "sourceDescription": {
+    "de": "Ein monumentales Anti-Kriegs-Gemälde, das die Bombardierung der baskischen Stadt Guernica darstellt. In kraftvollen kubistischen Formen zeigt es die Schrecken und die Sinnlosigkeit des Krieges.",
+    "en": "A monumental anti-war painting depicting the bombing of the Basque town of Guernica. Using powerful cubist forms, it shows the horrors and senselessness of war.",
+    "es": ""
+  },
+  "description": {
+    "de": "Ein monumentales Anti-Kriegs-Gemälde, das die Bombardierung der baskischen Stadt Guernica darstellt. In kraftvollen kubistischen Formen zeigt es die Schrecken und die Sinnlosigkeit des Krieges.",
+    "en": "A monumental anti-war painting depicting the bombing of the Basque town of Guernica. Using powerful cubist forms, it shows the horrors and senselessness of war.",
+    "es": ""
+  },
+  "material": {
+    "de": "",
+    "en": "",
+    "es": ""
+  },
+  "dimensions": "",
+  "images": [
+    {
+      "src": "/shows/demo-show/media/images/05-main.svg",
+      "alt": {
+        "de": "Guernica – Ansicht 1",
+        "en": "Guernica – View 1",
+        "es": ""
+      },
+      "kind": "hero"
+    },
+    {
+      "src": "/shows/demo-show/media/images/05-detail-1.svg",
+      "alt": {
+        "de": "Guernica – Ansicht 2",
+        "en": "Guernica – View 2",
+        "es": ""
+      },
+      "kind": "detail"
+    },
+    {
+      "src": "/shows/demo-show/media/images/05-detail-2.svg",
+      "alt": {
+        "de": "Guernica – Ansicht 3",
+        "en": "Guernica – View 3",
+        "es": ""
+      },
+      "kind": "detail"
+    }
+  ],
+  "audioCues": {
+    "de": "",
+    "en": "",
+    "es": ""
+  },
+  "audio": {
+    "de": "/shows/demo-show/media/audio/05-de.wav",
+    "en": "/shows/demo-show/media/audio/05-en.wav",
+    "es": ""
+  },
+  "translationStatus": {
+    "de": "human",
+    "en": "approved",
+    "es": "missing"
+  },
+  "audioCueStatus": {
+    "de": "missing",
+    "en": "missing",
+    "es": "missing"
+  },
+  "audioStatus": {
+    "de": "ready",
+    "en": "ready",
+    "es": "missing"
+  }
+}

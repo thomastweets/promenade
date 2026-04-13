@@ -1,0 +1,35 @@
+---
+import { loadShowBundleSync } from "@lib/content"
+import { getShowPublicLocales, isGuidedArtwork, type Locale } from "@lib/schema"
+import ArtworkDetailPage from "@web/components/ArtworkDetailPage.astro"
+
+export function getStaticPaths() {
+  const bundle = loadShowBundleSync()
+  const guideArtworks = bundle.artworks.filter(isGuidedArtwork)
+
+  return guideArtworks.flatMap((artwork) =>
+    getShowPublicLocales(bundle.show).map((locale) => ({
+      params: {
+        locale,
+        number: artwork.id
+      }
+    }))
+  )
+}
+
+const locale = Astro.params.locale as Locale
+const bundle = loadShowBundleSync()
+const guideArtworks = bundle.artworks.filter(isGuidedArtwork)
+const artwork = guideArtworks.find((entry) => entry.id === Astro.params.number)
+
+if (!artwork) {
+  throw new Error(`Unknown artwork ${Astro.params.number}`)
+}
+---
+
+<ArtworkDetailPage
+  artwork={artwork}
+  guideArtworks={guideArtworks}
+  locale={locale}
+  show={bundle.show}
+/>

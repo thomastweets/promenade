@@ -1,0 +1,70 @@
+{
+  "id": "demo-show",
+  "slug": "promenade-demo-show",
+  "locales": ["de", "en"],
+  "publicLocales": ["de", "en"],
+  "defaultLocale": "de",
+  "title": {
+    "de": "Beispielausstellung: Moderne Kunst",
+    "en": "Sample Exhibition: Modern Art",
+    "es": ""
+  },
+  "subtitle": {
+    "de": "Eine Reise durch zeitgenössische Kreativität",
+    "en": "A Journey Through Contemporary Creativity",
+    "es": ""
+  },
+  "intro": {
+    "de": "Diese Ausstellung präsentiert herausragende Werke der modernen Kunst. Entdecken Sie die Vielfalt und Kreativität zeitgenössischer Künstler.\n",
+    "en": "This exhibition showcases outstanding works of modern art. Discover the diversity and creativity of contemporary artists.\n",
+    "es": ""
+  },
+  "about": {
+    "de": "Max Mustermann, geboren 1970 in Berlin, ist ein international anerkannter Künstler. Seine Werke wurden weltweit ausgestellt.\n",
+    "en": "Max Mustermann, born 1970 in Berlin, is an internationally recognized artist. His works have been exhibited worldwide.\n",
+    "es": ""
+  },
+  "researchNotes": {
+    "de": "",
+    "en": "",
+    "es": ""
+  },
+  "help": {
+    "de": "Scannen Sie den QR-Code am Werk oder geben Sie die Werknummer ein. Bilder und Audio werden nach dem ersten Aufruf lokal zwischengespeichert, damit der Rundgang stabil weiterläuft.",
+    "en": "Scan the QR code next to an artwork or enter the work number manually. Images and audio are cached after the first request so the tour remains usable with unstable connectivity.",
+    "es": ""
+  },
+  "footer": {
+    "de": "© 2024 Museum Beispiel. Alle Rechte vorbehalten.",
+    "en": "© 2024 Example Museum. All rights reserved.",
+    "es": ""
+  },
+  "organization": {
+    "name": "Promenade Gallery",
+    "website": "https://example-museum.org",
+    "email": "info@example-museum.org",
+    "instagram": "@instagram_handle"
+  },
+  "branding": {
+    "logoSrc": "/shows/demo-show/brand/promenade-logo.png",
+    "accent": "#184f5d",
+    "accentSoft": "#d9efe7",
+    "paper": "#f6efe4",
+    "ink": "#17211d",
+    "qrLabelPrefix": "promenade"
+  },
+  "analytics": {
+    "provider": "none",
+    "domain": ""
+  },
+  "translationStatus": {
+    "de": "human",
+    "en": "approved",
+    "es": "missing"
+  },
+  "audioGuideStyle": {
+    "de": "Sprich wie eine kluge, ruhige Museumsbegleitung: warm, klar, aufmerksam und nie effekthascherisch. Betone Atmosphäre, Materialität und räumliche Wahrnehmung, lasse kurze Pausen nach gedanklich dichten Sätzen und formuliere so, dass Besucherinnen und Besucher gern weiter zuhören.",
+    "en": "Speak like a thoughtful museum guide: warm, observant, calm, and never theatrical. Emphasize atmosphere, materiality, and spatial perception, leave short pauses after dense ideas, and phrase the narration so visitors want to keep listening.",
+    "es": ""
+  }
+}

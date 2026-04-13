@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="960" viewBox="0 0 1280 960">
+  <defs>
+    <linearGradient id="bg" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#d9efe7" />
+      <stop offset="100%" stop-color="#ffffff" />
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="960" fill="url(#bg)" />
+  <circle cx="220" cy="220" r="180" fill="#1f4b63" opacity="0.14" />
+  <circle cx="1020" cy="720" r="210" fill="#1f4b63" opacity="0.10" />
+  <rect x="96" y="120" width="1088" height="720" rx="42" fill="none" stroke="#1f4b63" stroke-width="8" opacity="0.72" />
+  <text x="130" y="240" fill="#1f4b63" font-family="Georgia, serif" font-size="38" letter-spacing="3">PROMENADE</text>
+  <text x="130" y="360" fill="#1f4b63" font-family="Georgia, serif" font-size="84" font-weight="700">Mona Lisa</text>
+  <text x="130" y="440" fill="#1f4b63" font-family="Arial, sans-serif" font-size="34">Leonardo da Vinci · 1503</text>
+  <text x="130" y="620" fill="#1f4b63" font-family="Arial, sans-serif" font-size="30">The world's most famous portrait, known for its subject's mysterious smile. The innovative sfumato technique and captiva</text>
+  <text x="130" y="760" fill="#1f4b63" font-family="Arial, sans-serif" font-size="28" opacity="0.78">Sample placeholder image 1</text>
+</svg>
